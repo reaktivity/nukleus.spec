@@ -8,6 +8,7 @@
   <artifactId>nukleus.spec</artifactId>
   <version>develop-SNAPSHOT</version>
   <name>Nukleus Specification</name>
+  <description>Nukleus Specification</description>
   <url>https://github.com/reaktivity/build-template.java</url>
 
   <licenses>
