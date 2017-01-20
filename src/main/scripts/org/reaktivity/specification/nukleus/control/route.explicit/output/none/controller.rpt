@@ -1,0 +1,45 @@
+#
+# Copyright 2016-2017 The Reaktivity Project
+#
+# The Reaktivity Project licenses this file to you under the Apache License,
+# version 2.0 (the "License"); you may not use this file except in compliance
+# with the License. You may obtain a copy of the License at:
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+
+property newSourceRef ${nuklei:newReferenceId()} # external scope
+property newTargetRef ${nuklei:newReferenceId()} # external scope
+
+property nukleiRE010100C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+
+property controlRE010100C ${nukleiRE010100C.control("example")}
+
+connect agrona://stream/bidirectional
+        option reader ${agrona:broadcastReceiver(controlRE010100C.controller)}
+        option writer ${agrona:manyToOneWriter(controlRE010100C.nukleus)}
+
+connected
+
+write [0x00 0x00 0x00 0x01]
+write ${controlRE010100C.nextCorrelationId()}
+write [0x01 0x00]
+write [0x06] "source"
+write ${newSourceRef}
+write [0x06] "target"
+write ${newTargetRef}
+write [0x00]
+write flush
+
+read [0x40 0x00 0x00 0x01]
+read ${controlRE010100C.correlationId()}
+read ${newSourceRef}
+
+close
+closed
