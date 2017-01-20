@@ -1,0 +1,42 @@
+#
+# Copyright 2016-2017 The Reaktivity Project
+#
+# The Reaktivity Project licenses this file to you under the Apache License,
+# version 2.0 (the "License"); you may not use this file except in compliance
+# with the License. You may obtain a copy of the License at:
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+
+property nukleiRE010001N ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+
+property controlRE010001N ${nukleiRE010001N.controlNew("example")}
+
+connect agrona://stream/bidirectional
+        option reader ${agrona:manyToOneReader(controlRE010001N.nukleus)}
+        option writer ${agrona:broadcastTransmitter(controlRE010001N.controller)}
+
+connected
+
+read [0x00 0x00 0x00 0x01]
+read ([0..8]:correlationIdRE010001N)
+read [0x00 0x01]
+read [0x06] "source"
+read ([0..8]:sourceRefRE010001N)
+read [0x06] "target"
+read ([0..8]:targetRefRE010001N)
+read [0x00]
+
+write [0x40 0x00 0x00 0x01]
+write ${correlationIdRE010001N}
+write ${sourceRefRE010001N}
+write flush
+
+close
+closed

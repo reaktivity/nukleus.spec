@@ -17,6 +17,19 @@ scope common
 {
     scope control
     {
+        enum Role
+        {
+          INPUT,
+          OUTPUT
+        }
+
+        enum State
+        {
+          NONE,
+          NEW,
+          ESTABLISHED
+        }
+
         struct Frame
         {
             int64 correlationId;
@@ -27,86 +40,35 @@ scope common
         }
 
 
-        struct Bind extends common::control::Frame [0x00000001]
+        struct Route extends common::control::Frame [0x00000001]
         {
-            int8 kind; // [SERVER (0x10) | CLIENT (0x20)] ORed [INITIAL (0x01) | REPLY (0x02)]
+          common::control::Role role;
+          common::control::State state;
+          string source;
+          int64 sourceRef;
+          string target;
+          int64 targetRef;
+          octets extension;
         }
 
-        struct Bound extends common::control::Frame [0x40000001]
+        struct Routed extends common::control::Frame [0x40000001]
         {
-            int64 referenceId;
+          int64 sourceRef;
         }
 
-        struct Unbind extends common::control::Frame [0x00000002]
+        struct Unroute extends common::control::Frame [0x00000002]
         {
-            int64 referenceId;
+          common::control::Role role;
+          common::control::State state;
+          string source;
+          int64 sourceRef;
+          string target;
+          int64 targetRef;
+          octets extension;
         }
 
-        struct Unbound extends common::control::Frame [0x40000002]
+        struct Unrouted extends common::control::Frame [0x40000002]
         {
-        }
-
-        struct Route extends common::control::Frame [0x00000011]
-        {
-            string source;
-            int64 sourceRef;
-            string target;
-            int64 targetRef;
-            octets extension;
-        }
-
-        struct Routed extends common::control::Frame [0x40000011]
-        {
-        }
-
-        struct Unroute extends common::control::Frame [0x00000012]
-        {
-            string source;
-            int64 sourceRef;
-            string target;
-            int64 targetRef;
-            octets extension;
-        }
-
-        struct Unrouted extends common::control::Frame [0x40000012]
-        {
-        }
-
-        struct Reject extends common::control::Frame [0x00000013]
-        {
-            string source;
-            int64 sourceRef;
-            string target;
-            int64 targetRef;
-            octets extension;
-        }
-
-        struct Rejected extends common::control::Frame [0x40000013]
-        {
-        }
-
-        struct Unreject extends common::control::Frame [0x00000014]
-        {
-            string source;
-            int64 sourceRef;
-            string target;
-            int64 targetRef;
-            octets extension;
-        }
-
-        struct Unrejected extends common::control::Frame [0x40000014]
-        {
-        }
-
-
-        struct Connect extends common::control::Frame [0x00000021]
-        {
-            int64 referenceId;
-        }
-
-        struct Connected extends common::control::Frame [0x40000021]
-        {
-            int64 streamId;
         }
     }
 
