@@ -39,7 +39,6 @@ write flush
 
 read [0x40 0x00 0x00 0x02]
 read ${controlUR020102C.correlationId()}
-read ${newSourceRef}
 
 close
 closed

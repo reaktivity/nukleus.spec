@@ -35,7 +35,6 @@ read [0x00]
 
 write [0x40 0x00 0x00 0x02]
 write ${correlationIdUR020100N}
-write ${sourceRefUR020100N}
 write flush
 
 close
