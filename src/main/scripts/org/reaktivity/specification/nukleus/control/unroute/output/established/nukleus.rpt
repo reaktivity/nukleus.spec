@@ -28,9 +28,9 @@ read [0x00 0x00 0x00 0x02]
 read ([0..8]:correlationIdUR020102N)
 read [0x01 0x02]
 read [0x06] "source"
-read ([0..8]:sourceRefUR020102N)
+read ([0..8]:sourceOutputEstRefUR020102N)
 read [0x06] "target"
-read ([0..8]:targetRefUR020102N)
+read ([0..8]:targetOutputEstRefUR020102N)
 read [0x00]
 
 write [0x40 0x00 0x00 0x02]
