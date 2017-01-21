@@ -40,5 +40,7 @@ read [0x40 0x00 0x00 0x01]
 read ${controlRG010100C.correlationId()}
 read ([0..8]:newSourceOutputRef)
 
+read notify ROUTED_OUTPUT
+
 close
 closed

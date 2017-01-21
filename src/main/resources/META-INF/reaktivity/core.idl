@@ -35,15 +35,15 @@ scope core
             int64 correlationId;
         }
 
-        struct Error extends common::control::Frame [0x40000000]
+        struct Error extends core::control::Frame [0x40000000]
         {
         }
 
 
-        struct Route extends common::control::Frame [0x00000001]
+        struct Route extends core::control::Frame [0x00000001]
         {
-          common::control::Role role;
-          common::control::State state;
+          core::control::Role role;
+          core::control::State state;
           string source;
           int64 sourceRef;
           string target;
@@ -51,15 +51,15 @@ scope core
           octets extension;
         }
 
-        struct Routed extends common::control::Frame [0x40000001]
+        struct Routed extends core::control::Frame [0x40000001]
         {
           int64 sourceRef;
         }
 
-        struct Unroute extends common::control::Frame [0x00000002]
+        struct Unroute extends core::control::Frame [0x00000002]
         {
-          common::control::Role role;
-          common::control::State state;
+          core::control::Role role;
+          core::control::State state;
           string source;
           int64 sourceRef;
           string target;
@@ -67,7 +67,7 @@ scope core
           octets extension;
         }
 
-        struct Unrouted extends common::control::Frame [0x40000002]
+        struct Unrouted extends core::control::Frame [0x40000002]
         {
         }
     }
@@ -79,29 +79,29 @@ scope core
             int64 streamId;
         }
 
-        struct Begin extends common::stream::Frame [0x00000001]
+        struct Begin extends core::stream::Frame [0x00000001]
         {
             int64 referenceId;
             int64 correlationId;
             octets extension;
         }
 
-        struct Data extends common::stream::Frame [0x00000002]
+        struct Data extends core::stream::Frame [0x00000002]
         {
             octets payload;
             octets extension;
         }
 
-        struct End extends common::stream::Frame [0x00000003]
+        struct End extends core::stream::Frame [0x00000003]
         {
             octets extension;
         }
 
-        struct Reset extends common::stream::Frame [0x40000001]
+        struct Reset extends core::stream::Frame [0x40000001]
         {
         }
 
-        struct Window extends common::stream::Frame [0x40000002]
+        struct Window extends core::stream::Frame [0x40000002]
         {
             int32 update;
         }

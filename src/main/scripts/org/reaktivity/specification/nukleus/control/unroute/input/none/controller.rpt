@@ -21,7 +21,8 @@ property nukleiUR020000C ${nuklei:directory("target/nukleus-itests").controlCapa
 
 property controlUR020000C ${nukleiUR020000C.control("example")}
 
-connect agrona://stream/bidirectional
+connect await ROUTED_INPUT
+        agrona://stream/bidirectional
         option reader ${agrona:broadcastReceiver(controlUR020000C.controller)}
         option writer ${agrona:manyToOneWriter(controlUR020000C.nukleus)}
 

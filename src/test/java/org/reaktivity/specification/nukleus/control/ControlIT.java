@@ -97,6 +97,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/input/none/nukleus",
+        "route/input/none/controller",
         "unroute/input/none/nukleus",
         "unroute/input/none/controller"
     })
@@ -107,6 +109,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/input/new/nukleus",
+        "route/input/new/controller",
         "unroute/input/new/nukleus",
         "unroute/input/new/controller"
     })
@@ -117,6 +121,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/input/established/nukleus",
+        "route/input/established/controller",
         "unroute/input/established/nukleus",
         "unroute/input/established/controller"
     })
@@ -127,6 +133,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/output/none/nukleus",
+        "route/output/none/controller",
         "unroute/output/none/nukleus",
         "unroute/output/none/controller"
     })
@@ -137,6 +145,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/output/new/nukleus",
+        "route/output/new/controller",
         "unroute/output/new/nukleus",
         "unroute/output/new/controller"
     })
@@ -147,6 +157,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/output/established/nukleus",
+        "route/output/established/controller",
         "unroute/output/established/nukleus",
         "unroute/output/established/controller"
     })
