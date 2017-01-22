@@ -14,27 +14,27 @@
 # under the License.
 #
 
-property nukleiRG010000N ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+property nukleiRG010101N ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlRG010000N ${nukleiRG010000N.controlNew("example")}
+property controlRG010101N ${nukleiRG010101N.controlNew("example")}
 
 connect agrona://stream/bidirectional
-        option reader ${agrona:manyToOneReader(controlRG010000N.nukleus)}
-        option writer ${agrona:broadcastTransmitter(controlRG010000N.controller)}
+        option reader ${agrona:manyToOneReader(controlRG010101N.nukleus)}
+        option writer ${agrona:broadcastTransmitter(controlRG010101N.controller)}
 
 connected
 
 read [0x00 0x00 0x00 0x01]
-read ([0..8]:correlationIdRG010000N)
-read [0x00 0x01]
+read ([0..8]:correlationIdRG010101N)
+read [0x01 0x01]
 read [0x06] "source"
 read [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
 read [0x06] "target"
-read ([0..8]:targetRefRG010000N)
+read ([0..8]:targetOutputRefRG010101N)
 read [0x00]
 
 write [0x40 0x00 0x00 0x01]
-write ${correlationIdRG010000N}
+write ${correlationIdRG010101N}
 write ${nuklei:newReferenceId()}
 write flush
 

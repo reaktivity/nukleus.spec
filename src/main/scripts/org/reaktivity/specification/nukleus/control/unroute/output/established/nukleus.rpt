@@ -18,7 +18,8 @@ property nukleiUR020102N ${nuklei:directory("target/nukleus-itests").controlCapa
 
 property controlUR020102N ${nukleiUR020102N.controlNew("example")}
 
-connect agrona://stream/bidirectional
+connect await ROUTED_OUTPUT
+        agrona://stream/bidirectional
         option reader ${agrona:manyToOneReader(controlUR020102N.nukleus)}
         option writer ${agrona:broadcastTransmitter(controlUR020102N.controller)}
 
@@ -28,14 +29,13 @@ read [0x00 0x00 0x00 0x02]
 read ([0..8]:correlationIdUR020102N)
 read [0x01 0x02]
 read [0x06] "source"
-read ([0..8]:sourceRefUR020102N)
+read ([0..8]:sourceOutputEstRefUR020102N)
 read [0x06] "target"
-read ([0..8]:targetRefUR020102N)
+read ([0..8]:targetOutputEstRefUR020102N)
 read [0x00]
 
 write [0x40 0x00 0x00 0x02]
 write ${correlationIdUR020102N}
-write ${sourceRefUR020102N}
 write flush
 
 close

@@ -14,31 +14,33 @@
 # under the License.
 #
 
-property newTargetRef ${nuklei:newReferenceId()} # external scope
+property newTargetInputEstRef ${nuklei:newReferenceId()} # external scope
 
-property nukleiRG010000C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+property nukleiRG010002C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlRG010000C ${nukleiRG010000C.control("example")}
+property controlRG010002C ${nukleiRG010002C.control("example")}
 
 connect agrona://stream/bidirectional
-        option reader ${agrona:broadcastReceiver(controlRG010000C.controller)}
-        option writer ${agrona:manyToOneWriter(controlRG010000C.nukleus)}
+        option reader ${agrona:broadcastReceiver(controlRG010002C.controller)}
+        option writer ${agrona:manyToOneWriter(controlRG010002C.nukleus)}
 
 connected
 
 write [0x00 0x00 0x00 0x01]
-write ${controlRG010000C.nextCorrelationId()}
-write [0x00 0x01]
+write ${controlRG010002C.nextCorrelationId()}
+write [0x00 0x02]
 write [0x06] "source"
 write [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
 write [0x06] "target"
-write ${newTargetRef}
+write ${newTargetInputEstRef}
 write [0x00]
 write flush
 
 read [0x40 0x00 0x00 0x01]
-read ${controlRG010000C.correlationId()}
-read ([0..8]:newSourceRef)
+read ${controlRG010002C.correlationId()}
+read ([0..8]:newSourceInputEstRef)
+
+read notify ROUTED_INPUT
 
 close
 closed

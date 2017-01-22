@@ -14,14 +14,15 @@
 # under the License.
 #
 
-property newSourceRef ${nuklei:newReferenceId()} # external scope
-property newTargetRef ${nuklei:newReferenceId()} # external scope
+property newSourceInputRef ${nuklei:newReferenceId()} # external scope
+property newTargetInputRef ${nuklei:newReferenceId()} # external scope
 
 property nukleiUR020000C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
 property controlUR020000C ${nukleiUR020000C.control("example")}
 
-connect agrona://stream/bidirectional
+connect await ROUTED_INPUT
+        agrona://stream/bidirectional
         option reader ${agrona:broadcastReceiver(controlUR020000C.controller)}
         option writer ${agrona:manyToOneWriter(controlUR020000C.nukleus)}
 
@@ -31,15 +32,14 @@ write [0x00 0x00 0x00 0x02]
 write ${controlUR020000C.nextCorrelationId()}
 write [0x00 0x00]
 write [0x06] "source"
-write ${newSourceRef}
+write ${newSourceInputRef}
 write [0x06] "target"
-write ${newTargetRef}
+write ${newTargetInputRef}
 write [0x00]
 write flush
 
 read [0x40 0x00 0x00 0x02]
 read ${controlUR020000C.correlationId()}
-read ${newSourceRef}
 
 close
 closed

@@ -37,126 +37,68 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route.explicit/input/none/nukleus",
-        "route.explicit/input/none/controller"
+        "route/input/none/nukleus",
+        "route/input/none/controller"
     })
-    public void shouldRouteExplicitInputNone() throws Exception
+    public void shouldRouteInputNone() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route.explicit/input/new/nukleus",
-        "route.explicit/input/new/controller"
+        "route/input/new/nukleus",
+        "route/input/new/controller"
     })
-    public void shouldRouteExplicitInputNew() throws Exception
+    public void shouldRouteInputNew() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route.explicit/input/established/nukleus",
-        "route.explicit/input/established/controller"
+        "route/input/established/nukleus",
+        "route/input/established/controller"
     })
-    public void shouldRouteExplicitInputEstablished() throws Exception
+    public void shouldRouteInputEstablished() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route.generated/input/none/nukleus",
-        "route.generated/input/none/controller"
+        "route/output/none/nukleus",
+        "route/output/none/controller"
     })
-    public void shouldRouteGeneratedInputNone() throws Exception
+    public void shouldRouteOutputNone() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route.generated/input/new/nukleus",
-        "route.generated/input/new/controller"
+        "route/output/new/nukleus",
+        "route/output/new/controller"
     })
-    public void shouldRouteGeneratedInputNew() throws Exception
+    public void shouldRouteOutputNew() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route.generated/input/established/nukleus",
-        "route.generated/input/established/controller"
+        "route/output/established/nukleus",
+        "route/output/established/controller"
     })
-    public void shouldRouteGeneratedInputEstablished() throws Exception
+    public void shouldRouteOutputEstablished() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route.explicit/output/none/nukleus",
-        "route.explicit/output/none/controller"
-    })
-    public void shouldRouteExplicitOutputNone() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route.explicit/output/new/nukleus",
-        "route.explicit/output/new/controller"
-    })
-    public void shouldRouteExplicitOutputNew() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route.explicit/output/established/nukleus",
-        "route.explicit/output/established/controller"
-    })
-    public void shouldRouteExplicitOutputEstablished() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route.generated/output/none/nukleus",
-        "route.generated/output/none/controller"
-    })
-    public void shouldRouteGeneratedOutputNone() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route.generated/output/new/nukleus",
-        "route.generated/output/new/controller"
-    })
-    public void shouldRouteGeneratedOutputNew() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route.generated/output/established/nukleus",
-        "route.generated/output/established/controller"
-    })
-    public void shouldRouteGeneratedOutputEstablished() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
+        "route/input/none/nukleus",
+        "route/input/none/controller",
         "unroute/input/none/nukleus",
         "unroute/input/none/controller"
     })
@@ -167,6 +109,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/input/new/nukleus",
+        "route/input/new/controller",
         "unroute/input/new/nukleus",
         "unroute/input/new/controller"
     })
@@ -177,6 +121,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/input/established/nukleus",
+        "route/input/established/controller",
         "unroute/input/established/nukleus",
         "unroute/input/established/controller"
     })
@@ -187,6 +133,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/output/none/nukleus",
+        "route/output/none/controller",
         "unroute/output/none/nukleus",
         "unroute/output/none/controller"
     })
@@ -197,6 +145,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/output/new/nukleus",
+        "route/output/new/controller",
         "unroute/output/new/nukleus",
         "unroute/output/new/controller"
     })
@@ -207,6 +157,8 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/output/established/nukleus",
+        "route/output/established/controller",
         "unroute/output/established/nukleus",
         "unroute/output/established/controller"
     })
