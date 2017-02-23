@@ -42,13 +42,13 @@ scope core
 
         struct Route extends core::control::Frame [0x00000001]
         {
-          core::control::Role role;
-          core::control::State state;
-          string source;
-          int64 sourceRef;
-          string target;
-          int64 targetRef;
-          octets extension;
+            core::control::Role role;
+            core::control::State state;
+            string source;
+            int64 sourceRef;
+            string target;
+            int64 targetRef;
+            octets extension;
         }
 
         struct Routed extends core::control::Frame [0x40000001]
@@ -58,13 +58,13 @@ scope core
 
         struct Unroute extends core::control::Frame [0x00000002]
         {
-          core::control::Role role;
-          core::control::State state;
-          string source;
-          int64 sourceRef;
-          string target;
-          int64 targetRef;
-          octets extension;
+            core::control::Role role;
+            core::control::State state;
+            string source;
+            int64 sourceRef;
+            string target;
+            int64 targetRef;
+            octets extension;
         }
 
         struct Unrouted extends core::control::Frame [0x40000002]
@@ -88,7 +88,8 @@ scope core
 
         struct Data extends core::stream::Frame [0x00000002]
         {
-            octets payload;
+            uint16 length;
+            octets[length] payload;
             octets extension;
         }
 
