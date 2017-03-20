@@ -165,5 +165,53 @@ scope core
             int32 update;
         }
     }
+
+    scope security
+    {
+        struct Frame
+        {
+            int64 correlationId;
+        }
+
+        struct Promote extends core::security::Frame [0x00000001]
+        {
+            int64 securityRef;
+            int64 priorSubjectId;
+            octets extension;
+        }
+
+        struct Promoted extends core::security::Frame [0x40000001]
+        {
+            int64 subjectId;
+        }
+
+        struct Authorize extends core::security::Frame [0x00000002]
+        {
+            int64 subjectId;
+            list<string> roles;
+        }
+
+        struct Authorized extends core::security::Frame [0x40000002]
+        {
+        }
+        
+        struct Demote extends core::security::Frame [0x00000003]
+        {
+            int64 subjectId;
+        }
+        
+        struct Demoted extends core::security::Frame [0x40000003]
+        {
+        }
+        
+        struct Challenged extends core::security::Frame [0x40000004]
+        {
+            octets extension;
+        }
+        
+        struct Denied extends core::security::Frame [0x40000005]
+        {
+        }
+    }
         
 }
