@@ -39,7 +39,6 @@ scope core
         {
         }
 
-
         struct Route extends core::control::Frame [0x00000001]
         {
             core::control::Role role;
@@ -70,6 +69,65 @@ scope core
         struct Unrouted extends core::control::Frame [0x40000002]
         {
         }
+
+        struct Authenticate extends core::control::Frame [0x00000003]
+        {
+            string source;
+            int64 sourceRef;
+            string target;
+            int64 targetRef;
+            string secureName;
+            int64 secureRef;
+            octets extension;
+        }
+
+        struct Authenticated extends core::control::Frame [0x40000003]
+        {
+        }
+
+        struct Unauthenticate extends core::control::Frame [0x00000004]
+        {
+            string source;
+            int64 sourceRef;
+            string target;
+            int64 targetRef;
+            string secureName;
+            int64 secureRef;
+            octets extension;
+        }
+
+        struct Unauthenticated extends core::control::Frame [0x40000004]
+        {
+        }
+
+        struct Authorize extends core::control::Frame [0x00000005]
+        {
+            string source;
+            int64 sourceRef;
+            string target;
+            int64 targetRef;
+            string secureName;
+            octets extension;
+        }
+
+        struct Authorized extends core::control::Frame [0x40000005]
+        {
+        }
+
+        struct Unauthorize extends core::control::Frame [0x00000006]
+        {
+            string source;
+            int64 sourceRef;
+            string target;
+            int64 targetRef;
+            string secureName;
+            octets extension;
+        }
+
+        struct Unauthorized extends core::control::Frame [0x40000006]
+        {
+        }
+        
     }
 
     scope stream
@@ -107,4 +165,5 @@ scope core
             int32 update;
         }
     }
+        
 }
