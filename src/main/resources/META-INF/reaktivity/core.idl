@@ -19,15 +19,15 @@ scope core
     {
         enum Role
         {
-          INPUT,
-          OUTPUT
+            INPUT,
+            OUTPUT
         }
 
         enum State
         {
-          NONE,
-          NEW,
-          ESTABLISHED
+            NONE,
+            NEW,
+            ESTABLISHED
         }
 
         struct Frame
@@ -52,7 +52,7 @@ scope core
 
         struct Routed extends core::control::Frame [0x40000001]
         {
-          int64 sourceRef;
+            int64 sourceRef;
         }
 
         struct Unroute extends core::control::Frame [0x00000002]
