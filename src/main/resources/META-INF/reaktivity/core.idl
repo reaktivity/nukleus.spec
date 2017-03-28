@@ -15,6 +15,14 @@
  */
 scope core
 {
+
+    struct Authorization
+    {
+		long expires;
+		uint16 securityNukleus;
+		octets[6] roleMask;
+    }
+        
     scope control
     {
         enum Role
@@ -70,61 +78,25 @@ scope core
         {
         }
 
-        struct Authenticate extends core::control::Frame [0x00000003]
+        struct Authorize extends core::control::Frame [0x00000003]
         {
-            string source;
             int64 sourceRef;
-            string target;
-            int64 targetRef;
-            string secureName;
-            int64 secureRef;
-            octets extension;
+            string securityNukleus;
+            list<string> roles;
         }
 
-        struct Authenticated extends core::control::Frame [0x40000003]
+        struct Authorized extends core::control::Frame [0x40000003]
         {
+            core::Authorization authorization;
         }
 
-        struct Unauthenticate extends core::control::Frame [0x00000004]
+        struct Unauthorize extends core::control::Frame [0x00000004]
         {
-            string source;
             int64 sourceRef;
-            string target;
-            int64 targetRef;
-            string secureName;
-            int64 secureRef;
-            octets extension;
+            string securityNukleus;
         }
 
-        struct Unauthenticated extends core::control::Frame [0x40000004]
-        {
-        }
-
-        struct Authorize extends core::control::Frame [0x00000005]
-        {
-            string source;
-            int64 sourceRef;
-            string target;
-            int64 targetRef;
-            string secureName;
-            octets extension;
-        }
-
-        struct Authorized extends core::control::Frame [0x40000005]
-        {
-        }
-
-        struct Unauthorize extends core::control::Frame [0x00000006]
-        {
-            string source;
-            int64 sourceRef;
-            string target;
-            int64 targetRef;
-            string secureName;
-            octets extension;
-        }
-
-        struct Unauthorized extends core::control::Frame [0x40000006]
+        struct Unauthorized extends core::control::Frame [0x40000004]
         {
         }
         
@@ -141,76 +113,37 @@ scope core
         {
             int64 referenceId;
             int64 correlationId;
+            core::Authorization authorization;
             octets extension;
         }
 
         struct Data extends core::stream::Frame [0x00000002]
         {
             uint16 length;
+            core::Authorization authorization;
             octets[length] payload;
             octets extension;
         }
 
         struct End extends core::stream::Frame [0x00000003]
         {
+            core::Authorization authorization;
             octets extension;
         }
 
         struct Reset extends core::stream::Frame [0x40000001]
         {
+            octets extension;
         }
 
         struct Window extends core::stream::Frame [0x40000002]
         {
             int32 update;
         }
-    }
 
-    scope security
-    {
-        struct Frame
+        struct Authorization extends core::stream::Frame [0x40000003]
         {
-            int64 correlationId;
-        }
-
-        struct Promote extends core::security::Frame [0x00000001]
-        {
-            int64 securityRef;
-            int64 priorSubjectId;
-            octets extension;
-        }
-
-        struct Promoted extends core::security::Frame [0x40000001]
-        {
-            int64 subjectId;
-        }
-
-        struct Authorize extends core::security::Frame [0x00000002]
-        {
-            int64 subjectId;
-            list<string> roles;
-        }
-
-        struct Authorized extends core::security::Frame [0x40000002]
-        {
-        }
-        
-        struct Demote extends core::security::Frame [0x00000003]
-        {
-            int64 subjectId;
-        }
-        
-        struct Demoted extends core::security::Frame [0x40000003]
-        {
-        }
-        
-        struct Challenged extends core::security::Frame [0x40000004]
-        {
-            octets extension;
-        }
-        
-        struct Denied extends core::security::Frame [0x40000005]
-        {
+            core::Authorization authorization;
         }
     }
         
