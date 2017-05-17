@@ -22,7 +22,7 @@ import java.io.File;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-
+import org.agrona.CloseHelper;
 import org.agrona.concurrent.ringbuffer.RingBufferDescriptor;
 
 public final class NukleusRule implements TestRule
@@ -65,7 +65,7 @@ public final class NukleusRule implements TestRule
         File streams = new File(directory, String.format("%s/streams/%s", nukleus, source));
         long streamsBufferSize = streamsBufferCapacity + RingBufferDescriptor.TRAILER_LENGTH;
         long throttleBufferSize = throttleBufferCapacity + RingBufferDescriptor.TRAILER_LENGTH;
-        createEmptyFile(streams.getAbsoluteFile(), streamsBufferSize + throttleBufferSize);
+        CloseHelper.close(createEmptyFile(streams.getAbsoluteFile(), streamsBufferSize + throttleBufferSize));
         return this;
     }
 
