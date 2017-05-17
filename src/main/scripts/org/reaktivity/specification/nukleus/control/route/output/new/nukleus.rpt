@@ -18,9 +18,9 @@ property nukleiRG010101N ${nuklei:directory("target/nukleus-itests").controlCapa
 
 property controlRG010101N ${nukleiRG010101N.controlNew("example")}
 
-connect agrona://stream/bidirectional
-        option reader ${agrona:manyToOneReader(controlRG010101N.nukleus)}
-        option writer ${agrona:broadcastTransmitter(controlRG010101N.controller)}
+connect "agrona://stream/bidirectional"
+        option agrona:reader ${agrona:manyToOneReader(controlRG010101N.nukleus)}
+        option agrona:writer ${agrona:broadcastTransmitter(controlRG010101N.controller)}
 
 connected
 
