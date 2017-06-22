@@ -28,9 +28,9 @@ connected
 read [0x00 0x00 0x00 0x02]
 read ([0..8]:correlationIdUR020000N)
 read [0x00 0x00]
-read [0x06] "source"
+read ${nuklei:string("source")}
 read ([0..8]:sourceInputRefUR020000N)
-read [0x06] "target"
+read ${nuklei:string("target")}
 read ([0..8]:targetInputRefUR020000N)
 read [0x00]
 
