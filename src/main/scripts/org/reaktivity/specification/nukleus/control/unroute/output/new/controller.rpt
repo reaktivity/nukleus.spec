@@ -31,9 +31,9 @@ connected
 write [0x00 0x00 0x00 0x02]
 write ${controlUR020101C.nextCorrelationId()}
 write [0x01 0x01]
-write [0x06] "source"
+write ${nuklei:string("source")}
 write ${newSourceOutputRef}
-write [0x06] "target"
+write ${nuklei:string("target")}
 write ${newTargetOutputRef}
 write [0x00]
 write flush

@@ -15,6 +15,7 @@
  */
 package org.reaktivity.specification.nukleus;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.agrona.IoUtil.mapExistingFile;
 import static org.agrona.IoUtil.mapNewFile;
 import static org.agrona.IoUtil.unmap;
@@ -24,6 +25,7 @@ import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.util.Random;
 
+import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.AtomicBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.agrona.concurrent.broadcast.BroadcastBufferDescriptor;
@@ -32,6 +34,7 @@ import org.agrona.concurrent.ringbuffer.RingBuffer;
 import org.agrona.concurrent.ringbuffer.RingBufferDescriptor;
 import org.kaazing.k3po.lang.el.Function;
 import org.kaazing.k3po.lang.el.spi.FunctionMapperSpi;
+import org.reaktivity.specification.core.internal.types.StringFW;
 
 public final class Functions
 {
@@ -63,6 +66,19 @@ public final class Functions
     public static byte[] newCorrelationId()
     {
         return longToBytesNative(RANDOM.nextLong());
+    }
+
+    @Function
+    public static byte[] string(String value)
+    {
+        MutableDirectBuffer writeBuffer = new UnsafeBuffer(new byte[value.length() + 2]);
+        StringFW string = new StringFW.Builder()
+            .wrap(writeBuffer, 0, writeBuffer.capacity())
+            .set(value, UTF_8)
+            .build();
+        byte[] stringBytes = new byte[string.sizeof()];
+        string.buffer().getBytes(0, stringBytes);
+        return stringBytes;
     }
 
     public static final class Helper
