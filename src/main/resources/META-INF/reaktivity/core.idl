@@ -16,13 +16,6 @@
 scope core
 {
 
-    struct Authorization
-    {
-		long expires;
-		uint16 securityNukleus;
-		octets[6] roleMask;
-    }
-        
     scope control
     {
         enum Role
@@ -79,7 +72,9 @@ scope core
 
         struct Authorized extends core::control::Frame [0x40000003]
         {
-            core::Authorization authorization;
+            int64 authMask;
+            int64 authExpires;
+
         }
 
         struct Unauthorize extends core::control::Frame [0x00000004]
@@ -100,33 +95,42 @@ scope core
         {
             int64 streamId;
         }
-
+        
         struct Begin extends core::stream::Frame [0x00000001]
         {
+            int64 authMask;
+            int64 authExpires;
             string source;
             int64 sourceRef;
             int64 correlationId;
-            core::Authorization authorization;
             octets extension;
         }
 
         struct Data extends core::stream::Frame [0x00000002]
         {
+            int64 authMask;
+            int64 authExpires;
             uint16 length;
-            core::Authorization authorization;
             octets[length] payload;
             octets extension;
         }
 
         struct End extends core::stream::Frame [0x00000003]
         {
-            core::Authorization authorization;
+            int64 authMask;
+            int64 authExpires;
             octets extension;
         }
 
         struct Abort extends core::stream::Frame [0x00000004]
         {
             octets extension;
+        }
+        
+        struct Reauthorize extends core::stream::Frame [0x00000005]
+        {
+            int64 authMask;
+            int64 authExpires;
         }
 
         struct Reset extends core::stream::Frame [0x40000001]
@@ -140,10 +144,6 @@ scope core
             int32 frames;
         }
 
-        struct Authorization extends core::stream::Frame [0x40000003]
-        {
-            core::Authorization authorization;
-        }
     }
         
 }
