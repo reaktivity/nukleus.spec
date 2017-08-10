@@ -171,8 +171,8 @@ public class ControlIT
     @Specification({
         "route/input/new/nukleus",
         "route/input/new/controller",
-        "authorize/nukleus",
-        "authorize/controller"
+        "authorize/succeeds/nukleus",
+        "authorize/succeeds/controller"
     })
     public void shouldAuthorize() throws Exception
     {
@@ -183,8 +183,20 @@ public class ControlIT
     @Specification({
         "route/input/new/nukleus",
         "route/input/new/controller",
-        "authorize/nukleus",
-        "authorize/controller",
+        "authorize/fails.too.many.roles/nukleus",
+        "authorize/fails.too.many.roles/controller"
+    })
+    public void shouldFailToAuthorizeMoreThan48Roles() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "route/input/new/nukleus",
+        "route/input/new/controller",
+        "authorize/succeeds/nukleus",
+        "authorize/succeeds/controller",
         "unauthorize/nukleus",
         "unauthorize/controller"
     })
@@ -192,4 +204,47 @@ public class ControlIT
     {
         k3po.finish();
     }
+
+    @Test
+    @Specification({
+        "resolve/succeeds/nukleus",
+        "resolve/succeeds/controller"
+    })
+    public void shouldResolve() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "resolve/fails.too.many.roles/nukleus",
+        "resolve/fails.too.many.roles/controller"
+    })
+    public void shouldFailToResolveMoreThan48Roles() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "resolve/succeeds/nukleus",
+        "resolve/succeeds/controller",
+        "unresolve/succeeds/nukleus",
+        "unresolve/succeeds/controller"
+    })
+    public void shouldUnresolve() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "unresolve/fails.unknown.role/nukleus",
+        "unresolve/fails.unknown.role/controller"
+    })
+    public void shouldFailToUnresolveUnknownRole() throws Exception
+    {
+        k3po.finish();
+    }
+
 }

@@ -74,7 +74,6 @@ scope core
         {
             int64 authMask;
             int64 authExpires;
-
         }
 
         struct Unauthorize extends core::control::Frame [0x00000004]
@@ -86,9 +85,29 @@ scope core
         struct Unauthorized extends core::control::Frame [0x40000004]
         {
         }
+
+        struct Resolve extends core::control::Frame [0x00000005]
+        {
+            list<string> roles;
+        }
+
+        struct Resolved extends core::control::Frame [0x40000005]
+        {
+            int64 authMask;
+            int64 authExpires;
+        }
+
+        struct Unresolve extends core::control::Frame [0x00000006]
+        {
+            list<string> roles;
+        }
+
+        struct Unresolved extends core::control::Frame [0x40000006]
+        {
+        }
         
     }
-
+    
     scope stream
     {
         struct Frame
