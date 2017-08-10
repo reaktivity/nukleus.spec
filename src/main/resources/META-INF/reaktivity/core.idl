@@ -27,15 +27,9 @@ scope core
     {
         enum Role
         {
-            INPUT,
-            OUTPUT
-        }
-
-        enum State
-        {
-            NONE,
-            NEW,
-            ESTABLISHED
+          SERVER,
+          CLIENT,
+          PROXY
         }
 
         struct Frame
@@ -50,7 +44,6 @@ scope core
         struct Route extends core::control::Frame [0x00000001]
         {
             core::control::Role role;
-            core::control::State state;
             string source;
             int64 sourceRef;
             string target;
@@ -66,7 +59,6 @@ scope core
         struct Unroute extends core::control::Frame [0x00000002]
         {
             core::control::Role role;
-            core::control::State state;
             string source;
             int64 sourceRef;
             string target;
@@ -111,7 +103,8 @@ scope core
 
         struct Begin extends core::stream::Frame [0x00000001]
         {
-            int64 referenceId;
+            string source;
+            int64 sourceRef;
             int64 correlationId;
             core::Authorization authorization;
             octets extension;
@@ -131,6 +124,11 @@ scope core
             octets extension;
         }
 
+        struct Abort extends core::stream::Frame [0x00000004]
+        {
+            octets extension;
+        }
+
         struct Reset extends core::stream::Frame [0x40000001]
         {
             octets extension;
@@ -139,6 +137,7 @@ scope core
         struct Window extends core::stream::Frame [0x40000002]
         {
             int32 update;
+            int32 frames;
         }
 
         struct Authorization extends core::stream::Frame [0x40000003]
