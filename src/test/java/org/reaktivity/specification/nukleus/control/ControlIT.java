@@ -166,4 +166,30 @@ public class ControlIT
     {
         k3po.finish();
     }
+
+    @Test
+    @Specification({
+        "route/input/new/nukleus",
+        "route/input/new/controller",
+        "authorize/nukleus",
+        "authorize/controller"
+    })
+    public void shouldAuthorize() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "route/input/new/nukleus",
+        "route/input/new/controller",
+        "authorize/nukleus",
+        "authorize/controller",
+        "unauthorize/nukleus",
+        "unauthorize/controller"
+    })
+    public void shouldUnauthorize() throws Exception
+    {
+        k3po.finish();
+    }
 }

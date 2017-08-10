@@ -1,0 +1,47 @@
+#
+# Copyright 2016-2017 The Reaktivity Project
+#
+# The Reaktivity Project licenses this file to you under the Apache License,
+# version 2.0 (the "License"); you may not use this file except in compliance
+# with the License. You may obtain a copy of the License at:
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+
+property newSourceInputRef ${nuklei:newReferenceId()} # external scope
+
+property nukleiA03C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+
+property controlA03C ${nukleiA03C.control("example")}
+
+connect await ROUTED_INPUT
+        "agrona://stream/bidirectional"
+        option agrona:reader ${agrona:broadcastReceiver(controlA03C.controller)}
+        option agrona:writer ${agrona:manyToOneWriter(controlA03C.nukleus)}
+
+connected
+
+write [0x00 0x00 0x00 0x03]
+write ${controlA03C.nextCorrelationId()}
+write ${newSourceInputRef}
+write [0x08] "security"
+write [0x05] "role1"
+write [0x05] "role2"
+write flush
+
+read [0x40 0x00 0x00 0x03]
+read ${controlA03C.correlationId()}
+read ([0..2]:securityNukleusId)
+read [0x0c 0x00 0x00 0x00 0x00 0x00]
+read ([0..8]:expires)
+
+read notify AUTHORIZED_INPUT
+
+close
+closed
