@@ -37,140 +37,74 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/input/none/nukleus",
-        "route/input/none/controller"
+        "route/client/nukleus",
+        "route/client/controller"
     })
-    public void shouldRouteInputNone() throws Exception
+    public void shouldRouteClient() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/input/new/nukleus",
-        "route/input/new/controller"
+        "route/proxy/nukleus",
+        "route/proxy/controller"
     })
-    public void shouldRouteInputNew() throws Exception
+    public void shouldRouteProxy() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/input/established/nukleus",
-        "route/input/established/controller"
+        "route/server/nukleus",
+        "route/server/controller"
     })
-    public void shouldRouteInputEstablished() throws Exception
+    public void shouldRouteServer() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/output/none/nukleus",
-        "route/output/none/controller"
+        "route/client/nukleus",
+        "route/client/controller",
+        "unroute/client/nukleus",
+        "unroute/client/controller"
     })
-    public void shouldRouteOutputNone() throws Exception
+    public void shouldUnrouteClient() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/output/new/nukleus",
-        "route/output/new/controller"
+        "route/proxy/nukleus",
+        "route/proxy/controller",
+        "unroute/proxy/nukleus",
+        "unroute/proxy/controller"
     })
-    public void shouldRouteOutputNew() throws Exception
+    public void shouldUnrouteProxy() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/output/established/nukleus",
-        "route/output/established/controller"
+        "route/server/nukleus",
+        "route/server/controller",
+        "unroute/server/nukleus",
+        "unroute/server/controller"
     })
-    public void shouldRouteOutputEstablished() throws Exception
+    public void shouldUnrouteServer() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/input/none/nukleus",
-        "route/input/none/controller",
-        "unroute/input/none/nukleus",
-        "unroute/input/none/controller"
-    })
-    public void shouldUnrouteInputNone() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/input/new/nukleus",
-        "route/input/new/controller",
-        "unroute/input/new/nukleus",
-        "unroute/input/new/controller"
-    })
-    public void shouldUnrouteInputNew() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/input/established/nukleus",
-        "route/input/established/controller",
-        "unroute/input/established/nukleus",
-        "unroute/input/established/controller"
-    })
-    public void shouldUnrouteInputEstablished() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/output/none/nukleus",
-        "route/output/none/controller",
-        "unroute/output/none/nukleus",
-        "unroute/output/none/controller"
-    })
-    public void shouldUnrouteOutputNone() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/output/new/nukleus",
-        "route/output/new/controller",
-        "unroute/output/new/nukleus",
-        "unroute/output/new/controller"
-    })
-    public void shouldUnrouteOutputNew() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/output/established/nukleus",
-        "route/output/established/controller",
-        "unroute/output/established/nukleus",
-        "unroute/output/established/controller"
-    })
-    public void shouldUnrouteOutputEstablished() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/input/new/nukleus",
-        "route/input/new/controller",
+        "route/server/nukleus",
+        "route/server/controller",
         "authorize/succeeds/nukleus",
         "authorize/succeeds/controller"
     })
@@ -181,8 +115,8 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/input/new/nukleus",
-        "route/input/new/controller",
+        "route/server/nukleus",
+        "route/server/controller",
         "authorize/fails.too.many.roles/nukleus",
         "authorize/fails.too.many.roles/controller"
     })
@@ -193,8 +127,8 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/input/new/nukleus",
-        "route/input/new/controller",
+        "route/server/nukleus",
+        "route/server/controller",
         "authorize/succeeds/nukleus",
         "authorize/succeeds/controller",
         "unauthorize/nukleus",

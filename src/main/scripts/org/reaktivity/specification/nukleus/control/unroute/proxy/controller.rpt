@@ -17,20 +17,20 @@
 property newSourceInputRef ${nuklei:newReferenceId()} # external scope
 property newTargetInputRef ${nuklei:newReferenceId()} # external scope
 
-property nukleiUR020000C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+property nukleiUR02C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlUR020000C ${nukleiUR020000C.control("example")}
+property controlUR02C ${nukleiUR02C.control("example")}
 
 connect await ROUTED_INPUT
         "agrona://stream/bidirectional"
-        option agrona:reader ${agrona:broadcastReceiver(controlUR020000C.controller)}
-        option agrona:writer ${agrona:manyToOneWriter(controlUR020000C.nukleus)}
+        option agrona:reader ${agrona:broadcastReceiver(controlUR02C.controller)}
+        option agrona:writer ${agrona:manyToOneWriter(controlUR02C.nukleus)}
 
 connected
 
 write [0x00 0x00 0x00 0x02]
-write ${controlUR020000C.nextCorrelationId()}
-write [0x00 0x00]
+write ${controlUR02C.nextCorrelationId()}
+write [0x02]
 write [0x06] "source"
 write ${newSourceInputRef}
 write [0x06] "target"
@@ -39,7 +39,7 @@ write [0x00]
 write flush
 
 read [0x40 0x00 0x00 0x02]
-read ${controlUR020000C.correlationId()}
+read ${controlUR02C.correlationId()}
 
 close
 closed
