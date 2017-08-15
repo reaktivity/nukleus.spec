@@ -24,7 +24,6 @@ connect await ROUTED_INPUT
         "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlA03C.controller)}
         option agrona:writer ${agrona:manyToOneWriter(controlA03C.nukleus)}
-
 connected
 
 write [0x00 0x00 0x00 0x03]

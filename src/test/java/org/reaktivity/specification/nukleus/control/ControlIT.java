@@ -110,6 +110,22 @@ public class ControlIT
     })
     public void shouldAuthorize() throws Exception
     {
+        k3po.start();
+        k3po.notifyBarrier("RESOLVED");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "route/server/controller",
+        "route/server/nukleus",
+        "resolve/succeeds/nukleus",
+        "authorize/succeeds/controller",
+        "resolve/succeeds/controller",
+        "authorize/succeeds/nukleus"
+    })
+    public void shouldResolveWhileAuthorizing() throws Exception
+    {
         k3po.finish();
     }
 
@@ -136,6 +152,8 @@ public class ControlIT
     })
     public void shouldUnauthorize() throws Exception
     {
+        k3po.start();
+        k3po.notifyBarrier("RESOLVED");
         k3po.finish();
     }
 
