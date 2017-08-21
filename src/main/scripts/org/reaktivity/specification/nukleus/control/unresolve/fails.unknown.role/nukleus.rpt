@@ -26,7 +26,7 @@ connected
 
 read [0x00 0x00 0x00 0x06]
 read ([0..8]:correlationIdUR06N)
-read [0x15] "bad.role.not.resolved"
+read [0..6]
 
 write [0x40 0x00 0x00 0x00]
 write ${correlationIdUR06N}

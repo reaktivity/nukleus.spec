@@ -20,8 +20,6 @@ property nukleiA03C ${nuklei:directory("target/nukleus-itests").controlCapacity(
 
 property controlA03C ${nukleiA03C.control("example")}
 
-property roleBits [0x0c 0x00 0x00 0x00 0x00 0x00] # external scope
-
 connect await ROUTED_INPUT
         "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlA03C.controller)}
@@ -42,7 +40,7 @@ read await RESOLVED
 read [0x40 0x00 0x00 0x03]
 read ${controlA03C.correlationId()}
 read ([0..2]:securityNukleusId)
-read [0x0c 0x00 0x00 0x00 0x00 0x00]
+read ([0..6]:roleBits)
 read ([0..8]:expires)
 
 read notify AUTHORIZED_INPUT

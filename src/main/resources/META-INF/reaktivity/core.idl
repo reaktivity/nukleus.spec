@@ -99,7 +99,7 @@ scope core
 
         struct Unresolve extends core::control::Frame [0x00000006]
         {
-            list<string> roles;
+            int64 authMask;
         }
 
         struct Unresolved extends core::control::Frame [0x40000006]

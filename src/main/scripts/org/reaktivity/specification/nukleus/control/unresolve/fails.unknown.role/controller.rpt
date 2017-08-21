@@ -18,6 +18,8 @@ property nukleiUR06C ${nuklei:directory("target/nukleus-itests").controlCapacity
 
 property controlUR06C ${nukleiUR06C.control("security")}
 
+property badRoleBits [0x00 0x00 0x00 0x00 0x00 0x01]
+
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlUR06C.controller)}
         option agrona:writer ${agrona:manyToOneWriter(controlUR06C.nukleus)}
@@ -26,7 +28,7 @@ connected
 
 write [0x00 0x00 0x00 0x06]
 write ${controlUR06C.nextCorrelationId()}
-write [0x15] "bad.role.not.resolved"
+write ${badRoleBits}
 write flush
 
 read [0x40 0x00 0x00 0x00]
