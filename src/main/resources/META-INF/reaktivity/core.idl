@@ -94,7 +94,6 @@ scope core
         struct Resolved extends core::control::Frame [0x40000005]
         {
             int64 authMask;
-            int64 authExpires;
         }
 
         struct Unresolve extends core::control::Frame [0x00000006]

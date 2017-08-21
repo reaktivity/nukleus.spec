@@ -36,7 +36,6 @@ read [0x40 0x00 0x00 0x05]
 read ${controlR05C.correlationId()}
 read ([0..2]:securityNukleusId)
 read ${roleBits}
-read ([0..8]:expires)
 
 read notify RESOLVED
 
