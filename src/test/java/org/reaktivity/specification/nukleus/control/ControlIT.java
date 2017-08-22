@@ -147,10 +147,20 @@ public class ControlIT
 
     @Test
     @Specification({
-        "resolve/succeeds/nukleus",
-        "resolve/succeeds/controller"
+        "resolve/no.roles/nukleus",
+        "resolve/no.roles/controller"
     })
-    public void shouldResolve() throws Exception
+    public void shouldResolveWithoutRoles() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "resolve/with.roles/nukleus",
+        "resolve/with.roles/controller"
+    })
+    public void shouldResolveWithRoles() throws Exception
     {
         k3po.finish();
     }
@@ -167,8 +177,8 @@ public class ControlIT
 
     @Test
     @Specification({
-        "resolve/succeeds/nukleus",
-        "resolve/succeeds/controller",
+        "resolve/with.roles/nukleus",
+        "resolve/with.roles/controller",
         "unresolve/succeeds/nukleus",
         "unresolve/succeeds/controller"
     })
