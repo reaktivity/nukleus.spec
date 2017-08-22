@@ -29,9 +29,9 @@ read [0x00 0x00 0x00 0x02]
 read ([0..8]:correlationIdUR00N)
 read [0x00]
 read [0x06] "source"
-read ([0..8]:sourceInputRefUR00N)
+read ([0..8]:serverExceptRefUR00N)
 read [0x06] "target"
-read ([0..8]:targetInputRefUR00N)
+read ([0..8]:serverConnectRefUR00N)
 read [0x00]
 
 write [0x40 0x00 0x00 0x02]

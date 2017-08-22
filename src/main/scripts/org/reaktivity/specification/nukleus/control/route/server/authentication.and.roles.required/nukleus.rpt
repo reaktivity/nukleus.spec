@@ -29,9 +29,9 @@ read ([0..8]:correlationIdR00N)
 read [0x00]
 read [0..8] # authMask
 read [0x06] "source"
-read ([0..8]:targetInputRefR00N)
+read [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
 read [0x06] "target"
-read ([0..8]:targetInputRefR00N)
+read ([0..8]:serverConnectRefR00N)
 read [0x00]
 
 write [0x40 0x00 0x00 0x01]

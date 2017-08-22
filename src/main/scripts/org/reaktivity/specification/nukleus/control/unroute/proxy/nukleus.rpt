@@ -29,9 +29,9 @@ read [0x00 0x00 0x00 0x02]
 read ([0..8]:correlationIdUR02N)
 read [0x02]
 read [0x06] "source"
-read ([0..8]:sourceInputRefUR02N)
+read ([0..8]:proxyAcceptRefUR02N)
 read [0x06] "target"
-read ([0..8]:targetInputRefUR02N)
+read ([0..8]:proxyConnectRefUR02N)
 read [0x00]
 
 write [0x40 0x00 0x00 0x02]

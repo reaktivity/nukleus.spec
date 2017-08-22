@@ -14,8 +14,8 @@
 # under the License.
 #
 
-property newSourceInputRef ${nuklei:newReferenceId()} # external scope
-property newTargetInputRef ${nuklei:newReferenceId()} # external scope
+property newServerAcceptRef ${nuklei:newReferenceId()} # external scope
+property newServerConnectRef ${nuklei:newReferenceId()} # external scope
 
 property nukleiUR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
@@ -32,9 +32,9 @@ write [0x00 0x00 0x00 0x02]
 write ${controlUR00C.nextCorrelationId()}
 write [0x00]
 write [0x06] "source"
-write ${newSourceInputRef}
+write ${newServerAcceptRef}
 write [0x06] "target"
-write ${newTargetInputRef}
+write ${newServerConnectRef}
 write [0x00]
 write flush
 
