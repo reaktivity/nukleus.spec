@@ -14,30 +14,30 @@
 # under the License.
 #
 
-property nukleiR05C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+property nukleiR00N ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlR05C ${nukleiR05C.control("security")}
-
-property roleBits [0x0c 0x00 0x00 0x00 0x00 0x00] # external scope
+property controlR00N ${nukleiR00N.controlNew("example")}
 
 connect "agrona://stream/bidirectional"
-        option agrona:reader ${agrona:broadcastReceiver(controlR05C.controller)}
-        option agrona:writer ${agrona:manyToOneWriter(controlR05C.nukleus)}
+        option agrona:reader ${agrona:manyToOneReader(controlR00N.nukleus)}
+        option agrona:writer ${agrona:broadcastTransmitter(controlR00N.controller)}
 
 connected
 
-write [0x00 0x00 0x00 0x03]
-write ${controlR05C.nextCorrelationId()}
-write [0x05] "role1"
-write [0x05] "role2"
+read [0x00 0x00 0x00 0x01]
+read ([0..8]:correlationIdR00N)
+read [0x00]
+read [0..8] # authMask
+read [0x06] "source"
+read ([0..8]:targetInputRefR00N)
+read [0x06] "target"
+read ([0..8]:targetInputRefR00N)
+read [0x00]
+
+write [0x40 0x00 0x00 0x01]
+write ${correlationIdR00N}
+write ${nuklei:newReferenceId()}
 write flush
-
-read [0x40 0x00 0x00 0x03]
-read ${controlR05C.correlationId()}
-read ([0..2]:securityNukleusId)
-read ${roleBits}
-
-read notify RESOLVED
 
 close
 closed

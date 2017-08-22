@@ -57,10 +57,30 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/server/nukleus",
-        "route/server/controller"
+        "route/server/authentication.and.roles.required/nukleus",
+        "route/server/authentication.and.roles.required/controller"
     })
-    public void shouldRouteServer() throws Exception
+    public void shouldRouteServerAuthenticationAndRolesRequired() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "route/server/authentication.required/nukleus",
+        "route/server/authentication.required/controller"
+    })
+    public void shouldRouteServerAuthenticationRequired() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "route/server/unsecure/nukleus",
+        "route/server/unsecure/controller"
+    })
+    public void shouldRouteServerUnsecure() throws Exception
     {
         k3po.finish();
     }
@@ -91,69 +111,37 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/server/nukleus",
-        "route/server/controller",
+        "route/server/authentication.and.roles.required/nukleus",
+        "route/server/authentication.and.roles.required/controller",
         "unroute/server/nukleus",
         "unroute/server/controller"
     })
-    public void shouldUnrouteServer() throws Exception
+    public void shouldUnrouteServerAuthenticationAndRolesRequired() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/server/nukleus",
-        "route/server/controller",
-        "authorize/succeeds/nukleus",
-        "authorize/succeeds/controller"
+        "route/server/authentication.required/nukleus",
+        "route/server/authentication.required/controller",
+        "unroute/server/nukleus",
+        "unroute/server/controller"
     })
-    public void shouldAuthorize() throws Exception
-    {
-        k3po.start();
-        k3po.notifyBarrier("RESOLVED");
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/server/controller",
-        "route/server/nukleus",
-        "resolve/succeeds/nukleus",
-        "authorize/succeeds/controller",
-        "resolve/succeeds/controller",
-        "authorize/succeeds/nukleus"
-    })
-    public void shouldResolveWhileAuthorizing() throws Exception
+    public void shouldUnrouteServerAuthenticationRequired() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/server/nukleus",
-        "route/server/controller",
-        "authorize/fails.too.many.roles/nukleus",
-        "authorize/fails.too.many.roles/controller"
+        "route/server/unsecure/nukleus",
+        "route/server/unsecure/controller",
+        "unroute/server/nukleus",
+        "unroute/server/controller"
     })
-    public void shouldFailToAuthorizeMoreThan48Roles() throws Exception
+    public void shouldUnrouteServerUnsecure() throws Exception
     {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/server/nukleus",
-        "route/server/controller",
-        "authorize/succeeds/nukleus",
-        "authorize/succeeds/controller",
-        "unauthorize/nukleus",
-        "unauthorize/controller"
-    })
-    public void shouldUnauthorize() throws Exception
-    {
-        k3po.start();
-        k3po.notifyBarrier("RESOLVED");
         k3po.finish();
     }
 

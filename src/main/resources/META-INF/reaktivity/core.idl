@@ -37,6 +37,7 @@ scope core
         struct Route extends core::control::Frame [0x00000001]
         {
             core::control::Role role;
+            int64 authMask; // TODO: default 0L
             string source;
             int64 sourceRef;
             string target;
@@ -62,47 +63,27 @@ scope core
         struct Unrouted extends core::control::Frame [0x40000002]
         {
         }
-
-        struct Authorize extends core::control::Frame [0x00000003]
-        {
-            int64 sourceRef;
-            string securityNukleus;
-            list<string> roles;
-        }
-
-        struct Authorized extends core::control::Frame [0x40000003]
-        {
-            int64 authMask;
-            int64 authExpires;
-        }
-
-        struct Unauthorize extends core::control::Frame [0x00000004]
-        {
-            int64 sourceRef;
-            string securityNukleus;
-        }
-
-        struct Unauthorized extends core::control::Frame [0x40000004]
-        {
-        }
-
-        struct Resolve extends core::control::Frame [0x00000005]
-        {
-            list<string> roles;
-        }
-
-        struct Resolved extends core::control::Frame [0x40000005]
-        {
-            int64 authMask;
-        }
-
-        struct Unresolve extends core::control::Frame [0x00000006]
-        {
-            int64 authMask;
-        }
-
-        struct Unresolved extends core::control::Frame [0x40000006]
-        {
+        
+        scope auth 
+        {       
+            struct Resolve extends core::control::Frame [0x00000003]
+            {
+                list<string> roles;
+            }
+    
+            struct Resolved extends core::control::Frame [0x40000003]
+            {
+                int64 authMask;
+            }
+    
+            struct Unresolve extends core::control::Frame [0x00000004]
+            {
+                int64 authMask;
+            }
+    
+            struct Unresolved extends core::control::Frame [0x40000004]
+            {
+            }
         }
         
     }
@@ -126,8 +107,7 @@ scope core
 
         struct Data extends core::stream::Frame [0x00000002]
         {
-            int64 authMask;
-            int64 authExpires;
+            int64 authMask; // TODO: default 0L
             uint16 length;
             octets[length] payload;
             octets extension;
@@ -135,8 +115,6 @@ scope core
 
         struct End extends core::stream::Frame [0x00000003]
         {
-            int64 authMask;
-            int64 authExpires;
             octets extension;
         }
 
@@ -153,7 +131,7 @@ scope core
 
         struct Reset extends core::stream::Frame [0x40000001]
         {
-            octets extension;
+            octets extension; // TODO: default unset
         }
 
         struct Window extends core::stream::Frame [0x40000002]
