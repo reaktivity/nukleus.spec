@@ -44,7 +44,7 @@ read [0x40 0x00 0x00 0x01]
 read ${controlR00C.correlationId()}
 read ([0..8]:newServerAcceptRef)
 
-read notify ROUTED_INPUT
+read notify ROUTED_SERVER
 
 close
 closed
