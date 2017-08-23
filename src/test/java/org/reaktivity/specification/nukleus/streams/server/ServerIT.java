@@ -18,6 +18,7 @@ package org.reaktivity.specification.nukleus.streams.server;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.rules.RuleChain.outerRule;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.DisableOnDebug;
@@ -35,6 +36,34 @@ public class ServerIT
 
     @Rule
     public final TestRule chain = outerRule(k3po).around(timeout);
+
+    @Ignore("Awaiting support for connect option nukleus:authMask in k3po-nukleus-ext")
+    @Test
+    @Specification({
+        "authorized/source",
+        "authorized/target"
+    })
+    @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
+    public void shouldAcceptNewServerConnectionAuthorized() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_SERVER");
+        k3po.finish();
+    }
+
+    @Ignore("Awaiting support for accept option nukleus:authMask in k3po-nukleus-ext")
+    @Test
+    @Specification({
+        "not.authorized/source",
+        "not.authorized/target"
+    })
+    @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
+    public void shoulResetNewServerConnectionNotAuthorized() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_SERVER");
+        k3po.finish();
+    }
 
     @Test
     @Specification({

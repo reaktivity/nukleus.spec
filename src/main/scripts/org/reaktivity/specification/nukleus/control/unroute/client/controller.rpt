@@ -21,7 +21,7 @@ property nukleiUR01C ${nuklei:directory("target/nukleus-itests").controlCapacity
 
 property controlUR01C ${nukleiUR01C.control("example")}
 
-connect await ROUTED_OUTPUT
+connect await ROUTED_CLIENT
         "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlUR01C.controller)}
         option agrona:writer ${agrona:manyToOneWriter(controlUR01C.nukleus)}
