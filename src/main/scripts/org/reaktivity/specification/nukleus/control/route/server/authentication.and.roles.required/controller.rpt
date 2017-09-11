@@ -21,7 +21,7 @@ property nukleiR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(
 
 property controlR00C ${nukleiR00C.control("example")}
 
-property authMask [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00] # external scope
+property authorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00] # external scope
 
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlR00C.controller)}
@@ -32,11 +32,11 @@ connected
 write [0x00 0x00 0x00 0x01]
 write ${controlR00C.nextCorrelationId()}
 write [0x00]
-write ${authMask}
 write [0x06] "source"
 write [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
 write [0x06] "target"
 write ${newServerConnectRef}
+write ${authorization}
 write [0x00]
 write flush
 

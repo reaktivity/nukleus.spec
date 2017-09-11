@@ -15,11 +15,11 @@
 #
 
 property newServerAcceptRef  ${nuklei:newReferenceId()} # external
-property authMask [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]
+property authorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]
 
 connect await ROUTED_SERVER 
         "nukleus://example/streams/source"
-    option nukleus:authMask ${authMask}
+    option nukleus:authorization ${authorization}
     option nukleus:route ${newServerAcceptRef}
     option nukleus:window 8192 
 connected

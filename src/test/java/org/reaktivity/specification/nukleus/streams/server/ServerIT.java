@@ -37,7 +37,7 @@ public class ServerIT
     @Rule
     public final TestRule chain = outerRule(k3po).around(timeout);
 
-    @Ignore("Awaiting support for connect option nukleus:authMask in k3po-nukleus-ext")
+    @Ignore("Awaiting support for connect option nukleus:authorization in k3po-nukleus-ext")
     @Test
     @Specification({
         "authorized/source",
@@ -51,7 +51,7 @@ public class ServerIT
         k3po.finish();
     }
 
-    @Ignore("Awaiting support for accept option nukleus:authMask in k3po-nukleus-ext")
+    @Ignore("Awaiting support for accept option nukleus:authorization in k3po-nukleus-ext")
     @Test
     @Specification({
         "not.authorized/source",
@@ -59,6 +59,33 @@ public class ServerIT
     })
     @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
     public void shoulResetNewServerConnectionNotAuthorized() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_SERVER");
+        k3po.finish();
+    }
+
+    @Ignore("Awaiting support for accept option nukleus:authorization in k3po-nukleus-ext")
+    @Test
+    @Specification({
+        "not.authorized/source",
+        "not.authorized/target"
+    })
+    @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
+    public void shoulResetNewServerConnectionWithExpiredtAuthorization() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_SERVER");
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "unknown.route/source",
+        "unknown.route/target"
+    })
+    @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
+    public void shoulResetNewServerConnectionWithUnknownRouteRef() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_SERVER");
@@ -76,6 +103,7 @@ public class ServerIT
         k3po.start();
         k3po.notifyBarrier("ROUTED_SERVER");
         k3po.finish();
+        System.out.println(System.currentTimeMillis());
     }
 
 }

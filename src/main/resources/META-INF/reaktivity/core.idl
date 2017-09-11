@@ -37,11 +37,11 @@ scope core
         struct Route extends core::control::Frame [0x00000001]
         {
             core::control::Role role;
-            int64 authMask; // TODO: default 0L
             string source;
             int64 sourceRef;
             string target;
             int64 targetRef;
+            int64 authorization = 0;
             octets extension;
         }
 
@@ -73,12 +73,12 @@ scope core
 
             struct Resolved extends core::control::Frame [0x40000003]
             {
-                int64 authMask;
+                int64 authorization;
             }
 
             struct Unresolve extends core::control::Frame [0x00000004]
             {
-                int64 authMask;
+                int64 authorization;
             }
 
             struct Unresolved extends core::control::Frame [0x40000004]
@@ -97,17 +97,15 @@ scope core
 
         struct Begin extends core::stream::Frame [0x00000001]
         {
-            int64 authMask;
-            int64 authExpires;
             string source;
             int64 sourceRef;
             int64 correlationId;
+            int64 authorization = 0;
             octets extension;
         }
 
         struct Data extends core::stream::Frame [0x00000002]
         {
-            int64 authMask; // TODO: default 0L
             uint16 length;
             octets[length] payload;
             octets extension;
@@ -121,12 +119,6 @@ scope core
         struct Abort extends core::stream::Frame [0x00000004]
         {
             octets extension;
-        }
-
-        struct Reauthorize extends core::stream::Frame [0x00000005]
-        {
-            int64 authMask;
-            int64 authExpires;
         }
 
         struct Reset extends core::stream::Frame [0x40000001]
