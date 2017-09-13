@@ -24,6 +24,9 @@ connect await ROUTED_SERVER
     option nukleus:transmission "duplex"
 connected
 
+write "hello target"
+read "hello source"
+
 write close
 read closed
 

@@ -23,9 +23,13 @@ accept ${serverConnect}
        option nukleus:route ${newServerConnectRef}
        option nukleus:window 8192
        option nukleus:transmission "duplex"
+       option nukleus:authorization ${authorization}
 accepted
 
 connected
+
+read "hello target"
+write "hello source"
 
 read closed
 write close
