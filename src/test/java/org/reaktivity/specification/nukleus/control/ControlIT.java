@@ -57,20 +57,10 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/server/authentication.and.roles.required/nukleus",
-        "route/server/authentication.and.roles.required/controller"
+        "route/server/authorized/nukleus",
+        "route/server/authorized/controller"
     })
-    public void shouldRouteServerAuthenticationAndRolesRequired() throws Exception
-    {
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "route/server/authentication.required/nukleus",
-        "route/server/authentication.required/controller"
-    })
-    public void shouldRouteServerAuthenticationRequired() throws Exception
+    public void shouldRouteServerWithAuthorization() throws Exception
     {
         k3po.finish();
     }
@@ -111,27 +101,16 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/server/authentication.and.roles.required/nukleus",
-        "route/server/authentication.and.roles.required/controller",
+        "route/server/authorized/nukleus",
+        "route/server/authorized/controller",
         "unroute/server/nukleus",
         "unroute/server/controller"
     })
-    public void shouldUnrouteServerAuthenticationAndRolesRequired() throws Exception
+    public void shouldUnrouteServerWithAuthorization() throws Exception
     {
         k3po.finish();
     }
 
-    @Test
-    @Specification({
-        "route/server/authentication.required/nukleus",
-        "route/server/authentication.required/controller",
-        "unroute/server/nukleus",
-        "unroute/server/controller"
-    })
-    public void shouldUnrouteServerAuthenticationRequired() throws Exception
-    {
-        k3po.finish();
-    }
 
     @Test
     @Specification({

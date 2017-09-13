@@ -94,36 +94,40 @@ scope core
         {
             int64 streamId;
         }
+        
+        struct AuthorizedFrame extends core::stream::Frame
+        {
+            int64 authorization = 0;
+        }      
 
-        struct Begin extends core::stream::Frame [0x00000001]
+        struct Begin extends core::stream::AuthorizedFrame [0x00000001]
         {
             string source;
             int64 sourceRef;
             int64 correlationId;
-            int64 authorization = 0;
             octets extension;
         }
 
-        struct Data extends core::stream::Frame [0x00000002]
+        struct Data extends core::stream::AuthorizedFrame [0x00000002]
         {
             uint16 length;
             octets[length] payload;
             octets extension;
         }
 
-        struct End extends core::stream::Frame [0x00000003]
+        struct End extends core::stream::AuthorizedFrame [0x00000003]
         {
             octets extension;
         }
 
-        struct Abort extends core::stream::Frame [0x00000004]
+        struct Abort extends core::stream::AuthorizedFrame [0x00000004]
         {
             octets extension;
         }
 
         struct Reset extends core::stream::Frame [0x40000001]
         {
-            octets extension; // TODO: default unset
+            octets extension;
         }
 
         struct Window extends core::stream::Frame [0x40000002]
