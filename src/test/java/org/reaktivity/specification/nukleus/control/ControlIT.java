@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.rules.DisableOnDebug;
 import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
+import org.kaazing.k3po.junit.annotation.ScriptProperty;
 import org.kaazing.k3po.junit.annotation.Specification;
 import org.kaazing.k3po.junit.rules.K3poRule;
 
@@ -57,20 +58,32 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/server/authorized/nukleus",
-        "route/server/authorized/controller"
+        "route/server/nukleus",
+        "route/server/controller"
     })
-    public void shouldRouteServerWithAuthorization() throws Exception
+    public void shouldRouteServer() throws Exception
     {
         k3po.finish();
     }
 
     @Test
     @Specification({
-        "route/server/unsecure/nukleus",
-        "route/server/unsecure/controller"
+        "route/server/nukleus",
+        "route/server/controller"
     })
-    public void shouldRouteServerUnsecure() throws Exception
+    @ScriptProperty("authorization [0x01 0x00 0x00 0x00 0x00 0x00 0x00 0x00]")
+    public void shouldRouteServerWithAuthenticationRequired() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "route/server/nukleus",
+        "route/server/controller"
+    })
+    @ScriptProperty("authorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
+    public void shouldRouteServerWithAuthenticatedRolesRequired() throws Exception
     {
         k3po.finish();
     }
@@ -101,21 +114,21 @@ public class ControlIT
 
     @Test
     @Specification({
-        "route/server/authorized/nukleus",
-        "route/server/authorized/controller",
+        "route/server/nukleus",
+        "route/server/controller",
         "unroute/server/nukleus",
         "unroute/server/controller"
     })
+    @ScriptProperty("authorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
     public void shouldUnrouteServerWithAuthorization() throws Exception
     {
         k3po.finish();
     }
 
-
     @Test
     @Specification({
-        "route/server/unsecure/nukleus",
-        "route/server/unsecure/controller",
+        "route/server/nukleus",
+        "route/server/controller",
         "unroute/server/nukleus",
         "unroute/server/controller"
     })
