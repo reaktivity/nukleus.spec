@@ -27,11 +27,6 @@ accepted
 
 connected
 
-read "hello target"
-write "hello source"
-
-read closed
-write close
 
 
 

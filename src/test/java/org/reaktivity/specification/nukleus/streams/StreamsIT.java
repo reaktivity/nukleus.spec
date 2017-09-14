@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package org.reaktivity.specification.nukleus.streams.server;
+package org.reaktivity.specification.nukleus.streams;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.rules.RuleChain.outerRule;
@@ -28,7 +28,7 @@ import org.kaazing.k3po.junit.annotation.ScriptProperty;
 import org.kaazing.k3po.junit.annotation.Specification;
 import org.kaazing.k3po.junit.rules.K3poRule;
 
-public class ServerIT
+public class StreamsIT
 {
     private final K3poRule k3po = new K3poRule();
 
@@ -37,14 +37,13 @@ public class ServerIT
     @Rule
     public final TestRule chain = outerRule(k3po).around(timeout);
 
-    @Ignore("Awaiting release of k3po-nukleus-ext with support for option nukleus:authorization")
     @Test
     @Specification({
-        "authorized/source",
-        "authorized/target"
+        "connection.established/client",
+        "connection.established/server"
     })
     @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
-    public void shouldAcceptNewServerConnectionAuthorized() throws Exception
+    public void shouldEstablishConnection() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_SERVER");
@@ -54,11 +53,25 @@ public class ServerIT
     @Ignore("Awaiting release of k3po-nukleus-ext with support for option nukleus:authorization")
     @Test
     @Specification({
-        "not.authorized/source",
-        "not.authorized/target"
+        "connection.established.authorized/client",
+        "connection.established.authorized/server"
     })
     @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
-    public void shoulResetNewServerConnectionNotAuthorized() throws Exception
+    public void shouldEstablishAuthorizedConnection() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_SERVER");
+        k3po.finish();
+    }
+
+    @Ignore("Awaiting release of k3po-nukleus-ext with support for option nukleus:authorization")
+    @Test
+    @Specification({
+        "connection.refused.not.authorized/client",
+        "connection.refused.not.authorized/server"
+    })
+    @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
+    public void shoulResetConnectionWhenNotAuthorized() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_SERVER");
@@ -67,24 +80,11 @@ public class ServerIT
 
     @Test
     @Specification({
-        "unknown.route/source",
-        "unknown.route/target"
+        "connection.refused.unknown.route/client",
+        "connection.refused.unknown.route/server"
     })
     @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
-    public void shoulResetNewServerConnectionWithUnknownRouteRef() throws Exception
-    {
-        k3po.start();
-        k3po.notifyBarrier("ROUTED_SERVER");
-        k3po.finish();
-    }
-
-    @Test
-    @Specification({
-        "unsecure/source",
-        "unsecure/target"
-    })
-    @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
-    public void shouldAcceptNewServerConnectionUnsecured() throws Exception
+    public void shoulResetConnectionWhenNotRouted() throws Exception
     {
         k3po.start();
         k3po.notifyBarrier("ROUTED_SERVER");
