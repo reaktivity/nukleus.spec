@@ -18,6 +18,7 @@ package org.reaktivity.specification.nukleus.streams.server;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.rules.RuleChain.outerRule;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.DisableOnDebug;
@@ -36,6 +37,7 @@ public class ServerIT
     @Rule
     public final TestRule chain = outerRule(k3po).around(timeout);
 
+    @Ignore("Awaiting release of k3po-nukleus-ext with support for option nukleus:authorization")
     @Test
     @Specification({
         "authorized/source",
@@ -49,6 +51,7 @@ public class ServerIT
         k3po.finish();
     }
 
+    @Ignore("Awaiting release of k3po-nukleus-ext with support for option nukleus:authorization")
     @Test
     @Specification({
         "not.authorized/source",
