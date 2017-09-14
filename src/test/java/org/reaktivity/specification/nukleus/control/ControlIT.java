@@ -83,7 +83,7 @@ public class ControlIT
         "route/server/controller"
     })
     @ScriptProperty("authorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
-    public void shouldRouteServerWithAuthenticatedRolesRequired() throws Exception
+    public void shouldRouteServerWithRolesRequired() throws Exception
     {
         k3po.finish();
     }
