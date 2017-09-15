@@ -66,22 +66,22 @@ scope core
 
         scope auth
         {
-            struct Resolve extends core::control::Frame [0x00000003]
+            struct Resolve extends core::control::Frame [0x00000011]
             {
                 list<string> roles;
             }
 
-            struct Resolved extends core::control::Frame [0x40000003]
+            struct Resolved extends core::control::Frame [0x40000011]
             {
                 int64 authorization;
             }
 
-            struct Unresolve extends core::control::Frame [0x00000004]
+            struct Unresolve extends core::control::Frame [0x00000012]
             {
                 int64 authorization;
             }
 
-            struct Unresolved extends core::control::Frame [0x40000004]
+            struct Unresolved extends core::control::Frame [0x40000012]
             {
             }
         }

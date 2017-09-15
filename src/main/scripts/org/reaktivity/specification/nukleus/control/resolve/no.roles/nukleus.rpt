@@ -18,7 +18,7 @@ property nukleiR05N ${nuklei:directory("target/nukleus-itests").controlCapacity(
 
 property controlR05N ${nukleiR05N.controlNew("security")}
 
-property securityNukleusId [0x01 0x00]
+property authorizationScopeR05N [0x01 0x01]
 
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:manyToOneReader(controlR05N.nukleus)}
@@ -31,7 +31,7 @@ read ([0..8]:correlationIdR05N)
 
 write [0x40 0x00 0x00 0x03]
 write ${correlationIdR05N}
-write ${securityNukleusId}
+write ${authorizationScopeR05N}
 write [0x00 0x00 0x00 0x00 0x00 0x00]
 write flush
 
