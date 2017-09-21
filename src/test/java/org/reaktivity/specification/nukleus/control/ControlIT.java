@@ -71,7 +71,7 @@ public class ControlIT
         "route/server/nukleus",
         "route/server/controller"
     })
-    @ScriptProperty("authorization [0x01 0x00 0x00 0x00 0x00 0x00 0x00 0x00]")
+    @ScriptProperty("routeAuthorization [0x01 0x00 0x00 0x00 0x00 0x00 0x00 0x00]")
     public void shouldRouteServerWithAuthenticationRequired() throws Exception
     {
         k3po.finish();
@@ -82,7 +82,7 @@ public class ControlIT
         "route/server/nukleus",
         "route/server/controller"
     })
-    @ScriptProperty("authorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
+    @ScriptProperty("routeAuthorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
     public void shouldRouteServerWithRolesRequired() throws Exception
     {
         k3po.finish();
@@ -119,7 +119,7 @@ public class ControlIT
         "unroute/server/nukleus",
         "unroute/server/controller"
     })
-    @ScriptProperty("authorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
+    @ScriptProperty("routeAuthorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
     public void shouldUnrouteServerWithAuthorization() throws Exception
     {
         k3po.finish();
