@@ -21,7 +21,7 @@ property nukleiR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(
 
 property controlR00C ${nukleiR00C.control("example")}
 
-property routeAuthorization [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00] # external scope, native byte order
+property routeAuthorization [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00] # external scope, little endian byte order
 
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlR00C.controller)}
