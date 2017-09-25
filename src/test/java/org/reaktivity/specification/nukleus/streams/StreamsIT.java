@@ -80,8 +80,8 @@ public class StreamsIT
 
     @Test
     @Specification({
-        "connection.refused.unknown.route/client",
-        "connection.refused.unknown.route/server"
+        "connection.refused.unknown.route.ref/client",
+        "connection.refused.unknown.route.ref/server"
     })
     @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
     public void shoulResetConnectionWhenNotRouted() throws Exception

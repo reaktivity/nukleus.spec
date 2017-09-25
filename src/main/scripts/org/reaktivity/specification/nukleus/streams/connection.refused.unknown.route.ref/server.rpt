@@ -16,11 +16,16 @@
 
 property unknownServerAcceptRef [0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08]
 
-connect await ROUTED_SERVER 
-        "nukleus://example/streams/source"
-    option nukleus:route ${unknownServerAcceptRef}
-    option nukleus:window 8192 
+property serverConnect "nukleus://target/streams/example#source"
+       
+accept ${serverConnect}
+       option nukleus:route ${unknownServerAcceptRef}
+       option nukleus:window 0
+       option nukleus:throttle "none" 
+       
+accepted
 connected
 
-write aborted
+read abort
+
 
