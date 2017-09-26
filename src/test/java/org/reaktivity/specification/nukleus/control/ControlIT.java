@@ -68,6 +68,16 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/server/multiple.routes/nukleus",
+        "route/server/multiple.routes/controller"
+    })
+    public void shouldRouteServerMultipleRoutes() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
         "route/server/nukleus",
         "route/server/controller"
     })
@@ -119,8 +129,19 @@ public class ControlIT
         "unroute/server/nukleus",
         "unroute/server/controller"
     })
-    @ScriptProperty("routeAuthorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
-    public void shouldUnrouteServerWithAuthorization() throws Exception
+    public void shouldUnrouteServer() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "route/server/multiple.routes/nukleus",
+        "route/server/multiple.routes/controller",
+        "unroute/server/multiple.routes/nukleus",
+        "unroute/server/multiple.routes/controller"
+    })
+    public void shouldUnrouteServerMultipleRoutes() throws Exception
     {
         k3po.finish();
     }
@@ -132,7 +153,8 @@ public class ControlIT
         "unroute/server/nukleus",
         "unroute/server/controller"
     })
-    public void shouldUnrouteServerUnsecure() throws Exception
+    @ScriptProperty("routeAuthorization [0x01 0x00 0xc0 0x00 0x00 0x00 0x00 0x00]")
+    public void shouldUnrouteServerWithAuthorization() throws Exception
     {
         k3po.finish();
     }

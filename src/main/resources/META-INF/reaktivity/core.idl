@@ -57,6 +57,7 @@ scope core
             int64 sourceRef;
             string target;
             int64 targetRef;
+            int64 authorization = 0;
             octets extension;
         }
 

@@ -39,8 +39,8 @@ public class StreamsIT
 
     @Test
     @Specification({
-        "connection.established/client",
-        "connection.established/server"
+        "connection.established.unsecure/client",
+        "connection.established.unsecure/server"
     })
     @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
     public void shouldEstablishConnection() throws Exception
@@ -53,10 +53,25 @@ public class StreamsIT
     @Ignore("Awaiting release of k3po-nukleus-ext with support for option nukleus:authorization")
     @Test
     @Specification({
-        "connection.established.authorized/client",
-        "connection.established.authorized/server"
+        "multiple.connections.established/client",
+        "multiple.connections.established/server"
     })
     @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
+    public void shouldEstablishMultipleConnections() throws Exception
+    {
+        k3po.start();
+        k3po.notifyBarrier("ROUTED_SERVER");
+        k3po.finish();
+    }
+
+    @Ignore("Awaiting release of k3po-nukleus-ext with support for option nukleus:authorization")
+    @Test
+    @Specification({
+        "connection.established/client",
+        "connection.established/server"
+    })
+    @ScriptProperty({"serverConnect \"nukleus://example/streams/source\"",
+                     "routeAuthorization [0x01 0x00 0xc0]"})
     public void shouldEstablishAuthorizedConnection() throws Exception
     {
         k3po.start();

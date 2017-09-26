@@ -15,13 +15,15 @@
 # under the License.
 #
 
-property newServerConnectRef ${nuklei:newReferenceId()} # external scope
+property newServerConnectRef1 ${nuklei:newReferenceId()} # external scope
+property newServerConnectRef2 ${nuklei:newReferenceId()} # external scope
 
 property nukleiR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
 property controlR00C ${nukleiR00C.control("example")}
 
-property routeAuthorization [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
+property routeAuthorization1 [0x01 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
+property routeAuthorization2 [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
 
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlR00C.controller)}
@@ -35,13 +37,27 @@ write [0x00]
 write [0x06] "source"
 write [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
 write [0x06] "target"
-write ${newServerConnectRef}
-write ${routeAuthorization}
+write ${newServerConnectRef1}
+write ${routeAuthorization1}
 write flush
 
 read [0x40 0x00 0x00 0x01]
 read ${controlR00C.correlationId()}
-read ([0..8]:newServerAcceptRef)
+read ([0..8]:newServerAcceptRef1)
+
+write [0x00 0x00 0x00 0x01]
+write ${controlR00C.nextCorrelationId()}
+write [0x00]
+write [0x06] "source"
+write [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
+write [0x06] "target"
+write ${newServerConnectRef2}
+write ${routeAuthorization2}
+write flush
+
+read [0x40 0x00 0x00 0x01]
+read ${controlR00C.correlationId()}
+read ([0..8]:newServerAcceptRef2)
 
 read notify ROUTED_SERVER
 

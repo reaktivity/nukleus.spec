@@ -32,6 +32,7 @@ read [0x06] "source"
 read ([0..8]:serverAcceptRefUR00N)
 read [0x06] "target"
 read ([0..8]:serverConnectRefUR00N)
+read [0..8] # authorization
 read [0x00]
 
 write [0x40 0x00 0x00 0x02]
