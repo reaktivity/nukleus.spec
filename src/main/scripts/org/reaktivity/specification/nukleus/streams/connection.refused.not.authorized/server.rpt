@@ -25,9 +25,4 @@ accept ${serverConnect}
        option nukleus:route ${newServerConnectRef}
        option nukleus:window 8192
        option nukleus:authorization ${requiredAuthorization}
-       
-accepted
-connected
-
-read abort
 
