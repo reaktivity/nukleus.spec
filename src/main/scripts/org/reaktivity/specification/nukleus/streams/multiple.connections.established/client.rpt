@@ -16,8 +16,8 @@
 
 property newServerAcceptRef1  ${nuklei:newReferenceId()} # external
 property newServerAcceptRef2  ${nuklei:newReferenceId()} # external
-property streamAuthorization1 [0x01 0x00 0xc0]
-property streamAuthorization2 [0x01 0x00 0xc0]
+property streamAuthorization1 [0x00 0x00 0x00]
+property streamAuthorization2 [0x00 0x00 0x00]
 
 connect await ROUTED_SERVER 
         "nukleus://example/streams/source"
