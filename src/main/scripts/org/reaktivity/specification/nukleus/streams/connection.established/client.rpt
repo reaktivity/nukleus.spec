@@ -15,7 +15,7 @@
 #
 
 property newServerAcceptRef  ${nuklei:newReferenceId()} # external
-property streamAuthorization [0x01 0x00 0xc0]
+property streamAuthorization [0x00 0x00 0x00]
 property clientInitialWindow 8192
 
 connect await ROUTED_SERVER 
