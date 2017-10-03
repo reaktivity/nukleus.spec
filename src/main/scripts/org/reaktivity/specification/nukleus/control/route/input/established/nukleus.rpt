@@ -24,16 +24,16 @@ connect "agrona://stream/bidirectional"
 
 connected
 
-read [0x00 0x00 0x00 0x01]
+read 0x00000001
 read ([0..8]:correlationIdRG010002N)
 read [0x00 0x02]
 read [0x06] "source"
-read [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
+read 0L
 read [0x06] "target"
 read ([0..8]:targetInputEstRefRG010002N)
 read [0x00]
 
-write [0x40 0x00 0x00 0x01]
+write 0x40000001
 write ${correlationIdRG010002N}
 write ${nuklei:newReferenceId()}
 write flush

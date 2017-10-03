@@ -25,7 +25,7 @@ connect await ROUTED_INPUT
 
 connected
 
-read [0x00 0x00 0x00 0x02]
+read 0x00000002
 read ([0..8]:correlationIdUR020000N)
 read [0x00 0x00]
 read [0x06] "source"
@@ -34,7 +34,7 @@ read [0x06] "target"
 read ([0..8]:targetInputRefUR020000N)
 read [0x00]
 
-write [0x40 0x00 0x00 0x02]
+write 0x40000002
 write ${correlationIdUR020000N}
 write flush
 

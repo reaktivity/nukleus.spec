@@ -28,7 +28,7 @@ connect await ROUTED_INPUT
 
 connected
 
-write [0x00 0x00 0x00 0x02]
+write 0x00000002
 write ${controlUR020002C.nextCorrelationId()}
 write [0x00 0x02]
 write [0x06] "source"
@@ -38,7 +38,7 @@ write ${newTargetInputEstRef}
 write [0x00]
 write flush
 
-read [0x40 0x00 0x00 0x02]
+read 0x40000002
 read ${controlUR020002C.correlationId()}
 
 close
