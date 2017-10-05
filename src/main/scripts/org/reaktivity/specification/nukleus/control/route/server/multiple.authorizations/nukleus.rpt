@@ -18,6 +18,8 @@ property nukleiR00N ${nuklei:directory("target/nukleus-itests").controlCapacity(
 
 property controlR00N ${nukleiR00N.controlNew("example")}
 
+property newServerAcceptRefR00N ${nuklei:newReferenceId()}
+
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:manyToOneReader(controlR00N.nukleus)}
         option agrona:writer ${agrona:broadcastTransmitter(controlR00N.controller)}
@@ -25,17 +27,31 @@ connect "agrona://stream/bidirectional"
 connected
 
 read 0x00000001
-read (long:correlationIdR00N)
+read (long:correlationId1R00N)
 read [0x00]
 read [0x06] "source"
 read 0L
 read [0x06] "target"
-read (long:serverConnectRefR00N)
+read [0..8]   # server connect ref
 read [0..8] # authorization
 
 write 0x40000001
-write ${correlationIdR00N}
-write ${nuklei:newReferenceId()}
+write ${correlationId1R00N}
+write ${newServerAcceptRefR00N}
+write flush
+
+read 0x00000001
+read ([0..8]:correlationId2R00N)
+read [0x00]
+read [0x06] "source"
+read ${newServerAcceptRefR00N}
+read [0x06] "target"
+read [0..8]   # server connect ref
+read [0..8] # authorization
+
+write 0x40000001
+write ${correlationId2R00N}
+write ${newServerAcceptRefR00N}
 write flush
 
 close

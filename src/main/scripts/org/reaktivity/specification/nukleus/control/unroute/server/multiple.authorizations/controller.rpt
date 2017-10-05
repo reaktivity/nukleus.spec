@@ -1,4 +1,3 @@
-
 #
 # Copyright 2016-2017 The Reaktivity Project
 #
@@ -15,51 +14,52 @@
 # under the License.
 #
 
+property newServerAcceptRef ${nuklei:newReferenceId()} # external scope
 property newServerConnectRef1 ${nuklei:newReferenceId()} # external scope
 property newServerConnectRef2 ${nuklei:newReferenceId()} # external scope
 
-property route1Authorization 0x0000_000000000000L
-property route2Authorization 0x0000_000000000000L
+property route1Authorization 0x0001_000000000000L
+property route2Authorization 0x0002_000000000000L
 
-property nukleiR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+property nukleiUR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlR00C ${nukleiR00C.control("example")}
+property controlUR00C ${nukleiUR00C.control("example")}
 
-connect "agrona://stream/bidirectional"
-        option agrona:reader ${agrona:broadcastReceiver(controlR00C.controller)}
-        option agrona:writer ${agrona:manyToOneWriter(controlR00C.nukleus)}
+
+connect await ROUTED_SERVER
+        "agrona://stream/bidirectional"
+        option agrona:reader ${agrona:broadcastReceiver(controlUR00C.controller)}
+        option agrona:writer ${agrona:manyToOneWriter(controlUR00C.nukleus)}
 
 connected
 
-write 0x00000001
-write ${controlR00C.nextCorrelationId()}
+write 0x00000002
+write ${controlUR00C.nextCorrelationId()}
 write [0x00]
 write [0x06] "source"
-write 0L
+write ${newServerAcceptRef}
 write [0x06] "target"
 write ${newServerConnectRef1}
 write ${route1Authorization}
+write [0x00]
 write flush
 
-read 0x40000001
-read ${controlR00C.correlationId()}
-read (long:newServerAcceptRef1)
+read 0x40000002
+read ${controlUR00C.correlationId()}
 
-write 0x00000001
-write ${controlR00C.nextCorrelationId()}
+write 0x00000002
+write ${controlUR00C.nextCorrelationId()}
 write [0x00]
 write [0x06] "source"
-write 0L
+write ${newServerAcceptRef}
 write [0x06] "target"
 write ${newServerConnectRef2}
 write ${route2Authorization}
+write [0x00]
 write flush
 
-read 0x40000001
-read ${controlR00C.correlationId()}
-read (long:newServerAcceptRef2)
-
-read notify ROUTED_SERVER
+read 0x40000002
+read ${controlUR00C.correlationId()}
 
 close
 closed

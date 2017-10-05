@@ -18,8 +18,8 @@
 property newServerConnectRef1 ${nuklei:newReferenceId()} # external scope
 property newServerConnectRef2 ${nuklei:newReferenceId()} # external scope
 
-property route1Authorization 0x0000_000000000000L
-property route2Authorization 0x0000_000000000000L
+property route1Authorization 0x0001_000000000000L
+property route2Authorization 0x0001_000000000001L
 
 property nukleiR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
@@ -43,13 +43,13 @@ write flush
 
 read 0x40000001
 read ${controlR00C.correlationId()}
-read (long:newServerAcceptRef1)
+read (long:newServerAcceptRef)
 
 write 0x00000001
 write ${controlR00C.nextCorrelationId()}
 write [0x00]
 write [0x06] "source"
-write 0L
+write ${newServerAcceptRef}
 write [0x06] "target"
 write ${newServerConnectRef2}
 write ${route2Authorization}
@@ -57,7 +57,7 @@ write flush
 
 read 0x40000001
 read ${controlR00C.correlationId()}
-read (long:newServerAcceptRef2)
+read  ${newServerAcceptRef}
 
 read notify ROUTED_SERVER
 
