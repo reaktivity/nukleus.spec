@@ -41,7 +41,7 @@ write flush
 
 read 0x40000001
 read ${controlR00C.correlationId()}
-read ([0..8]:newServerAcceptRef)
+read (long:newServerAcceptRef)
 
 read notify ROUTED_SERVER
 
