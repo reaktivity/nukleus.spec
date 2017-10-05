@@ -26,7 +26,7 @@ connected
 
 write 0x00000003
 write ${controlR05C.nextCorrelationId()}
-write [0x06] "domain"
+write [0x05] "realm"
 write [0x05] "role1"
 write [0x05] "role2"
 write [0x05] "role3"

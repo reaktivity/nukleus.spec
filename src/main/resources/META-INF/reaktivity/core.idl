@@ -69,7 +69,7 @@ scope core
         {
             struct Resolve extends core::control::Frame [0x00000011]
             {
-                string domain;
+                string realm;
                 list<string> roles;
             }
 

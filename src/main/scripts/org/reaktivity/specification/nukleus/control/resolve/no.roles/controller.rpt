@@ -28,7 +28,7 @@ connected
 
 write 0x00000003
 write ${controlR05C.nextCorrelationId()}
-write [0x06] "domain"
+write [0x05] "realm"
 write flush
 
 read 0x40000003

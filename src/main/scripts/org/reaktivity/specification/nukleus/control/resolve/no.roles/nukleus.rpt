@@ -18,7 +18,7 @@ property nukleiR05N ${nuklei:directory("target/nukleus-itests").controlCapacity(
 
 property controlR05N ${nukleiR05N.controlNew("security")}
 
-property authorization 0x0001_000000000000L # security scope only
+property authorization 0x0001_000000000000L # security realm only
 
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:manyToOneReader(controlR05N.nukleus)}
@@ -28,7 +28,7 @@ connected
 
 read 0x00000003
 read (long:correlationIdR05N)
-read [0x06] "domain"
+read [0x05] "realm"
 
 write 0x40000003
 write ${correlationIdR05N}
