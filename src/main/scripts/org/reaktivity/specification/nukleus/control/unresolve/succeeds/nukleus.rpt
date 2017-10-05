@@ -18,7 +18,7 @@ property nukleiUR06N ${nuklei:directory("target/nukleus-itests").controlCapacity
 
 property controlUR06N ${nukleiUR06N.controlNew("security")}
 
-property roleBits [0x0c 0x00 0x00 0x00 0x00 0x00] # external scope
+property authorization 0x0001_00000000000cL
 
 connect await RESOLVED 
         "agrona://stream/bidirectional"
@@ -27,11 +27,11 @@ connect await RESOLVED
 
 connected
 
-read [0x00 0x00 0x00 0x04]
+read 0x00000004
 read ([0..8]:correlationIdUR06N)
-read ${roleBits}
+read ${authorization}
 
-write [0x40 0x00 0x00 0x04]
+write 0x40000004
 write ${correlationIdUR06N}
 write flush
 

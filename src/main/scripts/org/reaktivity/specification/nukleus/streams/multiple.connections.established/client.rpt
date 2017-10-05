@@ -16,15 +16,15 @@
 
 property newServerAcceptRef1  ${nuklei:newReferenceId()} # external
 property newServerAcceptRef2  ${nuklei:newReferenceId()} # external
-property streamAuthorization1 [0x00 0x00 0x00]
-property streamAuthorization2 [0x00 0x00 0x00]
+property stream1Authorization 0x0000_000000000000L
+property stream2Authorization 0x0000_000000000000L
 
 connect await ROUTED_SERVER 
         "nukleus://example/streams/source"
     option nukleus:route ${newServerAcceptRef1}
     option nukleus:window 8192 
     option nukleus:transmission "duplex"
-    option nukleus:authorization ${streamAuthorization1}
+    option nukleus:authorization ${stream1Authorization}
 connected
 
 connect await ROUTED_SERVER 
@@ -32,7 +32,7 @@ connect await ROUTED_SERVER
     option nukleus:route ${newServerAcceptRef2}
     option nukleus:window 8192 
     option nukleus:transmission "duplex"
-    option nukleus:authorization ${streamAuthorization2}
+    option nukleus:authorization ${stream2Authorization}
 connected
 
 

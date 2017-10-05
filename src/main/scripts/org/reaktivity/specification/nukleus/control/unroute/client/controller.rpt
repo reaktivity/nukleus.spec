@@ -28,18 +28,18 @@ connect await ROUTED_CLIENT
 
 connected
 
-write [0x00 0x00 0x00 0x02]
+write 0x00000002
 write ${controlUR01C.nextCorrelationId()}
 write [0x01]
 write [0x06] "source"
 write ${newClientAcceptRef}
 write [0x06] "target"
 write ${newClientConnectRef}
-write [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
+write 0L
 write [0x00]
 write flush
 
-read [0x40 0x00 0x00 0x02]
+read 0x40000002
 read ${controlUR01C.correlationId()}
 
 close

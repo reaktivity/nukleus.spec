@@ -18,7 +18,7 @@ property nukleiUR06C ${nuklei:directory("target/nukleus-itests").controlCapacity
 
 property controlUR06C ${nukleiUR06C.control("security")}
 
-property badRoleBits [0x00 0x00 0x00 0x00 0x00 0x01]
+property authorization 0x0001_ffff0000ffffL # contains unrecognized role bits
 
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlUR06C.controller)}
@@ -26,12 +26,12 @@ connect "agrona://stream/bidirectional"
 
 connected
 
-write [0x00 0x00 0x00 0x04]
+write 0x00000004
 write ${controlUR06C.nextCorrelationId()}
-write ${badRoleBits}
+write ${authorization}
 write flush
 
-read [0x40 0x00 0x00 0x00]
+read 0x40000000
 read ${controlUR06C.correlationId()}
 
 close

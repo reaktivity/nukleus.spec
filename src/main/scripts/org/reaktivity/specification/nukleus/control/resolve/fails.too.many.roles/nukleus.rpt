@@ -24,7 +24,7 @@ connect "agrona://stream/bidirectional"
 
 connected
 
-read [0x00 0x00 0x00 0x03]
+read 0x00000003
 read ([0..8]:correlationIdR05N)
 read [0x05] "role1"
 read [0x05] "role2"
@@ -77,7 +77,7 @@ read [0x05] "role48"
 read [0x05] "role49TooMany"
 
 
-write [0x40 0x00 0x00 0x00]
+write 0x40000000
 write ${correlationIdR05N}
 write flush
 

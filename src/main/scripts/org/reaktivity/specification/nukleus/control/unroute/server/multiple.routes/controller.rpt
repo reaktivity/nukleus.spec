@@ -21,8 +21,8 @@ property nukleiUR00C ${nuklei:directory("target/nukleus-itests").controlCapacity
 
 property controlUR00C ${nukleiUR00C.control("example")}
 
-property unrouteAuthorization1 [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
-property unrouteAuthorization2 [0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00]
+property unrouteAuthorization1 0x0000_000000000000L
+property unrouteAuthorization2 0x0000_000000000000L
 
 connect await ROUTED_SERVER
         "agrona://stream/bidirectional"
@@ -31,7 +31,7 @@ connect await ROUTED_SERVER
 
 connected
 
-write [0x00 0x00 0x00 0x02]
+write 0x00000002
 write ${controlUR00C.nextCorrelationId()}
 write [0x00]
 write [0x06] "source"
@@ -42,10 +42,10 @@ write ${unrouteAuthorization1}
 write [0x00]
 write flush
 
-read [0x40 0x00 0x00 0x02]
+read 0x40000002
 read ${controlUR00C.correlationId()}
 
-write [0x00 0x00 0x00 0x02]
+write 0x00000002
 write ${controlUR00C.nextCorrelationId()}
 write [0x00]
 write [0x06] "source"
@@ -56,7 +56,7 @@ write ${unrouteAuthorization2}
 write [0x00]
 write flush
 
-read [0x40 0x00 0x00 0x02]
+read 0x40000002
 read ${controlUR00C.correlationId()}
 
 close
