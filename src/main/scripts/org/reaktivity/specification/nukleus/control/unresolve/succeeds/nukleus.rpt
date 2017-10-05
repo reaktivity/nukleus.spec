@@ -28,7 +28,7 @@ connect await RESOLVED
 connected
 
 read 0x00000004
-read ([0..8]:correlationIdUR06N)
+read (long:correlationIdUR06N)
 read ${authorization}
 
 write 0x40000004

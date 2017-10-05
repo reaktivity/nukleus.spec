@@ -27,7 +27,7 @@ connect "agrona://stream/bidirectional"
 connected
 
 read 0x00000003
-read ([0..8]:correlationIdR05N)
+read (long:correlationIdR05N)
 read [0x06] "domain"
 
 write 0x40000003

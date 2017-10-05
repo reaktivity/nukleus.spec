@@ -41,7 +41,7 @@ write ${newServerAcceptRefR00N}
 write flush
 
 read 0x00000001
-read ([0..8]:correlationId2R00N)
+read (long:correlationId2R00N)
 read [0x00]
 read [0x06] "source"
 read ${newServerAcceptRefR00N}

@@ -25,7 +25,7 @@ connect "agrona://stream/bidirectional"
 connected
 
 read 0x00000004
-read ([0..8]:correlationIdUR06N)
+read (long:correlationIdUR06N)
 read [0..8] # authorization containing unrecognized role bits
 
 write 0x40000000

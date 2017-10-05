@@ -38,7 +38,7 @@ write flush
 
 read 0x40000001
 read ${controlR01C.correlationId()}
-read ([0..8]:newClientAcceptRef)
+read (long:newClientAcceptRef)
 
 read notify ROUTED_CLIENT
 

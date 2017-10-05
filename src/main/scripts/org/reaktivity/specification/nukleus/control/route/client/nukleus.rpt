@@ -25,12 +25,12 @@ connect "agrona://stream/bidirectional"
 connected
 
 read 0x00000001
-read ([0..8]:correlationIdR01N)
+read (long:correlationIdR01N)
 read [0x01]
 read [0x06] "source"
 read 0L
 read [0x06] "target"
-read ([0..8]:clientConnectRefR01N)
+read (long:clientConnectRefR01N)
 read 0L
 
 write 0x40000001

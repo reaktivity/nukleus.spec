@@ -25,12 +25,12 @@ connect "agrona://stream/bidirectional"
 connected
 
 read 0x00000001
-read ([0..8]:correlationIdR00N)
+read (long:correlationIdR00N)
 read [0x00]
 read [0x06] "source"
 read 0L
 read [0x06] "target"
-read ([0..8]:serverConnectRefR00N)
+read (long:serverConnectRefR00N)
 read [0..8] # authorization
 
 write 0x40000001
@@ -39,12 +39,12 @@ write ${nuklei:newReferenceId()}
 write flush
 
 read 0x00000001
-read ([0..8]:correlationIdR00N)
+read (long:correlationIdR00N)
 read [0x00]
 read [0x06] "source"
 read 0L
 read [0x06] "target"
-read ([0..8]:serverConnectRefR00N)
+read (long:serverConnectRefR00N)
 read [0..8] # authorization
 
 write 0x40000001

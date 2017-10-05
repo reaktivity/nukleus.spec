@@ -26,12 +26,12 @@ connect await ROUTED_CLIENT
 connected
 
 read 0x00000002
-read ([0..8]:correlationIdUR01N)
+read (long:correlationIdUR01N)
 read [0x01]
 read [0x06] "source"
-read ([0..8]:sourceOutputRefUR01N)
+read (long:sourceOutputRefUR01N)
 read [0x06] "target"
-read ([0..8]:targetOutputRefUR01N)
+read (long:targetOutputRefUR01N)
 read 0L
 read [0x00]
 
