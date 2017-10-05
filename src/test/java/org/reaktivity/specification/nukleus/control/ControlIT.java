@@ -225,8 +225,8 @@ public class ControlIT
 
     @Test
     @Specification({
-        "unresolve/fails.unknown.role/nukleus",
-        "unresolve/fails.unknown.role/controller"
+        "unresolve/fails.unknown.domain.or.role/nukleus",
+        "unresolve/fails.unknown.domain.or.role/controller"
     })
     public void shouldFailToUnresolveUnknownRole() throws Exception
     {
