@@ -20,7 +20,6 @@ import static org.agrona.IoUtil.mapNewFile;
 import static org.agrona.IoUtil.unmap;
 
 import java.io.File;
-import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.util.Random;
 
@@ -48,21 +47,21 @@ public final class Functions
     }
 
     @Function
-    public static byte[] newReferenceId()
+    public static Long newReferenceId()
     {
-        return longToBytesNative(RANDOM.nextLong());
+        return RANDOM.nextLong();
     }
 
     @Function
-    public static byte[] newStreamId()
+    public static Long newStreamId()
     {
-        return longToBytesNative(RANDOM.nextLong());
+        return RANDOM.nextLong();
     }
 
     @Function
-    public static byte[] newCorrelationId()
+    public static Long newCorrelationId()
     {
-        return longToBytesNative(RANDOM.nextLong());
+        return RANDOM.nextLong();
     }
 
     public static final class Helper
@@ -370,36 +369,6 @@ public final class Functions
         public String getPrefixName()
         {
             return "nuklei";
-        }
-    }
-
-    private static byte[] longToBytesNative(long value)
-    {
-        if (ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN)
-        {
-            return new byte[] {
-                    (byte) (value >> 56),
-                    (byte) (value >> 48),
-                    (byte) (value >> 40),
-                    (byte) (value >> 32),
-                    (byte) (value >> 24),
-                    (byte) (value >> 16),
-                    (byte) (value >> 8),
-                    (byte) value
-            };
-        }
-        else
-        {
-            return new byte[] {
-                    (byte) value,
-                    (byte) (value >> 8),
-                    (byte) (value >> 16),
-                    (byte) (value >> 24),
-                    (byte) (value >> 32),
-                    (byte) (value >> 40),
-                    (byte) (value >> 48),
-                    (byte) (value >> 56)
-            };
         }
     }
 
