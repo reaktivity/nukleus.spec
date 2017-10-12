@@ -47,9 +47,9 @@
 
     <agrona.version>0.5.5</agrona.version>
     <junit.version>4.12</junit.version>
-    <k3po.version>3.0.0-alpha-83</k3po.version>
+    <k3po.version>3.0.0-alpha-84</k3po.version>
     <k3po.nukleus.ext.version>0.10</k3po.nukleus.ext.version>
-    <nukleus.plugin.version>0.12</nukleus.plugin.version>
+    <nukleus.plugin.version>0.13</nukleus.plugin.version>
   </properties>
 
   <dependencies>
@@ -144,6 +144,13 @@
             </goals>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.3</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -249,7 +256,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>1.3.1</version>
+            <version>3.0.0-M1</version>
             <executions>
               <execution>
                 <id>enforce-no-snapshots</id>
@@ -270,6 +277,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
+            <version>3.0.1</version>
             <executions>
               <execution>
                 <goals>
@@ -281,6 +289,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.0.0-M1</version>
             <executions>
               <execution>
                 <goals>
@@ -292,6 +301,7 @@
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.8</version>
             <extensions>true</extensions>
             <configuration>
               <serverId>ossrh</serverId>
@@ -302,6 +312,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
             <executions>
               <execution>
                 <goals>
