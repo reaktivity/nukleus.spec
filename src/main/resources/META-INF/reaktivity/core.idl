@@ -134,8 +134,8 @@ scope core
 
         struct Window extends core::stream::Frame [0x40000002]
         {
-            int32 update;
-            int32 frames;
+            int32 credit;
+            int32 padding ;
         }
 
     }
