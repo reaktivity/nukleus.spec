@@ -114,6 +114,9 @@ scope core
         {
             uint16 length;
             octets[length] payload;
+            uint8 flags = 1;            // 0x01 FIN
+            int64 groupId = 0;
+            int32 claimed = 0;
             octets extension;
         }
 
@@ -135,7 +138,8 @@ scope core
         struct Window extends core::stream::Frame [0x40000002]
         {
             int32 credit;
-            int32 padding ;
+            int32 padding;
+            int64 groupId = 0;
         }
 
     }
