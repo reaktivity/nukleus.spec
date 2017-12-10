@@ -112,11 +112,11 @@ scope core
 
         struct Data extends core::stream::AuthorizedFrame [0x00000002]
         {
+            uint8 flags = 1;            // 0x01 FIN
+            int64 groupId;
+            int32 claimed;
             uint16 length;
             octets[length] payload;
-            uint8 flags = 1;            // 0x01 FIN
-            int64 groupId = 0;
-            int32 claimed = 0;
             octets extension;
         }
 
@@ -139,7 +139,7 @@ scope core
         {
             int32 credit;
             int32 padding;
-            int64 groupId = 0;
+            int64 groupId;
         }
 
     }
