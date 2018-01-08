@@ -29,6 +29,7 @@ connected
 read 0x00000011
 read (long:correlationIdR05N)
 read [0x05] "realm"
+read [0x00 0x00 0x00 0x00]
 
 write 0x40000011
 write ${correlationIdR05N}
