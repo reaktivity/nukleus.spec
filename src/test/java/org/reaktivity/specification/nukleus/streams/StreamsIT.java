@@ -32,7 +32,7 @@ public class StreamsIT
 {
     private final K3poRule k3po = new K3poRule();
 
-    private final TestRule timeout = new DisableOnDebug(new Timeout(15, SECONDS));
+    private final TestRule timeout = new DisableOnDebug(new Timeout(5, SECONDS));
 
     @Rule
     public final TestRule chain = outerRule(k3po).around(timeout);
