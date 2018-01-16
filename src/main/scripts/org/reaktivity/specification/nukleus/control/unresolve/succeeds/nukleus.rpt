@@ -30,6 +30,7 @@ connected
 read 0x00000012
 read (long:correlationIdUR06N)
 read ${authorization}
+read 0
 
 write 0x40000012
 write ${correlationIdUR06N}
