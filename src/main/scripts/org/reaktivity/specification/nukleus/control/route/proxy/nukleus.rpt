@@ -32,6 +32,7 @@ read 0L
 read [0x06] "target"
 read (long:proxyConnectRefR02N)
 read 0L
+read 0
 
 write 0x40000001
 write ${correlationIdR02N}
