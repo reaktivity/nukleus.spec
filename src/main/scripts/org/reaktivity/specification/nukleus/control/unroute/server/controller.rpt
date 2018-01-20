@@ -38,7 +38,7 @@ write ${newServerAcceptRef}
 write [0x06] "target"
 write ${newServerConnectRef}
 write ${unrouteAuthorization}
-write [0x00]
+write 0
 write flush
 
 read 0x40000002

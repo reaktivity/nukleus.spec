@@ -33,7 +33,7 @@ read (long:proxyAcceptRefUR02N)
 read [0x06] "target"
 read (long:proxyConnectRefUR02N)
 read 0L
-read [0x00]
+read 0
 
 write 0x40000002
 write ${correlationIdUR02N}
