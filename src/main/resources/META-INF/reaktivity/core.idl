@@ -115,8 +115,8 @@ scope core
             uint8 flags = 1;            // 0x01 FIN
             int64 groupId;
             int32 padding;
-            uint16 length;
-            octets[length] payload;
+            int32 length;
+            octets[length] payload = null;
             octets extension;
         }
 
