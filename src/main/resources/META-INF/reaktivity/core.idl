@@ -144,4 +144,19 @@ scope core
 
     }
 
+    scope state
+    {
+        struct RouteEntry
+        {
+            uint32 routeSize;
+            octets[routeSize] route;
+        }
+
+        struct RouteTable
+        {
+             int32 writeLockAcquires;
+             int32 writeLockReleases;
+             list<core::state::RouteEntry> routeEntries;
+        }
+    }
 }

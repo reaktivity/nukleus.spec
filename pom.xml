@@ -47,9 +47,9 @@
 
     <agrona.version>0.5.5</agrona.version>
     <junit.version>4.12</junit.version>
-    <k3po.version>3.0.0-alpha-84</k3po.version>
-    <k3po.nukleus.ext.version>0.10</k3po.nukleus.ext.version>
-    <nukleus.plugin.version>0.23</nukleus.plugin.version>
+    <k3po.version>3.0.0-alpha-88</k3po.version>
+    <k3po.nukleus.ext.version>0.17</k3po.nukleus.ext.version>
+    <nukleus.plugin.version>0.24</nukleus.plugin.version>
   </properties>
 
   <dependencies>

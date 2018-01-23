@@ -35,6 +35,7 @@ write 0L
 write [0x06] "target"
 write ${newProxyConnectRef}
 write 0L
+write 0
 write flush
 
 read 0x40000001

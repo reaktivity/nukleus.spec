@@ -42,7 +42,7 @@ write ${newServerAcceptRef1}
 write [0x06] "target"
 write ${newServerConnectRef1}
 write ${route1Authorization}
-write [0x00]
+write 0
 write flush
 
 read 0x40000002
@@ -56,7 +56,7 @@ write ${newServerAcceptRef2}
 write [0x06] "target"
 write ${newServerConnectRef2}
 write ${route2Authorization}
-write [0x00]
+write 0
 write flush
 
 read 0x40000002
