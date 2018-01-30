@@ -92,6 +92,12 @@ scope core
 
     scope stream
     {
+        struct Region
+        {
+            int64 offset;
+            int32 length;
+        }
+
         struct Frame
         {
             int64 streamId;
@@ -104,42 +110,26 @@ scope core
 
         struct Begin extends core::stream::AuthorizedFrame [0x00000001]
         {
+            uint8 flags = 0;            // 0x01 FIN
             string source;
             int64 sourceRef;
             int64 correlationId;
             octets extension;
         }
 
-        struct Data extends core::stream::AuthorizedFrame [0x00000002]
+        struct Write extends core::stream::AuthorizedFrame [0x00000002]
         {
-            uint8 flags = 1;            // 0x01 FIN
-            int64 groupId;
-            int32 padding;
-            int32 length;
-            octets[length] payload = null;
+            uint8 flags = 0;            // 0x01 FIN, 0x02 RST
+            int32 streamCount;
+            int64[streamCount] streamIds = null;
+            list<Region> regions;
             octets extension;
         }
 
-        struct End extends core::stream::AuthorizedFrame [0x00000003]
+        struct Ack extends core::stream::Frame [0x40000001]
         {
-            octets extension;
-        }
-
-        struct Abort extends core::stream::AuthorizedFrame [0x00000004]
-        {
-            octets extension;
-        }
-
-        struct Reset extends core::stream::Frame [0x40000001]
-        {
-            octets extension;
-        }
-
-        struct Window extends core::stream::Frame [0x40000002]
-        {
-            int32 credit;
-            int32 padding;
-            int64 groupId;
+            uint8 flags = 0;            // 0x01 FIN, 0x02 RST
+            list<Region> regions;
         }
 
     }
