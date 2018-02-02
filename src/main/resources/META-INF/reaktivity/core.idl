@@ -113,7 +113,7 @@ scope core
             octets extension;
         }
 
-        struct Write extends core::stream::Frame [0x00000002]
+        struct Transfer extends core::stream::Frame [0x00000002]
         {
             // int64[] replicaIds = null;
             list<core::stream::Region> regions;
@@ -137,9 +137,9 @@ scope core
 
         struct RouteTable
         {
-             int32 writeLockAcquires;
-             int32 writeLockReleases;
-             list<core::state::RouteEntry> routeEntries;
+            int32 writeLockAcquires;
+            int32 writeLockReleases;
+            list<core::state::RouteEntry> routeEntries;
         }
     }
 }
