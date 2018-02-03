@@ -15,11 +15,14 @@
 #
 
 property newServerAcceptRef  ${nuklei:newReferenceId()} # external
+property streamAuthorization 0x0000_000000000000L
+property clientInitialWindow 8192
 
 connect await ROUTED_SERVER 
         "nukleus://example/streams/source"
     option nukleus:route ${newServerAcceptRef}
     option nukleus:transmission "duplex"
+    option nukleus:authorization ${streamAuthorization}
 connected
 
 
