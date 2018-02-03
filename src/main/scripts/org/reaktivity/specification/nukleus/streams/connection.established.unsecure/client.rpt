@@ -20,7 +20,6 @@ property clientInitialWindow 8192
 connect await ROUTED_SERVER 
         "nukleus://example/streams/source"
     option nukleus:route ${newServerAcceptRef}
-    option nukleus:window ${clientInitialWindow} 
     option nukleus:transmission "duplex"
 connected
 

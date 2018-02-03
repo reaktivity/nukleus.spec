@@ -23,6 +23,5 @@ property requiredAuthorization 0x0001_ffff0000ffffL
        
 accept ${serverConnect}
        option nukleus:route ${newServerConnectRef}
-       option nukleus:window 8192
        option nukleus:authorization ${requiredAuthorization}
 

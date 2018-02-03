@@ -15,15 +15,20 @@
  */
 package org.reaktivity.specification.nukleus;
 
+import static java.nio.ByteOrder.nativeOrder;
 import static org.agrona.IoUtil.createEmptyFile;
+import static org.agrona.IoUtil.mapNewFile;
+import static org.agrona.IoUtil.unmap;
 
 import java.io.File;
+import java.nio.MappedByteBuffer;
+import java.util.Objects;
 
+import org.agrona.CloseHelper;
+import org.agrona.concurrent.ringbuffer.RingBufferDescriptor;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.agrona.CloseHelper;
-import org.agrona.concurrent.ringbuffer.RingBufferDescriptor;
 
 public final class NukleusRule implements TestRule
 {
@@ -77,6 +82,22 @@ public final class NukleusRule implements TestRule
             @Override
             public void evaluate() throws Throwable
             {
+                Objects.requireNonNull(directory, "directory");
+
+                final MappedByteBuffer mappedMemory = mapNewFile(new File(directory, "memory0"), 64 + 1024 * 1024);
+                try
+                {
+                    mappedMemory.order(nativeOrder())
+                                .putLong(0L)            // lock
+                                .putLong(0L)            // identity
+                                .putInt(8192)           // minimum block size
+                                .putInt(1024 * 1024);   // maximum block size
+                }
+                finally
+                {
+                    unmap(mappedMemory);
+                }
+
                 base.evaluate();
             }
         };

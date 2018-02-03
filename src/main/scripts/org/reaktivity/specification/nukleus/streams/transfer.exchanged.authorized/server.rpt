@@ -23,7 +23,6 @@ property authorization 0x0001_0000000000c0L
        
 accept ${serverConnect}
        option nukleus:route ${newServerConnectRef}
-       option nukleus:window 8192
        option nukleus:transmission "duplex"
        option nukleus:authorization ${authorization}
 accepted
@@ -35,6 +34,3 @@ write "hello source"
 
 read closed
 write close
-
-
-

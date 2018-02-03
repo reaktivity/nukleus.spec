@@ -20,8 +20,6 @@ property serverConnect "nukleus://target/streams/example#source"
        
 accept ${serverConnect}
        option nukleus:route ${unknownServerAcceptRef}
-       option nukleus:window 0
-       option nukleus:throttle "none" 
        
 accepted
 connected

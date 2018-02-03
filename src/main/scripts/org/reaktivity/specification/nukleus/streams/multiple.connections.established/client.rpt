@@ -22,7 +22,6 @@ property stream2Authorization 0x0000_000000000000L
 connect await ROUTED_SERVER 
         "nukleus://example/streams/source"
     option nukleus:route ${newServerAcceptRef1}
-    option nukleus:window 8192 
     option nukleus:transmission "duplex"
     option nukleus:authorization ${stream1Authorization}
 connected
@@ -30,7 +29,6 @@ connected
 connect await ROUTED_SERVER 
         "nukleus://example/streams/source"
     option nukleus:route ${newServerAcceptRef2}
-    option nukleus:window 8192 
     option nukleus:transmission "duplex"
     option nukleus:authorization ${stream2Authorization}
 connected

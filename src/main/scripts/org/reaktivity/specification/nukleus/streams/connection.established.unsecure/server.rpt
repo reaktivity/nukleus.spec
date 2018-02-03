@@ -21,7 +21,6 @@ property serverConnect "nukleus://target/streams/example#source"
        
 accept ${serverConnect}
        option nukleus:route ${newServerConnectRef}
-       option nukleus:window 8192
        option nukleus:transmission "duplex"
 accepted
 
