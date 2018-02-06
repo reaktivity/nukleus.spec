@@ -89,7 +89,6 @@ public final class NukleusRule implements TestRule
                 {
                     mappedMemory.order(nativeOrder())
                                 .putLong(0L)            // lock
-                                .putLong(0L)            // identity
                                 .putInt(8192)           // minimum block size
                                 .putInt(1024 * 1024);   // maximum block size
                 }
