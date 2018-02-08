@@ -96,6 +96,7 @@ scope core
         {
             int64 address;
             int32 length;
+            int64 streamId;
         }
 
         struct Frame
