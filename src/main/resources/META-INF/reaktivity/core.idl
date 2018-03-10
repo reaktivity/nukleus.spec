@@ -95,6 +95,8 @@ scope core
         struct Frame
         {
             int64 streamId;
+            int64 timestamp = 0;
+            int64 trace = 0;
         }
         
         struct AuthorizedFrame extends core::stream::Frame
