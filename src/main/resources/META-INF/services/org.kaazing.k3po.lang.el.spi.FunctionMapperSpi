@@ -1,3 +1,4 @@
+org.reaktivity.specification.nukleus.CoreFunctions$Mapper
 org.reaktivity.specification.nukleus.Functions$Mapper
 org.reaktivity.specification.nukleus.control.Functions$Mapper
 org.reaktivity.specification.nukleus.streams.Functions$Mapper
