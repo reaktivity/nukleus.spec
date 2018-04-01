@@ -22,7 +22,7 @@ property newServerConnectRef2 ${newServerAcceptRef2} # external scope
 property stream1Authorization 0x0000_000000000000L
 property stream2Authorization 0x0000_000000000000L
 
-property serverConnect "nukleus://target/streams/example#source"
+property serverConnect "nukleus://target/streams/example"
        
 accept ${serverConnect}
        option nukleus:route ${newServerConnectRef1}

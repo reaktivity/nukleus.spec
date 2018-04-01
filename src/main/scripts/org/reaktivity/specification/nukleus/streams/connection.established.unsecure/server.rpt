@@ -17,7 +17,7 @@
 property newServerAcceptRef ${nuklei:newReferenceId()} 
 property newServerConnectRef ${newServerAcceptRef} # external scope
 
-property serverConnect "nukleus://target/streams/example#source"
+property serverConnect "nukleus://target/streams/example"
        
 accept ${serverConnect}
        option nukleus:route ${newServerConnectRef}

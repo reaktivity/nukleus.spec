@@ -16,7 +16,7 @@
 
 property unknownServerAcceptRef 12345678L
 
-property serverConnect "nukleus://target/streams/example#source"
+property serverConnect "nukleus://target/streams/example"
        
 accept ${serverConnect}
        option nukleus:route ${unknownServerAcceptRef}
