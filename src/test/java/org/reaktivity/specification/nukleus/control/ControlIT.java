@@ -233,4 +233,13 @@ public class ControlIT
         k3po.finish();
     }
 
+    @Test
+    @Specification({
+        "freeze/nukleus",
+        "freeze/controller"
+    })
+    public void shouldFreeze() throws Exception
+    {
+        k3po.finish();
+    }
 }
