@@ -65,6 +65,14 @@ scope core
         {
         }
 
+        struct Freeze extends core::control::Frame [0x00000003]
+        {
+        }
+
+        struct Frozen extends core::control::Frame [0x40000003]
+        {
+        }
+
         scope auth
         {
             struct Resolve extends core::control::Frame [0x00000011]
