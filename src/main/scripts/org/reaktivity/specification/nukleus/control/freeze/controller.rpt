@@ -17,9 +17,11 @@
 
 property newServerConnectRef ${nuklei:newReferenceId()} # external scope
 
-property nukleiF00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
-
+property commandCapacityF00C 1024
+property responseCapacityF00C 1024
 property nameF00C "example"
+
+property nukleiF00C ${nuklei:directory("target/nukleus-itests").controlCapacity(commandCapacityF00C, responseCapacityF00C)}
 property controlF00C ${nukleiF00C.control(nameF00C)}
 
 connect "agrona://stream/bidirectional"
