@@ -14,9 +14,11 @@
 # under the License.
 #
 
-property nukleiF00N ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
-
+property commandCapacityF00N 1024
+property responseCapacityF00N 1024
 property nameF00N "example"
+
+property nukleiF00N ${nuklei:directory("target/nukleus-itests").controlCapacity(commandCapacityF00N, responseCapacityF00N)}
 property controlF00N ${nukleiF00N.controlNew(nameF00N)}
 
 connect "agrona://stream/bidirectional"
