@@ -110,6 +110,16 @@ public class ControlIT
 
     @Test
     @Specification({
+        "route/server/multiple.extensions/nukleus",
+        "route/server/multiple.extensions/controller"
+    })
+    public void shouldRouteServerByExtension() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
         "route/client/nukleus",
         "route/client/controller",
         "unroute/client/nukleus",
@@ -176,7 +186,19 @@ public class ControlIT
         "unroute/server/multiple.authorizations/nukleus",
         "unroute/server/multiple.authorizations/controller"
     })
-    public void shouldUnrouteServerMultipleAuthorizations() throws Exception
+    public void shouldUnrouteServerByAuthorization() throws Exception
+    {
+        k3po.finish();
+    }
+
+    @Test
+    @Specification({
+        "route/server/multiple.extensions/nukleus",
+        "route/server/multiple.extensions/controller",
+        "unroute/server/multiple.extensions/nukleus",
+        "unroute/server/multiple.extensions/controller"
+    })
+    public void shouldUnrouteServerByExtension() throws Exception
     {
         k3po.finish();
     }
