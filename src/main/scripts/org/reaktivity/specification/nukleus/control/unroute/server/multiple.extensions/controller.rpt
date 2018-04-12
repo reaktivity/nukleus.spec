@@ -17,48 +17,48 @@
 property newServerAcceptRef ${nuklei:newReferenceId()} # external scope
 property newServerConnectRef ${nuklei:newReferenceId()} # external scope
 
-property route1Authorization 0x0001_000000000000L
-property route2Authorization 0x0002_000000000000L
+property route1Extension "ext1"
+property route2Extension "ext2"
 
-property nukleiUR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
+property nukleiURME00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlUR00C ${nukleiUR00C.control("example")}
+property controlURME00C ${nukleiURME00C.control("example")}
 
 
 connect await ROUTED_SERVER
         "agrona://stream/bidirectional"
-        option agrona:reader ${agrona:broadcastReceiver(controlUR00C.controller)}
-        option agrona:writer ${agrona:manyToOneWriter(controlUR00C.nukleus)}
+        option agrona:reader ${agrona:broadcastReceiver(controlURME00C.controller)}
+        option agrona:writer ${agrona:manyToOneWriter(controlURME00C.nukleus)}
 
 connected
 
 write 0x00000002
-write ${controlUR00C.nextCorrelationId()}
+write ${controlURME00C.nextCorrelationId()}
 write [0x00]
 write [0x06] "source"
 write ${newServerAcceptRef}
 write [0x06] "target"
 write ${newServerConnectRef}
-write ${route1Authorization}
-write 0
+write 0L
+write ${route1Extension}
 write flush
 
 read 0x40000002
-read ${controlUR00C.correlationId()}
+read ${controlURME00C.correlationId()}
 
 write 0x00000002
-write ${controlUR00C.nextCorrelationId()}
+write ${controlURME00C.nextCorrelationId()}
 write [0x00]
 write [0x06] "source"
 write ${newServerAcceptRef}
 write [0x06] "target"
 write ${newServerConnectRef}
-write ${route2Authorization}
-write 0
+write 0L
+write ${route2Extension}
 write flush
 
 read 0x40000002
-read ${controlUR00C.correlationId()}
+read ${controlURME00C.correlationId()}
 
 close
 closed
