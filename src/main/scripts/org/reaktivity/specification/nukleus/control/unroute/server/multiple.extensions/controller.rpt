@@ -15,8 +15,7 @@
 #
 
 property newServerAcceptRef ${nuklei:newReferenceId()} # external scope
-property newServerConnectRef1 ${nuklei:newReferenceId()} # external scope
-property newServerConnectRef2 ${nuklei:newReferenceId()} # external scope
+property newServerConnectRef ${nuklei:newReferenceId()} # external scope
 
 property route1Extension "ext1"
 property route2Extension "ext2"
@@ -39,7 +38,7 @@ write [0x00]
 write [0x06] "source"
 write ${newServerAcceptRef}
 write [0x06] "target"
-write ${newServerConnectRef1}
+write ${newServerConnectRef}
 write 0L
 write ${route1Extension}
 write flush
@@ -53,7 +52,7 @@ write [0x00]
 write [0x06] "source"
 write ${newServerAcceptRef}
 write [0x06] "target"
-write ${newServerConnectRef2}
+write ${newServerConnectRef}
 write 0L
 write ${route2Extension}
 write flush

@@ -15,8 +15,7 @@
 # under the License.
 #
 
-property newServerConnectRef1 ${nuklei:newReferenceId()} # external scope
-property newServerConnectRef2 ${nuklei:newReferenceId()} # external scope
+property newServerConnectRef ${nuklei:newReferenceId()} # external scope
 
 property route1Authorization 0x0001_000000000000L
 property route2Authorization 0x0001_000000000001L
@@ -37,7 +36,7 @@ write [0x00]
 write [0x06] "source"
 write 0L
 write [0x06] "target"
-write ${newServerConnectRef1}
+write ${newServerConnectRef}
 write ${route1Authorization}
 write 0
 write flush
@@ -52,7 +51,7 @@ write [0x00]
 write [0x06] "source"
 write ${newServerAcceptRef}
 write [0x06] "target"
-write ${newServerConnectRef2}
+write ${newServerConnectRef}
 write ${route2Authorization}
 write 0
 write flush
