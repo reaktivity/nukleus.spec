@@ -22,7 +22,9 @@ scope core
         {
           SERVER,
           CLIENT,
-          PROXY
+          PROXY,
+          SERVER_REVERSE,
+          CLIENT_REVERSE
         }
 
         struct Frame
@@ -48,6 +50,7 @@ scope core
         struct Routed extends core::control::Frame [0x40000001]
         {
             int64 sourceRef;
+            int64 targetRef;
         }
 
         struct Unroute extends core::control::Frame [0x00000002]

@@ -32,13 +32,14 @@ read [0x00]
 read [0x06] "source"
 read 0L
 read [0x06] "target"
-read [0..8] # server connect ref
+read (long:serverConnectRef1R00N)
 read [0..8] # authorization
 read 0
 
 write 0x40000001
 write ${correlationId1R00N}
 write ${newServerAcceptRefR00N}
+write ${serverConnectRef1R00N}
 write flush
 
 read 0x00000001
@@ -47,13 +48,14 @@ read [0x00]
 read [0x06] "source"
 read ${newServerAcceptRefR00N}
 read [0x06] "target"
-read [0..8] # server connect ref
+read (long:serverConnectRef2R00N)
 read [0..8] # authorization
 read 0
 
 write 0x40000001
 write ${correlationId2R00N}
 write ${newServerAcceptRefR00N}
+write ${serverConnectRef2R00N}
 write flush
 
 close

@@ -40,6 +40,7 @@ write flush
 read 0x40000001
 read ${controlR01C.correlationId()}
 read (long:newClientAcceptRef)
+read ${newClientConnectRef}
 
 read notify ROUTED_CLIENT
 
