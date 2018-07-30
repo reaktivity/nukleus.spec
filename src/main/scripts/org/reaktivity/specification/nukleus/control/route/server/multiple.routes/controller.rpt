@@ -45,6 +45,7 @@ write flush
 read 0x40000001
 read ${controlR00C.correlationId()}
 read (long:newServerAcceptRef1)
+read ${newServerConnectRef1}
 
 write 0x00000001
 write ${controlR00C.nextCorrelationId()}
@@ -60,6 +61,7 @@ write flush
 read 0x40000001
 read ${controlR00C.correlationId()}
 read (long:newServerAcceptRef2)
+read ${newServerConnectRef2}
 
 read notify ROUTED_SERVER
 

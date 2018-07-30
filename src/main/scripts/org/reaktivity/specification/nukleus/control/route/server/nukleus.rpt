@@ -37,6 +37,7 @@ read 0
 write 0x40000001
 write ${correlationIdR00N}
 write ${nuklei:newReferenceId()}
+write ${serverConnectRefR00N}
 write flush
 
 close
