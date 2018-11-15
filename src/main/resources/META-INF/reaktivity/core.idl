@@ -120,6 +120,7 @@ scope core
             string source;
             int64 sourceRef;
             int64 correlationId;
+            int64 affinity = 0;
             octets extension;
         }
 
