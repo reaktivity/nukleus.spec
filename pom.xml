@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.reaktivity</groupId>
   <artifactId>nukleus.spec</artifactId>
-  <version>0.24</version>
+  <version>0.25</version>
   <name>Nukleus Specification</name>
   <description>Nukleus Specification</description>
   <url>https://github.com/reaktivity/build-template.java</url>
@@ -109,7 +109,7 @@
         <configuration>
           <header>COPYRIGHT</header>
           <properties>
-            <copyrightYears>2016-2017</copyrightYears>
+            <copyrightYears>2016-2018</copyrightYears>
           </properties>
           <includes>
             <include>src/**</include>
@@ -134,7 +134,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.17</version>
+        <version>3.0.0</version>
         <configuration>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
         </configuration>
