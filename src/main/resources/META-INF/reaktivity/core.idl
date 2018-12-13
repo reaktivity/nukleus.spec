@@ -105,6 +105,7 @@ scope core
     {
         struct Frame
         {
+            int64 routeId;
             int64 streamId;
             int64 timestamp = 0;
             int64 trace = 0;

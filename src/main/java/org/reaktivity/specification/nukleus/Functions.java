@@ -15,14 +15,17 @@
  */
 package org.reaktivity.specification.nukleus;
 
+import static org.agrona.BitUtil.align;
+import static org.agrona.IoUtil.createEmptyFile;
 import static org.agrona.IoUtil.mapExistingFile;
-import static org.agrona.IoUtil.mapNewFile;
 import static org.agrona.IoUtil.unmap;
 
 import java.io.File;
 import java.nio.MappedByteBuffer;
 import java.util.Random;
 
+import org.agrona.BitUtil;
+import org.agrona.CloseHelper;
 import org.agrona.concurrent.AtomicBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.agrona.concurrent.broadcast.BroadcastBufferDescriptor;
@@ -36,8 +39,28 @@ public final class Functions
 {
     private static final Random RANDOM = new Random();
 
-    // TODO: compute with alignment
-    private static final int META_DATA_LENGTH = 64;
+    private static final int CONTROL_VERSION = 1;
+
+    private static final int FIELD_OFFSET_VERSION = 0;
+    private static final int FIELD_SIZE_VERSION = BitUtil.SIZE_OF_INT;
+
+    private static final int FIELD_OFFSET_COMMAND_BUFFER_LENGTH = FIELD_OFFSET_VERSION + FIELD_SIZE_VERSION;
+    private static final int FIELD_SIZE_COMMAND_BUFFER_LENGTH = BitUtil.SIZE_OF_INT;
+
+    private static final int FIELD_OFFSET_RESPONSE_BUFFER_LENGTH =
+            FIELD_OFFSET_COMMAND_BUFFER_LENGTH + FIELD_SIZE_COMMAND_BUFFER_LENGTH;
+    private static final int FIELD_SIZE_RESPONSE_BUFFER_LENGTH = BitUtil.SIZE_OF_INT;
+
+    private static final int FIELD_OFFSET_COUNTER_LABELS_BUFFER_LENGTH =
+            FIELD_OFFSET_RESPONSE_BUFFER_LENGTH + FIELD_SIZE_RESPONSE_BUFFER_LENGTH;
+    private static final int FIELD_SIZE_COUNTER_LABELS_BUFFER_LENGTH = BitUtil.SIZE_OF_INT;
+
+    private static final int FIELD_OFFSET_COUNTER_VALUES_BUFFER_LENGTH =
+            FIELD_OFFSET_COUNTER_LABELS_BUFFER_LENGTH + FIELD_SIZE_COUNTER_LABELS_BUFFER_LENGTH;
+    private static final int FIELD_SIZE_COUNTER_VALUES_BUFFER_LENGTH = BitUtil.SIZE_OF_INT;
+
+    private static final int END_OF_META_DATA_OFFSET = align(
+            FIELD_OFFSET_COUNTER_VALUES_BUFFER_LENGTH + FIELD_SIZE_COUNTER_VALUES_BUFFER_LENGTH, BitUtil.CACHE_LINE_LENGTH);
 
     @Function
     public static Helper directory(
@@ -258,18 +281,54 @@ public final class Functions
                 private Eager(
                     boolean overwrite,
                     File location,
-                    int ringCapacity,
-                    int broadcastCapacity)
+                    int commandBufferCapacity,
+                    int responseBufferCapacity)
                 {
-                    File absolute = location.getAbsoluteFile();
-                    int metaLength = META_DATA_LENGTH;
-                    int ringLength = ringCapacity + RingBufferDescriptor.TRAILER_LENGTH;
-                    int broadcastLength = broadcastCapacity + BroadcastBufferDescriptor.TRAILER_LENGTH;
-                    this.buffer = overwrite
-                            ? mapNewFile(absolute, metaLength + ringLength + broadcastLength)
-                                    : mapExistingFile(absolute, location.getAbsolutePath());
-                    this.nukleus = new UnsafeBuffer(buffer, metaLength, ringLength);
-                    this.controller = new UnsafeBuffer(buffer, metaLength + ringLength, broadcastLength);
+                    File controlFile = location.getAbsoluteFile();
+                    int counterLabelsBufferCapacity = 0;
+                    int counterValuesBufferCapacity = 0;
+
+                    if (overwrite)
+                    {
+                        int commandBufferLength = commandBufferCapacity + RingBufferDescriptor.TRAILER_LENGTH;
+                        int responseBufferLength = responseBufferCapacity + BroadcastBufferDescriptor.TRAILER_LENGTH;
+                        int counterLabelsBufferLength = counterLabelsBufferCapacity;
+                        int counterValuesBufferLength = counterValuesBufferCapacity;
+
+                        CloseHelper.close(createEmptyFile(controlFile, END_OF_META_DATA_OFFSET +
+                                commandBufferLength + responseBufferLength +
+                                counterLabelsBufferLength + counterValuesBufferLength));
+
+                        MappedByteBuffer metadata = mapExistingFile(controlFile, "metadata", 0, END_OF_META_DATA_OFFSET);
+                        metadata.putInt(FIELD_OFFSET_VERSION, CONTROL_VERSION);
+                        metadata.putInt(FIELD_OFFSET_COMMAND_BUFFER_LENGTH, commandBufferCapacity);
+                        metadata.putInt(FIELD_OFFSET_RESPONSE_BUFFER_LENGTH, responseBufferCapacity);
+                        metadata.putInt(FIELD_OFFSET_COUNTER_LABELS_BUFFER_LENGTH, counterLabelsBufferCapacity);
+                        metadata.putInt(FIELD_OFFSET_COUNTER_VALUES_BUFFER_LENGTH, counterValuesBufferCapacity);
+                        unmap(metadata);
+                    }
+                    else
+                    {
+                        MappedByteBuffer metadata = mapExistingFile(controlFile, "metadata", 0, END_OF_META_DATA_OFFSET);
+                        assert CONTROL_VERSION == metadata.getInt(FIELD_OFFSET_VERSION);
+                        commandBufferCapacity = metadata.getInt(FIELD_OFFSET_COMMAND_BUFFER_LENGTH);
+                        responseBufferCapacity = metadata.getInt(FIELD_OFFSET_RESPONSE_BUFFER_LENGTH);
+                        counterLabelsBufferCapacity = metadata.getInt(FIELD_OFFSET_COUNTER_LABELS_BUFFER_LENGTH);
+                        counterValuesBufferCapacity = metadata.getInt(FIELD_OFFSET_COUNTER_VALUES_BUFFER_LENGTH);
+                        unmap(metadata);
+                    }
+
+                    int commandBufferLength = commandBufferCapacity + RingBufferDescriptor.TRAILER_LENGTH;
+                    int responseBufferLength = responseBufferCapacity + BroadcastBufferDescriptor.TRAILER_LENGTH;
+//                    int counterLabelsBufferLength = counterLabelsBufferCapacity;
+//                    int counterValuesBufferLength = counterValuesBufferCapacity;
+
+                    int commandBufferOffset = END_OF_META_DATA_OFFSET;
+                    this.buffer = mapExistingFile(controlFile, "commands");
+                    this.nukleus = new UnsafeBuffer(buffer, commandBufferOffset, commandBufferLength);
+
+                    int responseBufferOffset = commandBufferOffset + commandBufferLength;
+                    this.controller = new UnsafeBuffer(buffer, responseBufferOffset, responseBufferLength);
                 }
 
                 @Override
