@@ -26,6 +26,7 @@ connected
 
 read 0x00000012
 read (long:correlationIdUR06N)
+read ${core:string("security")}
 read [0..8] # authorization containing unrecognized role bits
 read 0
 

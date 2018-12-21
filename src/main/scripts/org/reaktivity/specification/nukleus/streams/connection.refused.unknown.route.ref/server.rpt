@@ -14,12 +14,9 @@
 # under the License.
 #
 
-property unknownServerAcceptRef 12345678L
+property serverAddress "nukleus://streams/example#9"
 
-property serverConnect "nukleus://target/streams/example"
-       
-accept ${serverConnect}
-       option nukleus:route ${unknownServerAcceptRef}
+accept ${serverAddress}
        option nukleus:window 0
        option nukleus:throttle "none" 
        
@@ -27,5 +24,3 @@ accepted
 connected
 
 read abort
-
-

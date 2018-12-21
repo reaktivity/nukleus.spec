@@ -91,9 +91,6 @@ public final class Functions
     {
         private final File configDirectory;
 
-        private int streamCapacity;
-        private int throttleCapacity;
-
         private int ringCapacity;
         private int broadcastCapacity;
 
@@ -101,15 +98,6 @@ public final class Functions
             File configDirectory)
         {
             this.configDirectory = configDirectory;
-        }
-
-        public Helper streamsCapacity(
-            int streamCapacity,
-            int throttleCapacity)
-        {
-            this.streamCapacity = streamCapacity;
-            this.throttleCapacity = throttleCapacity;
-            return this;
         }
 
         public Helper controlCapacity(
@@ -126,7 +114,7 @@ public final class Functions
             String source)
         {
             String relativePath = String.format("%s/streams/%s", nukleus, source);
-            return new StreamsHelper.Deferred(new File(configDirectory, relativePath), streamCapacity, throttleCapacity);
+            return new StreamsHelper.Deferred(new File(configDirectory, relativePath));
         }
 
         public ControlHelper controlNew(
@@ -147,39 +135,24 @@ public final class Functions
         {
             public abstract AtomicBuffer getBuffer();
 
-            public abstract AtomicBuffer getThrottle();
-
             private static final class Eager extends StreamsHelper
             {
                 private final MappedByteBuffer buffer;
                 private final AtomicBuffer streamsBuffer;
-                private final AtomicBuffer throttleBuffer;
 
                 private Eager(
-                    File location,
-                    int streamCapacity,
-                    int throttleCapacity)
+                    File location)
                 {
                     File absolute = location.getAbsoluteFile();
 
-                    int streamBufferSize = streamCapacity + RingBufferDescriptor.TRAILER_LENGTH;
-                    int throttleBufferSize = throttleCapacity + RingBufferDescriptor.TRAILER_LENGTH;
-
                     this.buffer = mapExistingFile(absolute, "streams");
-                    this.streamsBuffer = new UnsafeBuffer(buffer, 0, streamBufferSize);
-                    this.throttleBuffer = new UnsafeBuffer(buffer, streamBufferSize, throttleBufferSize);
+                    this.streamsBuffer = new UnsafeBuffer(buffer);
                 }
 
                 @Override
                 public AtomicBuffer getBuffer()
                 {
                     return streamsBuffer;
-                }
-
-                @Override
-                public AtomicBuffer getThrottle()
-                {
-                    return throttleBuffer;
                 }
 
                 @Override
@@ -191,26 +164,20 @@ public final class Functions
                 @Override
                 public String toString()
                 {
-                    return String.format("streamsCapacity(%d, %d)", streamsBuffer.capacity(), throttleBuffer.capacity());
+                    return String.format("streamsCapacity %d", streamsBuffer.capacity());
                 }
             }
 
             private static final class Deferred extends StreamsHelper
             {
                 private final File location;
-                private final int streamsCapacity;
-                private final int throttleCapacity;
 
                 private Eager delegate;
 
                 private Deferred(
-                    File location,
-                    int streamsCapacity,
-                    int throttleCapacity)
+                    File location)
                 {
                     this.location = location;
-                    this.streamsCapacity = streamsCapacity;
-                    this.throttleCapacity = throttleCapacity;
                 }
 
                 @Override
@@ -218,13 +185,6 @@ public final class Functions
                 {
                     ensureInitialized();
                     return delegate.streamsBuffer;
-                }
-
-                @Override
-                public AtomicBuffer getThrottle()
-                {
-                    ensureInitialized();
-                    return delegate.throttleBuffer;
                 }
 
                 @Override
@@ -239,14 +199,14 @@ public final class Functions
                 @Override
                 public String toString()
                 {
-                    return String.format("streamsCapacity(%d, %d)", streamsCapacity, throttleCapacity);
+                    return String.format("delegate %s", delegate != null ? delegate : "deferred");
                 }
 
                 void ensureInitialized()
                 {
                     if (delegate == null)
                     {
-                        delegate = new Eager(location, streamsCapacity, throttleCapacity);
+                        delegate = new Eager(location);
                     }
                 }
             }

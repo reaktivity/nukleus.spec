@@ -26,18 +26,15 @@ connected
 
 read 0x00000001
 read (long:correlationIdR01N)
+read ${core:string("example")}
 read [0x01]
-read [0x06] "source"
 read 0L
-read [0x06] "target"
-read (long:clientConnectRefR01N)
-read 0L
-read 0
+read ${core:string("example#0")}
+read ${core:string("target#0")}
 
 write 0x40000001
 write ${correlationIdR01N}
-write ${nuklei:newReferenceId()}
-write ${clientConnectRefR01N}
+write ${nukleus:newClientRouteId("example#0", "target#0")}
 write flush
 
 close

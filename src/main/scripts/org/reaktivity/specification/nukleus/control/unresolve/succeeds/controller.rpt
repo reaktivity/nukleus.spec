@@ -29,6 +29,7 @@ connected
 
 write 0x00000012
 write ${controlUR06C.nextCorrelationId()}
+write ${core:string("security")}
 write ${authorization}
 write 0
 write flush

@@ -14,13 +14,11 @@
 # under the License.
 #
 
-property newServerAcceptRef  ${nuklei:newReferenceId()} # external
 property authorization 0x0001_0000000000c0L
 
 connect await ROUTED_SERVER 
-        "nukleus://example/streams/source"
+        "nukleus://streams/example#0"
     option nukleus:authorization ${authorization}
-    option nukleus:route ${newServerAcceptRef}
     option nukleus:window 8192 
 connected
 

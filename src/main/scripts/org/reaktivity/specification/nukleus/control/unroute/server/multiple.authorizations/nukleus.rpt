@@ -27,13 +27,8 @@ connected
 
 read 0x00000002
 read (long:correlationId1UR00N)
-read [0x00]
-read [0x06] "source"
-read (long:serverAcceptRefUR00N)
-read [0x06] "target"
-read [0..8]
-read [0..8] # authorization
-read 0
+read ${core:string("example")}
+read [0..8] # routeId
 
 write 0x40000002
 write ${correlationId1UR00N}
@@ -41,13 +36,8 @@ write flush
 
 read 0x00000002
 read (long:correlationId2UR00N)
-read [0x00]
-read [0x06] "source"
-read (long:serverAcceptRefUR00N)
-read [0x06] "target"
-read [0..8]
-read [0..8] # authorization
-read 0
+read ${core:string("example")}
+read [0..8] # routeId
 
 write 0x40000002
 write ${correlationId2UR00N}

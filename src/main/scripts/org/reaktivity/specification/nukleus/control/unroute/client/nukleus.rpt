@@ -27,13 +27,8 @@ connected
 
 read 0x00000002
 read (long:correlationIdUR01N)
-read [0x01]
-read [0x06] "source"
-read (long:sourceOutputRefUR01N)
-read [0x06] "target"
-read (long:targetOutputRefUR01N)
-read 0L
-read 0
+read ${core:string("example")}
+read [0..8] # routeId
 
 write 0x40000002
 write ${correlationIdUR01N}

@@ -14,7 +14,7 @@
 # under the License.
 #
 
-property newClientConnectRef ${nuklei:newReferenceId()} # external scope
+property newClientRouteId ${nukleus:newClientRouteId("example#0", "target#0")} # external
 
 property nukleiR01C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
@@ -28,19 +28,16 @@ connected
 
 write 0x00000001
 write ${controlR01C.nextCorrelationId()}
+write ${core:string("example")}
 write [0x01]
-write [0x06] "source"
 write 0L
-write [0x06] "target"
-write ${newClientConnectRef}
-write 0L
-write 0
+write ${core:string("example#0")}
+write ${core:string("target#0")}
 write flush
 
 read 0x40000001
 read ${controlR01C.correlationId()}
-read (long:newClientAcceptRef)
-read ${newClientConnectRef}
+read (long:newClientRouteId)
 
 read notify ROUTED_CLIENT
 

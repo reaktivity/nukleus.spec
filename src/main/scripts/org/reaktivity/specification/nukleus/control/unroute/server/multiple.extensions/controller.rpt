@@ -14,11 +14,8 @@
 # under the License.
 #
 
-property newServerAcceptRef ${nuklei:newReferenceId()} # external scope
-property newServerConnectRef ${nuklei:newReferenceId()} # external scope
-
-property route1Extension "ext1"
-property route2Extension "ext2"
+property newServerRouteId1 ${nukleus:newServerRouteId("example#0", "target#0")} # external
+property newServerRouteId2 ${nukleus:newServerRouteId("example#0", "target#0")} # external
 
 property nukleiURME00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
@@ -34,13 +31,8 @@ connected
 
 write 0x00000002
 write ${controlURME00C.nextCorrelationId()}
-write [0x00]
-write [0x06] "source"
-write ${newServerAcceptRef}
-write [0x06] "target"
-write ${newServerConnectRef}
-write 0L
-write ${route1Extension}
+write ${core:string("example")}
+write ${newServerRouteId1}
 write flush
 
 read 0x40000002
@@ -48,13 +40,8 @@ read ${controlURME00C.correlationId()}
 
 write 0x00000002
 write ${controlURME00C.nextCorrelationId()}
-write [0x00]
-write [0x06] "source"
-write ${newServerAcceptRef}
-write [0x06] "target"
-write ${newServerConnectRef}
-write 0L
-write ${route2Extension}
+write ${core:string("example")}
+write ${newServerRouteId2}
 write flush
 
 read 0x40000002

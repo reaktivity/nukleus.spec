@@ -14,19 +14,11 @@
 # under the License.
 #
 
-property newServerAcceptRef ${nuklei:newReferenceId()} 
-property newServerConnectRef ${newServerAcceptRef} # external scope
+property serverAddress "nukleus://streams/example#0"
 
-property serverConnect "nukleus://target/streams/example"
-       
-accept ${serverConnect}
-       option nukleus:route ${newServerConnectRef}
+accept ${serverAddress}
        option nukleus:window 8192
        option nukleus:transmission "duplex"
 accepted
 
 connected
-
-
-
-
