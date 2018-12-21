@@ -31,7 +31,11 @@
 # under the License.
 #
 
-property newServerConnectRef ${nuklei:newReferenceId()} # external scope
+property newServerRouteId1 ${nukleus:newServerRouteId("example#0", "target#0")} # external
+property newServerRouteId2 ${nukleus:newServerRouteId("example#0", "target#0")}
+
+property route1Authorization 0x0001_000000000000L
+property route2Authorization 0x0001_000000000001L
 
 property route1Extension "ext1"
 property route2Extension "ext2"
@@ -48,35 +52,31 @@ connected
 
 write 0x00000001
 write ${controlRME00C.nextCorrelationId()}
+write ${core:string("example")}
 write [0x00]
-write [0x06] "source"
-write 0L
-write [0x06] "target"
-write ${newServerConnectRef}
-write 0L
+write ${route1Authorization}
+write ${core:string("example#0")}
+write ${core:string("target#0")}
 write ${route1Extension}
 write flush
 
 read 0x40000001
 read ${controlRME00C.correlationId()}
-read (long:newServerAcceptRef)
-read ${newServerConnectRef}
+read (long:newServerRouteId1)
 
 write 0x00000001
 write ${controlRME00C.nextCorrelationId()}
+write ${core:string("example")}
 write [0x00]
-write [0x06] "source"
-write ${newServerAcceptRef}
-write [0x06] "target"
-write ${newServerConnectRef}
-write 0L
+write ${route2Authorization}
+write ${core:string("example#0")}
+write ${core:string("target#0")}
 write ${route2Extension}
 write flush
 
 read 0x40000001
 read ${controlRME00C.correlationId()}
-read ${newServerAcceptRef}
-read ${newServerConnectRef}
+read (long:newServerRouteId2)
 
 read notify ROUTED_SERVER
 

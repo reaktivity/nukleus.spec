@@ -28,6 +28,7 @@ connected
 
 read 0x00000011
 read (long:correlationIdR05N)
+read ${core:string("security")}
 read [0x05] "realm"
 read [0x00 0x00 0x00 0x00]
 

@@ -26,34 +26,28 @@ connected
 
 read 0x00000001
 read (long:correlationIdR00N)
+read ${core:string("example")}
 read [0x00]
-read [0x06] "source"
-read 0L
-read [0x06] "target"
-read (long:serverConnectRef1R00N)
 read [0..8] # authorization
-read 0
+read ${core:string("example#0")}
+read ${core:string("target#0")}
 
 write 0x40000001
 write ${correlationIdR00N}
-write ${nuklei:newReferenceId()}
-write ${serverConnectRef1R00N}
+write ${nukleus:newServerRouteId("example#0", "target#0")}
 write flush
 
 read 0x00000001
 read (long:correlationIdR00N)
+read ${core:string("example")}
 read [0x00]
-read [0x06] "source"
-read 0L
-read [0x06] "target"
-read (long:serverConnectRef2R00N)
 read [0..8] # authorization
-read 0
+read ${core:string("example#1")}
+read ${core:string("target#1")}
 
 write 0x40000001
 write ${correlationIdR00N}
-write ${nuklei:newReferenceId()}
-write ${serverConnectRef2R00N}
+write ${nukleus:newServerRouteId("example#1", "target#1")}
 write flush
 
 close

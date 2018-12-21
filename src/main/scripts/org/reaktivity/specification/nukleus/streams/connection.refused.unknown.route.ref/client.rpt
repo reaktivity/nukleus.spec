@@ -14,13 +14,9 @@
 # under the License.
 #
 
-property unknownServerAcceptRef 12345678L
-
 connect await ROUTED_SERVER 
-        "nukleus://example/streams/source"
-    option nukleus:route ${unknownServerAcceptRef}
+        "nukleus://streams/example#9"
     option nukleus:window 8192
 connected
 
 write aborted
-

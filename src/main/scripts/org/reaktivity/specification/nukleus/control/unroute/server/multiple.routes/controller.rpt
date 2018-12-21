@@ -14,13 +14,8 @@
 # under the License.
 #
 
-property newServerAcceptRef1 ${nuklei:newReferenceId()} # external scope
-property newServerConnectRef2 ${nuklei:newReferenceId()} # external scope
-property newServerAcceptRef1 ${nuklei:newReferenceId()} # external scope
-property newServerConnectRef2 ${nuklei:newReferenceId()} # external scope
-
-property route1Authorization 0x0001_000000000000L
-property route2Authorization 0x0002_000000000000L
+property newServerRouteId1 ${nukleus:newServerRouteId("example#0", "target#0")} # external
+property newServerRouteId2 ${nukleus:newServerRouteId("example#1", "target#1")} # external
 
 property nukleiUR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
@@ -36,13 +31,8 @@ connected
 
 write 0x00000002
 write ${controlUR00C.nextCorrelationId()}
-write [0x00]
-write [0x06] "source"
-write ${newServerAcceptRef1}
-write [0x06] "target"
-write ${newServerConnectRef1}
-write ${route1Authorization}
-write 0
+write ${core:string("example")}
+write ${newServerRouteId1}
 write flush
 
 read 0x40000002
@@ -50,13 +40,8 @@ read ${controlUR00C.correlationId()}
 
 write 0x00000002
 write ${controlUR00C.nextCorrelationId()}
-write [0x00]
-write [0x06] "source"
-write ${newServerAcceptRef2}
-write [0x06] "target"
-write ${newServerConnectRef2}
-write ${route2Authorization}
-write 0
+write ${core:string("example")}
+write ${newServerRouteId2}
 write flush
 
 read 0x40000002

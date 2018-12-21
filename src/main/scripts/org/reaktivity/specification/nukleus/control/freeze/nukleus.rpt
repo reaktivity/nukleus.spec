@@ -29,6 +29,7 @@ connected
 
 read 0x00000003
 read (long:correlationIdF00N)
+read ${core:string(nameF00N)}
 
 write 0x40000003
 write ${correlationIdF00N}

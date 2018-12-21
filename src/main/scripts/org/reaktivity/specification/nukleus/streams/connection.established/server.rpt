@@ -14,13 +14,10 @@
 # under the License.
 #
 
-property newServerAcceptRef ${nuklei:newReferenceId()} 
-property newServerConnectRef ${newServerAcceptRef} # external scope
 property streamAuthorization 0x0000_000000000000L
-property serverConnect "nukleus://target/streams/example"
-       
-accept ${serverConnect}
-       option nukleus:route ${newServerConnectRef}
+property serverAddress "nukleus://streams/example#0"
+
+accept ${serverAddress}
        option nukleus:window 8192
        option nukleus:transmission "duplex"
        option nukleus:authorization ${streamAuthorization}

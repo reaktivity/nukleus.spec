@@ -42,7 +42,6 @@ public class StreamsIT
         "connection.established.unsecure/client",
         "connection.established.unsecure/server"
     })
-    @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
     public void shouldEstablishConnection() throws Exception
     {
         k3po.start();
@@ -98,7 +97,6 @@ public class StreamsIT
         "connection.refused.unknown.route.ref/client",
         "connection.refused.unknown.route.ref/server"
     })
-    @ScriptProperty("serverConnect \"nukleus://example/streams/source\"")
     public void shoulResetConnectionWhenNotRouted() throws Exception
     {
         k3po.start();

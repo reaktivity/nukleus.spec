@@ -28,6 +28,7 @@ connected
 
 write 0x00000011
 write ${controlR05C.nextCorrelationId()}
+write ${core:string("security")}
 write [0x05] "realm"
 write [0x00 0x00 0x00 0x00]
 write flush
