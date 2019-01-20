@@ -109,26 +109,14 @@ public final class Functions
             return this;
         }
 
-        public StreamsHelper streams(
-            String nukleus,
-            String source)
+        public ControlHelper controlNew()
         {
-            String relativePath = String.format("%s/streams/%s", nukleus, source);
-            return new StreamsHelper.Deferred(new File(configDirectory, relativePath));
+            return new ControlHelper.Eager(true, new File(configDirectory, "control"), ringCapacity, broadcastCapacity);
         }
 
-        public ControlHelper controlNew(
-            String nukleus)
+        public ControlHelper control()
         {
-            String relativePath = String.format("%s/control", nukleus);
-            return new ControlHelper.Eager(true, new File(configDirectory, relativePath), ringCapacity, broadcastCapacity);
-        }
-
-        public ControlHelper control(
-            String nukleus)
-        {
-            String relativePath = String.format("%s/control", nukleus);
-            return new ControlHelper.Deferred(false, new File(configDirectory, relativePath), ringCapacity, broadcastCapacity);
+            return new ControlHelper.Deferred(false, new File(configDirectory, "control"), ringCapacity, broadcastCapacity);
         }
 
         public abstract static class StreamsHelper implements AutoCloseable

@@ -18,7 +18,7 @@ property newServerRouteId ${nukleus:newServerRouteId("example#0", "target#0")} #
 
 property nukleiR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlR00C ${nukleiR00C.control("example")}
+property controlR00C ${nukleiR00C.control()}
 
 property routeAuthorization 0x0000_000000000000L
 

@@ -16,7 +16,7 @@
 
 property nukleiUR01N ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlUR01N ${nukleiUR01N.controlNew("example")}
+property controlUR01N ${nukleiUR01N.controlNew()}
 
 connect await ROUTED_CLIENT
         "agrona://stream/bidirectional"

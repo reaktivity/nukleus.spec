@@ -19,7 +19,7 @@ property responseCapacityF00N 1024
 property nameF00N "example"
 
 property nukleiF00N ${nuklei:directory("target/nukleus-itests").controlCapacity(commandCapacityF00N, responseCapacityF00N)}
-property controlF00N ${nukleiF00N.controlNew(nameF00N)}
+property controlF00N ${nukleiF00N.controlNew()}
 
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:manyToOneReader(controlF00N.nukleus)}
