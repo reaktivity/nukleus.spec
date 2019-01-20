@@ -19,7 +19,7 @@ property newServerRouteId2 ${nukleus:newServerRouteId("example#1", "target#1")} 
 
 property nukleiUR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlUR00C ${nukleiUR00C.control("example")}
+property controlUR00C ${nukleiUR00C.control()}
 
 
 connect await ROUTED_SERVER

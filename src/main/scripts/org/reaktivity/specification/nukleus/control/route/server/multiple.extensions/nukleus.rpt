@@ -16,7 +16,7 @@
 
 property nukleiRME00N ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlRME00N ${nukleiRME00N.controlNew("example")}
+property controlRME00N ${nukleiRME00N.controlNew()}
 
 property newServerAcceptRefRME00N ${nuklei:newReferenceId()}
 

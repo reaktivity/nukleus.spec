@@ -18,7 +18,7 @@ property newProxyRouteId ${nukleus:newProxyRouteId("example#0", "target#0")} # e
 
 property nukleiUR02C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlUR02C ${nukleiUR02C.control("example")}
+property controlUR02C ${nukleiUR02C.control()}
 
 connect await ROUTED_PROXY
         "agrona://stream/bidirectional"

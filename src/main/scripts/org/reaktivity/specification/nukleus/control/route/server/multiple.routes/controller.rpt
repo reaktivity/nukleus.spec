@@ -22,7 +22,7 @@ property route2Authorization 0x0000_000000000000L
 
 property nukleiR00C ${nuklei:directory("target/nukleus-itests").controlCapacity(1024, 1024)}
 
-property controlR00C ${nukleiR00C.control("example")}
+property controlR00C ${nukleiR00C.control()}
 
 connect "agrona://stream/bidirectional"
         option agrona:reader ${agrona:broadcastReceiver(controlR00C.controller)}
