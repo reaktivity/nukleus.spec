@@ -52,6 +52,7 @@ scope core
             int64 authorization = 0;
             string localAddress;
             string remoteAddress;
+            string tag;
             octets extension;
         }
 
