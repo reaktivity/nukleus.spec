@@ -37,6 +37,7 @@ write [0x00]
 write ${route1Authorization}
 write ${core:string("example#0")}
 write ${core:string("target#0")}
+write [0x00]
 write flush
 
 read 0x40000001
@@ -50,6 +51,7 @@ write [0x00]
 write ${route2Authorization}
 write ${core:string("example#1")}
 write ${core:string("target#1")}
+write [0x00]
 write flush
 
 read 0x40000001
