@@ -115,7 +115,6 @@ scope core
 
         struct Begin extends core::stream::Frame [0x00000001]
         {
-            int64 correlationId;
             int64 affinity = 0;
             octets extension;
         }
