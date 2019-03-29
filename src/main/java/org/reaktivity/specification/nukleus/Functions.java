@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2018 The Reaktivity Project
+ * Copyright 2016-2019 The Reaktivity Project
  *
  * The Reaktivity Project licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
@@ -117,87 +117,6 @@ public final class Functions
         public ControlHelper control()
         {
             return new ControlHelper.Deferred(false, new File(configDirectory, "control"), ringCapacity, broadcastCapacity);
-        }
-
-        public abstract static class StreamsHelper implements AutoCloseable
-        {
-            public abstract AtomicBuffer getBuffer();
-
-            private static final class Eager extends StreamsHelper
-            {
-                private final MappedByteBuffer buffer;
-                private final AtomicBuffer streamsBuffer;
-
-                private Eager(
-                    File location)
-                {
-                    File absolute = location.getAbsoluteFile();
-
-                    this.buffer = mapExistingFile(absolute, "streams");
-                    this.streamsBuffer = new UnsafeBuffer(buffer);
-                }
-
-                @Override
-                public AtomicBuffer getBuffer()
-                {
-                    return streamsBuffer;
-                }
-
-                @Override
-                public void close()
-                {
-                    unmap(buffer);
-                }
-
-                @Override
-                public String toString()
-                {
-                    return String.format("streamsCapacity %d", streamsBuffer.capacity());
-                }
-            }
-
-            private static final class Deferred extends StreamsHelper
-            {
-                private final File location;
-
-                private Eager delegate;
-
-                private Deferred(
-                    File location)
-                {
-                    this.location = location;
-                }
-
-                @Override
-                public AtomicBuffer getBuffer()
-                {
-                    ensureInitialized();
-                    return delegate.streamsBuffer;
-                }
-
-                @Override
-                public void close() throws Exception
-                {
-                    if (delegate != null)
-                    {
-                        delegate.close();
-                    }
-                }
-
-                @Override
-                public String toString()
-                {
-                    return String.format("delegate %s", delegate != null ? delegate : "deferred");
-                }
-
-                void ensureInitialized()
-                {
-                    if (delegate == null)
-                    {
-                        delegate = new Eager(location);
-                    }
-                }
-            }
         }
 
         public abstract static class ControlHelper implements AutoCloseable
