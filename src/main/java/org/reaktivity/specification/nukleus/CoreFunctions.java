@@ -20,6 +20,10 @@ import static java.util.Optional.ofNullable;
 import static org.agrona.BitUtil.SIZE_OF_BYTE;
 import static org.agrona.BitUtil.SIZE_OF_SHORT;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.agrona.BitUtil;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.kaazing.k3po.lang.el.Function;
@@ -31,6 +35,19 @@ public final class CoreFunctions
 {
     private static final ThreadLocal<StringFW.Builder> STRING_RW = ThreadLocal.withInitial(StringFW.Builder::new);
     private static final ThreadLocal<String16FW.Builder> STRING16_RW = ThreadLocal.withInitial(String16FW.Builder::new);
+
+    @Function
+    public static byte[] fromHex(
+        String text)
+    {
+        return BitUtil.fromHex(text);
+    }
+
+    @Function
+    public static Random random()
+    {
+        return ThreadLocalRandom.current();
+    }
 
     @Function
     public static byte[] string(

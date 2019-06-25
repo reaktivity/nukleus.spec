@@ -15,11 +15,6 @@
  */
 scope core
 {
-    struct Extension
-    {
-        int16 type;
-    }
-
     scope control
     {
         enum Role
@@ -77,33 +72,35 @@ scope core
         {
         }
 
-        scope auth
+        struct Resolve extends core::control::Command [0x00000011]
         {
-            struct Resolve extends core::control::Command [0x00000011]
-            {
-                string realm;
-                list<string> roles;
-            }
-
-            struct Resolved extends core::control::Response [0x40000011]
-            {
-                int64 authorization;
-            }
-
-            struct Unresolve extends core::control::Command [0x00000012]
-            {
-                int64 authorization;
-            }
-
-            struct Unresolved extends core::control::Response [0x40000012]
-            {
-            }
+            string realm;
+            list<string> roles;
+            octets extension;
         }
 
+        struct Resolved extends core::control::Response [0x40000011]
+        {
+            int64 authorization;
+        }
+
+        struct Unresolve extends core::control::Command [0x00000012]
+        {
+            int64 authorization;
+        }
+
+        struct Unresolved extends core::control::Response [0x40000012]
+        {
+        }
     }
 
     scope stream
     {
+        struct Extension
+        {
+            int32 typeId;
+        }
+
         struct Frame
         {
             int64 routeId;
@@ -142,6 +139,7 @@ scope core
         struct Signal extends core::stream::Frame [0x00000005]
         {
             int64 signalId;
+            octets extension;
         }
 
         struct Reset extends core::stream::Frame [0x40000001]
@@ -154,6 +152,7 @@ scope core
             int32 credit;
             int32 padding;
             int64 groupId;
+            octets extension;
         }
 
     }
