@@ -136,12 +136,6 @@ scope core
             octets extension;
         }
 
-        struct Signal extends core::stream::Frame [0x00000005]
-        {
-            int64 signalId;
-            octets extension;
-        }
-
         struct Reset extends core::stream::Frame [0x40000001]
         {
             octets extension;
@@ -155,6 +149,11 @@ scope core
             octets extension;
         }
 
+        struct Signal extends core::stream::Frame [0x40000003]
+        {
+            int64 signalId;
+            octets extension;
+        }
     }
 
     scope state
