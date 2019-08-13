@@ -20,6 +20,7 @@ import static java.util.Optional.ofNullable;
 import static org.agrona.BitUtil.SIZE_OF_BYTE;
 import static org.agrona.BitUtil.SIZE_OF_SHORT;
 
+import java.nio.ByteBuffer;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -35,6 +36,8 @@ public final class CoreFunctions
 {
     private static final ThreadLocal<StringFW.Builder> STRING_RW = ThreadLocal.withInitial(StringFW.Builder::new);
     private static final ThreadLocal<String16FW.Builder> STRING16_RW = ThreadLocal.withInitial(String16FW.Builder::new);
+
+    private static final String CHALLENGE_CAPABILITY = "challenge";
 
     @Function
     public static byte[] fromHex(
@@ -79,6 +82,35 @@ public final class CoreFunctions
         final byte[] array = new byte[string16.sizeof()];
         string16.buffer().getBytes(0, array);
         return array;
+    }
+
+    @Function
+    public static byte[] capabilities(String capability, String... optionalCapabilities)
+    {
+        int capabilities = 0x00000000;
+        capabilities = maskBits(capability, capabilities);
+
+        for (int i = 0; i < optionalCapabilities.length; i++)
+        {
+            capabilities = maskBits(optionalCapabilities[i], capabilities);
+        }
+
+        ByteBuffer bb = ByteBuffer.allocate(1);
+        bb.putInt(capabilities);
+        return bb.array();
+    }
+
+    private static int maskBits(
+        String capability,
+        int capabilities)
+    {
+        switch (capability)
+        {
+            case CHALLENGE_CAPABILITY:
+                capabilities = capabilities | 0x00000001;
+                break;
+        }
+        return capabilities;
     }
 
     public static class Mapper extends FunctionMapperSpi.Reflective
