@@ -87,7 +87,7 @@ public final class CoreFunctions
     @Function
     public static byte[] capabilities(String capability, String... optionalCapabilities)
     {
-        int capabilities = 0x00000000;
+        int capabilities = 0x00;
         capabilities = maskBits(capability, capabilities);
 
         for (int i = 0; i < optionalCapabilities.length; i++)
@@ -107,7 +107,7 @@ public final class CoreFunctions
         switch (capability)
         {
             case CHALLENGE_CAPABILITY:
-                capabilities = capabilities | 0x00000001;
+                capabilities = capabilities | 0x01;
                 break;
         }
         return capabilities;
