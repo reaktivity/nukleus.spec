@@ -34,10 +34,33 @@ import org.reaktivity.specification.nukleus.internal.types.StringFW;
 
 public final class CoreFunctions
 {
+    enum Capability
+    {
+        CHALLENGE(0x01);
+
+        final int capability;
+
+        Capability(int bitPos)
+        {
+            capability = bitPos;
+        }
+
+        public static int of(
+            String name,
+            String... optionalNames)
+        {
+            int capabilityMask = 0x00;
+            capabilityMask |= Capability.valueOf(name).capability;
+            for (int i = 0; i < optionalNames.length; i++)
+            {
+                capabilityMask |= Capability.valueOf(optionalNames[i]).capability;
+            }
+            return capabilityMask;
+        }
+    }
+
     private static final ThreadLocal<StringFW.Builder> STRING_RW = ThreadLocal.withInitial(StringFW.Builder::new);
     private static final ThreadLocal<String16FW.Builder> STRING16_RW = ThreadLocal.withInitial(String16FW.Builder::new);
-
-    private static final String CHALLENGE_CAPABILITY = "challenge";
 
     @Function
     public static byte[] fromHex(
@@ -85,32 +108,15 @@ public final class CoreFunctions
     }
 
     @Function
-    public static byte[] capabilities(String capability, String... optionalCapabilities)
+    public static byte[] capabilities(
+        String capability,
+        String... optionalCapabilities)
     {
-        int capabilities = 0x00;
-        capabilities = maskBits(capability, capabilities);
-
-        for (int i = 0; i < optionalCapabilities.length; i++)
-        {
-            capabilities = maskBits(optionalCapabilities[i], capabilities);
-        }
+        int capabilities = Capability.of(capability, optionalCapabilities);
 
         ByteBuffer bb = ByteBuffer.allocate(1);
-        bb.putInt(capabilities);
+        bb.put((byte) capabilities);
         return bb.array();
-    }
-
-    private static int maskBits(
-        String capability,
-        int capabilities)
-    {
-        switch (capability)
-        {
-            case CHALLENGE_CAPABILITY:
-                capabilities = capabilities | 0x01;
-                break;
-        }
-        return capabilities;
     }
 
     public static class Mapper extends FunctionMapperSpi.Reflective
