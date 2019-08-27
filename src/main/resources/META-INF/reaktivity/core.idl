@@ -26,6 +26,11 @@ scope core
           CLIENT_REVERSE
         }
 
+        enum Capability
+        {
+          CHALLENGE
+        }
+
         struct Command
         {
             int64 correlationId;

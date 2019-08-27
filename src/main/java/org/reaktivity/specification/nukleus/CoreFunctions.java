@@ -31,33 +31,34 @@ import org.kaazing.k3po.lang.el.Function;
 import org.kaazing.k3po.lang.el.spi.FunctionMapperSpi;
 import org.reaktivity.specification.nukleus.internal.types.String16FW;
 import org.reaktivity.specification.nukleus.internal.types.StringFW;
+import org.reaktivity.specification.nukleus.internal.types.control.Capability;
 
 public final class CoreFunctions
 {
-    enum Capability
-    {
-        CHALLENGE(0x01);
-
-        final int capability;
-
-        Capability(int bitPos)
-        {
-            capability = bitPos;
-        }
-
-        public static int of(
-            String name,
-            String... optionalNames)
-        {
-            int capabilityMask = 0x00;
-            capabilityMask |= Capability.valueOf(name).capability;
-            for (int i = 0; i < optionalNames.length; i++)
-            {
-                capabilityMask |= Capability.valueOf(optionalNames[i]).capability;
-            }
-            return capabilityMask;
-        }
-    }
+//    enum Capability
+//    {
+//        CHALLENGE(0x01);
+//
+//        final int capability;
+//
+//        Capability(int bitPos)
+//        {
+//            capability = bitPos;
+//        }
+//
+//        public static int of(
+//            String name,
+//            String... optionalNames)
+//        {
+//            int capabilityMask = 0x00;
+//            capabilityMask |= Capability.valueOf(name).capability;
+//            for (int i = 0; i < optionalNames.length; i++)
+//            {
+//                capabilityMask |= Capability.valueOf(optionalNames[i]).capability;
+//            }
+//            return capabilityMask;
+//        }
+//    }
 
     private static final ThreadLocal<StringFW.Builder> STRING_RW = ThreadLocal.withInitial(StringFW.Builder::new);
     private static final ThreadLocal<String16FW.Builder> STRING16_RW = ThreadLocal.withInitial(String16FW.Builder::new);
@@ -112,11 +113,24 @@ public final class CoreFunctions
         String capability,
         String... optionalCapabilities)
     {
-        int capabilities = Capability.of(capability, optionalCapabilities);
+        int capabilities = of(capability, optionalCapabilities);
 
         ByteBuffer bb = ByteBuffer.allocate(1);
         bb.put((byte) capabilities);
         return bb.array();
+    }
+
+    public static int of(
+        String name,
+        String... optionalNames)
+    {
+        int capabilityMask = 0x00;
+        capabilityMask |= 1 << Capability.valueOf(name).ordinal();
+        for (int i = 0; i < optionalNames.length; i++)
+        {
+            capabilityMask |= 1 << Capability.valueOf(optionalNames[i]).ordinal();
+        }
+        return capabilityMask;
     }
 
     public static class Mapper extends FunctionMapperSpi.Reflective
