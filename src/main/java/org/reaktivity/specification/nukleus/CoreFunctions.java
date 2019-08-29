@@ -95,7 +95,7 @@ public final class CoreFunctions
         return bb.array();
     }
 
-    public static int of(
+    private static int of(
         String name,
         String... optionalNames)
     {

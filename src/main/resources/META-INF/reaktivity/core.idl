@@ -19,16 +19,16 @@ scope core
     {
         enum Role
         {
-          SERVER,
-          CLIENT,
-          PROXY,
-          SERVER_REVERSE,
-          CLIENT_REVERSE
+            SERVER,
+            CLIENT,
+            PROXY,
+            SERVER_REVERSE,
+            CLIENT_REVERSE
         }
 
         enum Capability
         {
-          CHALLENGE
+            CHALLENGE
         }
 
         struct Command
