@@ -35,31 +35,6 @@ import org.reaktivity.specification.nukleus.internal.types.control.Capability;
 
 public final class CoreFunctions
 {
-//    enum Capability
-//    {
-//        CHALLENGE(0x01);
-//
-//        final int capability;
-//
-//        Capability(int bitPos)
-//        {
-//            capability = bitPos;
-//        }
-//
-//        public static int of(
-//            String name,
-//            String... optionalNames)
-//        {
-//            int capabilityMask = 0x00;
-//            capabilityMask |= Capability.valueOf(name).capability;
-//            for (int i = 0; i < optionalNames.length; i++)
-//            {
-//                capabilityMask |= Capability.valueOf(optionalNames[i]).capability;
-//            }
-//            return capabilityMask;
-//        }
-//    }
-
     private static final ThreadLocal<StringFW.Builder> STRING_RW = ThreadLocal.withInitial(StringFW.Builder::new);
     private static final ThreadLocal<String16FW.Builder> STRING16_RW = ThreadLocal.withInitial(String16FW.Builder::new);
 
