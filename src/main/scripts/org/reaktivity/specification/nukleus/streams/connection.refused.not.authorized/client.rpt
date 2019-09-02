@@ -20,7 +20,5 @@ connect await ROUTED_SERVER
         "nukleus://streams/example#0"
     option nukleus:authorization ${authorization}
     option nukleus:window 8192 
-connected
 
-write aborted
-
+connect aborted
