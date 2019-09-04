@@ -25,6 +25,8 @@ import org.junit.Test;
 import org.reaktivity.specification.nukleus.internal.types.String16FW;
 import org.reaktivity.specification.nukleus.internal.types.StringFW;
 
+import java.nio.ByteBuffer;
+
 public class CoreFunctionsTest
 {
     @Test
@@ -93,5 +95,14 @@ public class CoreFunctionsTest
         String16FW string = new String16FW().wrap(buffer, 0, buffer.capacity());
 
         assertEquals("", string.asString());
+    }
+
+    @Test
+    public void shouldMaskChallengeCapability()
+    {
+        final byte[] challengeMaskBytes = CoreFunctions.capabilities("CHALLENGE");
+        ByteBuffer bb = ByteBuffer.wrap(challengeMaskBytes);
+        final int challengeMask = bb.get();
+        assertEquals(0x01, challengeMask);
     }
 }
