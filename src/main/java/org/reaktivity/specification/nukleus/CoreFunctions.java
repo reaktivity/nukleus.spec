@@ -98,7 +98,9 @@ public final class CoreFunctions
         capabilityMask |= 1 << Capability.valueOf(name).ordinal();
         for (int i = 0; i < optionalNames.length; i++)
         {
-            capabilityMask |= 1 << Capability.valueOf(optionalNames[i]).ordinal();
+            final int capabilityOrdinal = Capability.valueOf(optionalNames[i]).ordinal();
+            assert capabilityOrdinal < Byte.SIZE;
+            capabilityMask |= 1 << capabilityOrdinal;
         }
         return capabilityMask;
     }
