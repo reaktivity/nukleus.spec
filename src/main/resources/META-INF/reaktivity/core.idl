@@ -161,6 +161,11 @@ scope core
             int64 signalId;
             octets extension;
         }
+
+        struct Challenge extends core::stream::Frame [0x40000004]
+        {
+            octets extension;
+        }
     }
 
     scope state
