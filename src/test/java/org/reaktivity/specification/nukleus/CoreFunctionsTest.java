@@ -100,9 +100,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldMaskChallengeCapability()
     {
-        final byte[] challengeMaskBytes = CoreFunctions.capabilities("CHALLENGE");
-        ByteBuffer bb = ByteBuffer.wrap(challengeMaskBytes);
-        final byte challengeMask = bb.get();
+        final byte challengeMask = CoreFunctions.capabilities("CHALLENGE");
         assertEquals(0x01, challengeMask);
     }
 }

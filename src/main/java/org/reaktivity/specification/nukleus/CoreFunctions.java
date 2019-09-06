@@ -84,22 +84,18 @@ public final class CoreFunctions
     }
 
     @Function
-    public static byte[] capabilities(
+    public static byte capabilities(
         String capability,
         String... optionalCapabilities)
     {
-        int capabilities = of(capability, optionalCapabilities);
-
-        ByteBuffer bb = ByteBuffer.allocate(1);
-        bb.put((byte) capabilities);
-        return bb.array();
+        return of(capability, optionalCapabilities);
     }
 
-    private static int of(
+    private static byte of(
         String name,
         String... optionalNames)
     {
-        int capabilityMask = 0x00;
+        byte capabilityMask = 0x00;
         capabilityMask |= 1 << Capability.valueOf(name).ordinal();
         for (int i = 0; i < optionalNames.length; i++)
         {
