@@ -25,8 +25,6 @@ import org.junit.Test;
 import org.reaktivity.specification.nukleus.internal.types.String16FW;
 import org.reaktivity.specification.nukleus.internal.types.StringFW;
 
-import java.nio.ByteBuffer;
-
 public class CoreFunctionsTest
 {
     @Test
