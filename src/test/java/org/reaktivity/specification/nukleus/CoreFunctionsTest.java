@@ -102,7 +102,7 @@ public class CoreFunctionsTest
     {
         final byte[] challengeMaskBytes = CoreFunctions.capabilities("CHALLENGE");
         ByteBuffer bb = ByteBuffer.wrap(challengeMaskBytes);
-        final int challengeMask = bb.get();
+        final byte challengeMask = bb.get();
         assertEquals(0x01, challengeMask);
     }
 }
