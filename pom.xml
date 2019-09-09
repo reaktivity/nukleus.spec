@@ -42,8 +42,8 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <checkstyle.config.location>src/conf/checkstyle/configuration.xml</checkstyle.config.location>
     <checkstyle.suppressions.location>src/conf/checkstyle/suppressions.xml</checkstyle.suppressions.location>
-    <jacoco.coverage.ratio>0.00</jacoco.coverage.ratio>
-    <jacoco.missed.count>107</jacoco.missed.count>
+    <jacoco.coverage.ratio>0.09</jacoco.coverage.ratio>
+    <jacoco.missed.count>19</jacoco.missed.count>
 
     <agrona.version>0.9.35</agrona.version>
     <junit.version>4.12</junit.version>
@@ -169,6 +169,9 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.2</version>
         <configuration>
+          <excludes>
+            <exclude>org/reaktivity/specification/nukleus/internal/types/**/*.class</exclude>
+          </excludes>
           <rules>
             <rule>
               <element>BUNDLE</element>
