@@ -23,12 +23,11 @@ import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.util.Random;
 
-import org.kaazing.k3po.lang.el.Function;
-import org.kaazing.k3po.lang.el.spi.FunctionMapperSpi;
-
 import org.agrona.concurrent.AtomicBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.agrona.concurrent.ringbuffer.RingBufferDescriptor;
+import org.kaazing.k3po.lang.el.Function;
+import org.kaazing.k3po.lang.el.spi.FunctionMapperSpi;
 
 @Deprecated
 public final class Functions
@@ -56,7 +55,7 @@ public final class Functions
         long value;
         do
         {
-            value = (RANDOM.nextLong() & 0x3ffffffffffffffeL);
+            value = RANDOM.nextLong() & 0x3ffffffffffffffeL;
         }
         while (value == 0L);
 
@@ -166,28 +165,30 @@ public final class Functions
     {
         if (ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN)
         {
-            return new byte[] {
-                    (byte) (value >> 56),
-                    (byte) (value >> 48),
-                    (byte) (value >> 40),
-                    (byte) (value >> 32),
-                    (byte) (value >> 24),
-                    (byte) (value >> 16),
-                    (byte) (value >> 8),
-                    (byte) value
+            return new byte[]
+            {
+                (byte) (value >> 56),
+                (byte) (value >> 48),
+                (byte) (value >> 40),
+                (byte) (value >> 32),
+                (byte) (value >> 24),
+                (byte) (value >> 16),
+                (byte) (value >> 8),
+                (byte) value
             };
         }
         else
         {
-            return new byte[] {
-                    (byte) value,
-                    (byte) (value >> 8),
-                    (byte) (value >> 16),
-                    (byte) (value >> 24),
-                    (byte) (value >> 32),
-                    (byte) (value >> 40),
-                    (byte) (value >> 48),
-                    (byte) (value >> 56)
+            return new byte[]
+            {
+                (byte) value,
+                (byte) (value >> 8),
+                (byte) (value >> 16),
+                (byte) (value >> 24),
+                (byte) (value >> 32),
+                (byte) (value >> 40),
+                (byte) (value >> 48),
+                (byte) (value >> 56)
             };
         }
     }

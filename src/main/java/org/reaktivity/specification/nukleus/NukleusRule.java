@@ -19,11 +19,11 @@ import static org.agrona.IoUtil.createEmptyFile;
 
 import java.io.File;
 
+import org.agrona.CloseHelper;
+import org.agrona.concurrent.ringbuffer.RingBufferDescriptor;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.agrona.CloseHelper;
-import org.agrona.concurrent.ringbuffer.RingBufferDescriptor;
 
 public final class NukleusRule implements TestRule
 {
