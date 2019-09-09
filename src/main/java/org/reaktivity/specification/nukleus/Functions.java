@@ -148,12 +148,10 @@ public final class Functions
                 private Eager(
                     boolean overwrite,
                     File location,
-                    int newCommandBufferCapacity,
-                    int newResponseBufferCapacity)
+                    int commandBufferCapacity,
+                    int responseBufferCapacity)
                 {
                     File controlFile = location.getAbsoluteFile();
-                    int commandBufferCapacity = newCommandBufferCapacity;
-                    int responseBufferCapacity = newResponseBufferCapacity;
                     int counterLabelsBufferCapacity = 0;
                     int counterValuesBufferCapacity = 0;
 
