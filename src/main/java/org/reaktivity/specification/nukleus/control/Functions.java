@@ -22,15 +22,14 @@ import static org.agrona.IoUtil.unmap;
 import java.io.File;
 import java.nio.MappedByteBuffer;
 
-import org.kaazing.k3po.lang.el.Function;
-import org.kaazing.k3po.lang.el.spi.FunctionMapperSpi;
-
 import org.agrona.concurrent.AtomicBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.agrona.concurrent.broadcast.BroadcastBufferDescriptor;
 import org.agrona.concurrent.ringbuffer.ManyToOneRingBuffer;
 import org.agrona.concurrent.ringbuffer.RingBuffer;
 import org.agrona.concurrent.ringbuffer.RingBufferDescriptor;
+import org.kaazing.k3po.lang.el.Function;
+import org.kaazing.k3po.lang.el.spi.FunctionMapperSpi;
 
 @Deprecated
 public final class Functions

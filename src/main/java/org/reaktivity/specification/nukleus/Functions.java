@@ -148,10 +148,12 @@ public final class Functions
                 private Eager(
                     boolean overwrite,
                     File location,
-                    int commandBufferCapacity,
-                    int responseBufferCapacity)
+                    int newCommandBufferCapacity,
+                    int newResponseBufferCapacity)
                 {
                     File controlFile = location.getAbsoluteFile();
+                    int commandBufferCapacity = newCommandBufferCapacity;
+                    int responseBufferCapacity = newResponseBufferCapacity;
                     int counterLabelsBufferCapacity = 0;
                     int counterValuesBufferCapacity = 0;
 
@@ -187,8 +189,6 @@ public final class Functions
 
                     int commandBufferLength = commandBufferCapacity + RingBufferDescriptor.TRAILER_LENGTH;
                     int responseBufferLength = responseBufferCapacity + BroadcastBufferDescriptor.TRAILER_LENGTH;
-//                    int counterLabelsBufferLength = counterLabelsBufferCapacity;
-//                    int counterValuesBufferLength = counterValuesBufferCapacity;
 
                     int commandBufferOffset = END_OF_META_DATA_OFFSET;
                     this.buffer = mapExistingFile(controlFile, "commands");
