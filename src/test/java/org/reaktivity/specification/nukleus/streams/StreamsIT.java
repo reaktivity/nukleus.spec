@@ -94,8 +94,7 @@ public class StreamsIT
 
     @Test
     @Specification({
-        "connection.refused.unknown.route.ref/client",
-        "connection.refused.unknown.route.ref/server"
+        "connection.refused.unknown.route.ref/client"
     })
     public void shoulResetConnectionWhenNotRouted() throws Exception
     {

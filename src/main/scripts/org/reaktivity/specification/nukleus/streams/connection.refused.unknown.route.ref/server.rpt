@@ -19,8 +19,3 @@ property serverAddress "nukleus://streams/example#9"
 accept ${serverAddress}
        option nukleus:window 0
        option nukleus:throttle "none" 
-       
-accepted
-connected
-
-read abort
