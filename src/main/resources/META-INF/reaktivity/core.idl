@@ -19,11 +19,16 @@ scope core
     {
         enum Role
         {
-          SERVER,
-          CLIENT,
-          PROXY,
-          SERVER_REVERSE,
-          CLIENT_REVERSE
+            SERVER,
+            CLIENT,
+            PROXY,
+            SERVER_REVERSE,
+            CLIENT_REVERSE
+        }
+
+        enum Capability
+        {
+            CHALLENGE
         }
 
         struct Command
@@ -146,12 +151,18 @@ scope core
             int32 credit;
             int32 padding;
             int64 groupId;
+            uint8 capabilities = 0;
             octets extension;
         }
 
         struct Signal extends core::stream::Frame [0x40000003]
         {
             int64 signalId;
+            octets extension;
+        }
+
+        struct Challenge extends core::stream::Frame [0x40000004]
+        {
             octets extension;
         }
     }
