@@ -80,7 +80,7 @@ scope core
         struct Resolve extends core::control::Command [0x00000011]
         {
             string realm;
-            list<string> roles;
+            string[] roles;
             octets extension;
         }
 
@@ -178,7 +178,7 @@ scope core
         struct RouteTable
         {
              int32 modificationCount;
-             list<core::state::RouteEntry> entries;
+             RouteEntry[] entries;
         }
     }
 }
