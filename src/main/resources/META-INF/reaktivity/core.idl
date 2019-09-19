@@ -48,7 +48,7 @@ scope core
 
         struct Route extends core::control::Command [0x00000001]
         {
-            core::control::Role role;
+            Role role;
             int64 authorization = 0;
             string localAddress;
             string remoteAddress;
