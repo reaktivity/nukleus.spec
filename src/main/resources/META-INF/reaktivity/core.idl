@@ -42,11 +42,11 @@ scope core
             int64 correlationId;
         }
 
-        struct Error extends core::control::Response [0x40000000]
+        struct Error extends Response [0x40000000]
         {
         }
 
-        struct Route extends core::control::Command [0x00000001]
+        struct Route extends Command [0x00000001]
         {
             Role role;
             int64 authorization = 0;
@@ -55,46 +55,46 @@ scope core
             octets extension;
         }
 
-        struct Routed extends core::control::Response [0x40000001]
+        struct Routed extends Response [0x40000001]
         {
             int64 routeId;
         }
 
-        struct Unroute extends core::control::Command [0x00000002]
+        struct Unroute extends Command [0x00000002]
         {
             int64 routeId;
         }
 
-        struct Unrouted extends core::control::Response [0x40000002]
+        struct Unrouted extends Response [0x40000002]
         {
         }
 
-        struct Freeze extends core::control::Command [0x00000003]
+        struct Freeze extends Command [0x00000003]
         {
         }
 
-        struct Frozen extends core::control::Response [0x40000003]
+        struct Frozen extends Response [0x40000003]
         {
         }
 
-        struct Resolve extends core::control::Command [0x00000011]
+        struct Resolve extends Command [0x00000011]
         {
             string realm;
             string[] roles;
             octets extension;
         }
 
-        struct Resolved extends core::control::Response [0x40000011]
+        struct Resolved extends Response [0x40000011]
         {
             int64 authorization;
         }
 
-        struct Unresolve extends core::control::Command [0x00000012]
+        struct Unresolve extends Command [0x00000012]
         {
             int64 authorization;
         }
 
-        struct Unresolved extends core::control::Response [0x40000012]
+        struct Unresolved extends Response [0x40000012]
         {
         }
     }
@@ -115,13 +115,13 @@ scope core
             int64 authorization = 0;
         }
 
-        struct Begin extends core::stream::Frame [0x00000001]
+        struct Begin extends Frame [0x00000001]
         {
             int64 affinity = 0;
             octets extension;
         }
 
-        struct Data extends core::stream::Frame [0x00000002]
+        struct Data extends Frame [0x00000002]
         {
             uint8 flags = 3;            // 0x02 INIT, 0x01 FIN
             int64 groupId;
@@ -131,22 +131,22 @@ scope core
             octets extension;
         }
 
-        struct End extends core::stream::Frame [0x00000003]
+        struct End extends Frame [0x00000003]
         {
             octets extension;
         }
 
-        struct Abort extends core::stream::Frame [0x00000004]
+        struct Abort extends Frame [0x00000004]
         {
             octets extension;
         }
 
-        struct Reset extends core::stream::Frame [0x40000001]
+        struct Reset extends Frame [0x40000001]
         {
             octets extension;
         }
 
-        struct Window extends core::stream::Frame [0x40000002]
+        struct Window extends Frame [0x40000002]
         {
             int32 credit;
             int32 padding;
@@ -155,13 +155,13 @@ scope core
             octets extension;
         }
 
-        struct Signal extends core::stream::Frame [0x40000003]
+        struct Signal extends Frame [0x40000003]
         {
             int64 signalId;
             octets extension;
         }
 
-        struct Challenge extends core::stream::Frame [0x40000004]
+        struct Challenge extends Frame [0x40000004]
         {
             octets extension;
         }
