@@ -125,7 +125,7 @@ scope core
         {
             uint8 flags = 3;            // 0x02 INIT, 0x01 FIN
             int64 groupId;
-            int32 padding;
+            int32 reserved;
             int32 length;
             octets[length] payload = null;
             octets extension;
