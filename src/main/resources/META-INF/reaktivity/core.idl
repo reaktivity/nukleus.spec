@@ -111,20 +111,20 @@ scope core
             int64 routeId;
             int64 streamId;
             int64 timestamp = 0;
-            int64 trace = 0;
+            int64 traceId = 0;
             int64 authorization = 0;
         }
 
         struct Begin extends Frame [0x00000001]
         {
-            int64 affinity = 0;
+            int64 affinity;
             octets extension;
         }
 
         struct Data extends Frame [0x00000002]
         {
             uint8 flags = 3;            // 0x02 INIT, 0x01 FIN
-            int64 groupId;
+            int64 budgetId;
             int32 reserved;
             int32 length;
             octets[length] payload = null;
@@ -148,22 +148,26 @@ scope core
 
         struct Window extends Frame [0x40000002]
         {
+            int64 budgetId;
             int32 credit;
             int32 padding;
-            int64 groupId;
             uint8 capabilities = 0;
-            octets extension;
         }
 
         struct Signal extends Frame [0x40000003]
         {
-            int64 signalId;
-            octets extension;
+            int64 cancelId;
+            int32 signalId;
         }
 
         struct Challenge extends Frame [0x40000004]
         {
             octets extension;
+        }
+
+        struct Flush extends Frame [0x40000005]
+        {
+            int64 budgetId;
         }
     }
 
