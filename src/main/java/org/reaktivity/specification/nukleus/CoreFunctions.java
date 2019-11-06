@@ -20,17 +20,35 @@ import static java.util.Optional.ofNullable;
 import static org.agrona.BitUtil.SIZE_OF_BYTE;
 import static org.agrona.BitUtil.SIZE_OF_SHORT;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.agrona.BitUtil;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.kaazing.k3po.lang.el.Function;
 import org.kaazing.k3po.lang.el.spi.FunctionMapperSpi;
 import org.reaktivity.specification.nukleus.internal.types.String16FW;
 import org.reaktivity.specification.nukleus.internal.types.StringFW;
+import org.reaktivity.specification.nukleus.internal.types.control.Capability;
 
 public final class CoreFunctions
 {
     private static final ThreadLocal<StringFW.Builder> STRING_RW = ThreadLocal.withInitial(StringFW.Builder::new);
     private static final ThreadLocal<String16FW.Builder> STRING16_RW = ThreadLocal.withInitial(String16FW.Builder::new);
+
+    @Function
+    public static byte[] fromHex(
+        String text)
+    {
+        return BitUtil.fromHex(text);
+    }
+
+    @Function
+    public static Random random()
+    {
+        return ThreadLocalRandom.current();
+    }
 
     @Function
     public static byte[] string(
@@ -62,6 +80,29 @@ public final class CoreFunctions
         final byte[] array = new byte[string16.sizeof()];
         string16.buffer().getBytes(0, array);
         return array;
+    }
+
+    @Function
+    public static byte capabilities(
+        String capability,
+        String... optionalCapabilities)
+    {
+        return of(capability, optionalCapabilities);
+    }
+
+    private static byte of(
+        String name,
+        String... optionalNames)
+    {
+        byte capabilityMask = 0x00;
+        capabilityMask |= 1 << Capability.valueOf(name).ordinal();
+        for (int i = 0; i < optionalNames.length; i++)
+        {
+            final int capabilityOrdinal = Capability.valueOf(optionalNames[i]).ordinal();
+            assert capabilityOrdinal < Byte.SIZE;
+            capabilityMask |= 1 << capabilityOrdinal;
+        }
+        return capabilityMask;
     }
 
     public static class Mapper extends FunctionMapperSpi.Reflective

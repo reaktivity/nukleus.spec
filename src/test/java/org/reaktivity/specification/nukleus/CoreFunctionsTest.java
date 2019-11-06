@@ -94,4 +94,11 @@ public class CoreFunctionsTest
 
         assertEquals("", string.asString());
     }
+
+    @Test
+    public void shouldMaskChallengeCapability()
+    {
+        final byte challengeMask = CoreFunctions.capabilities("CHALLENGE");
+        assertEquals(0x01, challengeMask);
+    }
 }

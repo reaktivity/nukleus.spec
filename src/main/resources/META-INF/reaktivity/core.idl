@@ -15,20 +15,20 @@
  */
 scope core
 {
-    struct Extension
-    {
-        int16 type;
-    }
-
     scope control
     {
         enum Role
         {
-          SERVER,
-          CLIENT,
-          PROXY,
-          SERVER_REVERSE,
-          CLIENT_REVERSE
+            SERVER,
+            CLIENT,
+            PROXY,
+            SERVER_REVERSE,
+            CLIENT_REVERSE
+        }
+
+        enum Capability
+        {
+            CHALLENGE
         }
 
         struct Command
@@ -42,13 +42,13 @@ scope core
             int64 correlationId;
         }
 
-        struct Error extends core::control::Response [0x40000000]
+        struct Error extends Response [0x40000000]
         {
         }
 
-        struct Route extends core::control::Command [0x00000001]
+        struct Route extends Command [0x00000001]
         {
-            core::control::Role role;
+            Role role;
             int64 authorization = 0;
             string localAddress;
             string remoteAddress;
@@ -56,108 +56,120 @@ scope core
             octets extension;
         }
 
-        struct Routed extends core::control::Response [0x40000001]
+        struct Routed extends Response [0x40000001]
         {
             int64 routeId;
         }
 
-        struct Unroute extends core::control::Command [0x00000002]
+        struct Unroute extends Command [0x00000002]
         {
             int64 routeId;
         }
 
-        struct Unrouted extends core::control::Response [0x40000002]
+        struct Unrouted extends Response [0x40000002]
         {
         }
 
-        struct Freeze extends core::control::Command [0x00000003]
+        struct Freeze extends Command [0x00000003]
         {
         }
 
-        struct Frozen extends core::control::Response [0x40000003]
+        struct Frozen extends Response [0x40000003]
         {
         }
 
-        scope auth
+        struct Resolve extends Command [0x00000011]
         {
-            struct Resolve extends core::control::Command [0x00000011]
-            {
-                string realm;
-                list<string> roles;
-            }
-
-            struct Resolved extends core::control::Response [0x40000011]
-            {
-                int64 authorization;
-            }
-
-            struct Unresolve extends core::control::Command [0x00000012]
-            {
-                int64 authorization;
-            }
-
-            struct Unresolved extends core::control::Response [0x40000012]
-            {
-            }
+            string realm;
+            string[] roles;
+            octets extension;
         }
 
+        struct Resolved extends Response [0x40000011]
+        {
+            int64 authorization;
+        }
+
+        struct Unresolve extends Command [0x00000012]
+        {
+            int64 authorization;
+        }
+
+        struct Unresolved extends Response [0x40000012]
+        {
+        }
     }
 
     scope stream
     {
+        struct Extension
+        {
+            int32 typeId;
+        }
+
         struct Frame
         {
             int64 routeId;
             int64 streamId;
             int64 timestamp = 0;
-            int64 trace = 0;
+            int64 traceId = 0;
             int64 authorization = 0;
         }
 
-        struct Begin extends core::stream::Frame [0x00000001]
+        struct Begin extends Frame [0x00000001]
         {
-            int64 correlationId;
-            int64 affinity = 0;
+            int64 affinity;
             octets extension;
         }
 
-        struct Data extends core::stream::Frame [0x00000002]
+        struct Data extends Frame [0x00000002]
         {
             uint8 flags = 3;            // 0x02 INIT, 0x01 FIN
-            int64 groupId;
-            int32 padding;
+            int64 budgetId;
+            int32 reserved;
             int32 length;
             octets[length] payload = null;
             octets extension;
         }
 
-        struct End extends core::stream::Frame [0x00000003]
+        struct End extends Frame [0x00000003]
         {
             octets extension;
         }
 
-        struct Abort extends core::stream::Frame [0x00000004]
+        struct Abort extends Frame [0x00000004]
         {
             octets extension;
         }
 
-        struct Signal extends core::stream::Frame [0x00000005]
-        {
-            int64 signalId;
-        }
-
-        struct Reset extends core::stream::Frame [0x40000001]
+        struct Reset extends Frame [0x40000001]
         {
             octets extension;
         }
 
-        struct Window extends core::stream::Frame [0x40000002]
+        struct Window extends Frame [0x40000002]
         {
+            int64 budgetId;
             int32 credit;
             int32 padding;
-            int64 groupId;
+            uint8 capabilities = 0;
         }
 
+        struct Signal extends Frame [0x40000003]
+        {
+            int64 cancelId;
+            int32 signalId;
+        }
+
+        struct Challenge extends Frame [0x40000004]
+        {
+            octets extension;
+        }
+
+        struct Flush extends Frame [0x40000005]
+        {
+            int64 budgetId;
+        }
     }
 
     scope state
@@ -171,7 +183,7 @@ scope core
         struct RouteTable
         {
              int32 modificationCount;
-             list<core::state::RouteEntry> entries;
+             RouteEntry[] entries;
         }
     }
 }

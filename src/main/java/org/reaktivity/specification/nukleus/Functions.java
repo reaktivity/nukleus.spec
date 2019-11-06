@@ -119,87 +119,6 @@ public final class Functions
             return new ControlHelper.Deferred(false, new File(configDirectory, "control"), ringCapacity, broadcastCapacity);
         }
 
-        public abstract static class StreamsHelper implements AutoCloseable
-        {
-            public abstract AtomicBuffer getBuffer();
-
-            private static final class Eager extends StreamsHelper
-            {
-                private final MappedByteBuffer buffer;
-                private final AtomicBuffer streamsBuffer;
-
-                private Eager(
-                    File location)
-                {
-                    File absolute = location.getAbsoluteFile();
-
-                    this.buffer = mapExistingFile(absolute, "streams");
-                    this.streamsBuffer = new UnsafeBuffer(buffer);
-                }
-
-                @Override
-                public AtomicBuffer getBuffer()
-                {
-                    return streamsBuffer;
-                }
-
-                @Override
-                public void close()
-                {
-                    unmap(buffer);
-                }
-
-                @Override
-                public String toString()
-                {
-                    return String.format("streamsCapacity %d", streamsBuffer.capacity());
-                }
-            }
-
-            private static final class Deferred extends StreamsHelper
-            {
-                private final File location;
-
-                private Eager delegate;
-
-                private Deferred(
-                    File location)
-                {
-                    this.location = location;
-                }
-
-                @Override
-                public AtomicBuffer getBuffer()
-                {
-                    ensureInitialized();
-                    return delegate.streamsBuffer;
-                }
-
-                @Override
-                public void close() throws Exception
-                {
-                    if (delegate != null)
-                    {
-                        delegate.close();
-                    }
-                }
-
-                @Override
-                public String toString()
-                {
-                    return String.format("delegate %s", delegate != null ? delegate : "deferred");
-                }
-
-                void ensureInitialized()
-                {
-                    if (delegate == null)
-                    {
-                        delegate = new Eager(location);
-                    }
-                }
-            }
-        }
-
         public abstract static class ControlHelper implements AutoCloseable
         {
             private long correlationId;
@@ -268,8 +187,6 @@ public final class Functions
 
                     int commandBufferLength = commandBufferCapacity + RingBufferDescriptor.TRAILER_LENGTH;
                     int responseBufferLength = responseBufferCapacity + BroadcastBufferDescriptor.TRAILER_LENGTH;
-//                    int counterLabelsBufferLength = counterLabelsBufferCapacity;
-//                    int counterValuesBufferLength = counterValuesBufferCapacity;
 
                     int commandBufferOffset = END_OF_META_DATA_OFFSET;
                     this.buffer = mapExistingFile(controlFile, "commands");
