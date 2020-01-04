@@ -23,7 +23,9 @@ scope core
             CLIENT,
             PROXY,
             SERVER_REVERSE,
-            CLIENT_REVERSE
+            CLIENT_REVERSE,
+            CACHE_SERVER,
+            CACHE_CLIENT
         }
 
         enum Capability
