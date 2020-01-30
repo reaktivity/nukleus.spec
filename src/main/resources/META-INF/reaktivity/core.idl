@@ -143,6 +143,13 @@ scope core
             octets extension;
         }
 
+        struct Flush extends Frame [0x00000005]
+        {
+            int64 budgetId;
+            int32 reserved = 0;
+            octets extension;
+        }
+
         struct Reset extends Frame [0x40000001]
         {
             octets extension;
@@ -165,11 +172,6 @@ scope core
         struct Challenge extends Frame [0x40000004]
         {
             octets extension;
-        }
-
-        struct Flush extends Frame [0x40000005]
-        {
-            int64 budgetId;
         }
     }
 
