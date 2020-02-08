@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 The Reaktivity Project
+ * Copyright 2016-2020 The Reaktivity Project
  *
  * The Reaktivity Project licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
@@ -23,7 +23,9 @@ scope core
             CLIENT,
             PROXY,
             SERVER_REVERSE,
-            CLIENT_REVERSE
+            CLIENT_REVERSE,
+            CACHE_SERVER,
+            CACHE_CLIENT
         }
 
         enum Capability
@@ -141,6 +143,13 @@ scope core
             octets extension;
         }
 
+        struct Flush extends Frame [0x00000005]
+        {
+            int64 budgetId;
+            int32 reserved = 0;
+            octets extension;
+        }
+
         struct Reset extends Frame [0x40000001]
         {
             octets extension;
@@ -158,16 +167,12 @@ scope core
         {
             int64 cancelId;
             int32 signalId;
+            octets extension;
         }
 
         struct Challenge extends Frame [0x40000004]
         {
             octets extension;
-        }
-
-        struct Flush extends Frame [0x40000005]
-        {
-            int64 budgetId;
         }
     }
 
