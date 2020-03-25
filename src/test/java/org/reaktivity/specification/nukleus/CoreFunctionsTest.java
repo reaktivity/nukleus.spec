@@ -23,7 +23,7 @@ import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.junit.Test;
 import org.reaktivity.specification.nukleus.internal.types.String16FW;
-import org.reaktivity.specification.nukleus.internal.types.StringFW;
+import org.reaktivity.specification.nukleus.internal.types.String8FW;
 
 public class CoreFunctionsTest
 {
@@ -33,7 +33,7 @@ public class CoreFunctionsTest
         byte[] array = CoreFunctions.string("value");
 
         DirectBuffer buffer = new UnsafeBuffer(array);
-        StringFW string = new StringFW().wrap(buffer, 0, buffer.capacity());
+        String8FW string = new String8FW().wrap(buffer, 0, buffer.capacity());
 
         assertEquals("value", string.asString());
     }
@@ -44,7 +44,7 @@ public class CoreFunctionsTest
         byte[] array = CoreFunctions.string(null);
 
         DirectBuffer buffer = new UnsafeBuffer(array);
-        StringFW string = new StringFW().wrap(buffer, 0, buffer.capacity());
+        String8FW string = new String8FW().wrap(buffer, 0, buffer.capacity());
 
         assertNull(string.asString());
     }
@@ -56,7 +56,7 @@ public class CoreFunctionsTest
 
         MutableDirectBuffer buffer = new UnsafeBuffer(new byte[array.length + 1]);
         buffer.putBytes(0, array);
-        StringFW string = new StringFW().wrap(buffer, 0, buffer.capacity());
+        String8FW string = new String8FW().wrap(buffer, 0, buffer.capacity());
 
         assertEquals("", string.asString());
     }

@@ -36,7 +36,7 @@ scope core
         struct Command
         {
             int64 correlationId;
-            string nukleus;
+            string8 nukleus;
         }
 
         struct Response
@@ -52,8 +52,8 @@ scope core
         {
             Role role;
             int64 authorization = 0;
-            string localAddress;
-            string remoteAddress;
+            string8 localAddress;
+            string8 remoteAddress;
             octets extension;
         }
 
@@ -81,8 +81,8 @@ scope core
 
         struct Resolve extends Command [0x00000011]
         {
-            string realm;
-            string[] roles;
+            string8 realm;
+            string8[] roles;
             octets extension;
         }
 
