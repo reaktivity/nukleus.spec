@@ -160,6 +160,7 @@ scope core
             int64 budgetId;
             int32 credit;
             int32 padding;
+            int32 minimum = 0;
             uint8 capabilities = 0;
         }
 
