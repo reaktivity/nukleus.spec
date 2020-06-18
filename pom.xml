@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.reaktivity</groupId>
   <artifactId>nukleus.spec</artifactId>
-  <version>0.47</version>
+  <version>0.48</version>
   <name>Nukleus Specification</name>
   <description>Nukleus Specification</description>
   <url>https://github.com/reaktivity/build-template.java</url>
@@ -226,6 +226,9 @@
         <version>2.22.1</version>
         <configuration>
           <argLine>@{argLine}</argLine>
+          <excludes>
+            <exclude/>
+          </excludes>
         </configuration>
       </plugin>
       <plugin>
