@@ -45,11 +45,11 @@
     <jacoco.coverage.ratio>0.11</jacoco.coverage.ratio>
     <jacoco.missed.count>18</jacoco.missed.count>
 
-    <agrona.version>1.1.0</agrona.version>
+    <agrona.version>1.6.0</agrona.version>
     <junit.version>4.12</junit.version>
-    <k3po.version>3.0.0-alpha-103</k3po.version>
+    <k3po.version>3.0.0</k3po.version>
     <reaktor.version>0.101</reaktor.version>
-    <nukleus.plugin.version>0.46</nukleus.plugin.version>
+    <nukleus.plugin.version>0.64</nukleus.plugin.version>
   </properties>
 
   <dependencies>
