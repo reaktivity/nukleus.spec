@@ -112,6 +112,8 @@ scope core
         {
             int64 routeId;
             int64 streamId;
+            int64 sequence;
+            int64 acknowledge;
             int64 timestamp = 0;
             int64 traceId = 0;
             int64 authorization = 0;
@@ -158,8 +160,8 @@ scope core
         struct Window extends Frame [0x40000002]
         {
             int64 budgetId;
-            int32 credit;
             int32 padding;
+            int32 maximum;
             int32 minimum = 0;
             uint8 capabilities = 0;
         }
