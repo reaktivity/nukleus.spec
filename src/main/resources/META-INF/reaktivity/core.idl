@@ -128,7 +128,7 @@ scope core
 
         struct Data extends Frame [0x00000002]
         {
-            uint8 flags = 3;            // 0x02 INIT, 0x01 FIN
+            uint8 flags = 3;            // 0x01 FIN, 0x02 INIT, 0x04 INCOMPLETE
             int64 budgetId;
             int32 reserved;
             int32 length;
