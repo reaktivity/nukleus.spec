@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.reaktivity</groupId>
   <artifactId>nukleus.spec</artifactId>
-  <version>0.52</version>
+  <version>0.53</version>
   <name>Nukleus Specification</name>
   <description>Nukleus Specification</description>
   <url>https://github.com/reaktivity/nukleus.spec</url>
@@ -364,12 +364,6 @@
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>javadoc</classifier>
-                </artifact>
-                <artifact>
-                  <groupId>${project.groupId}</groupId>
-                  <artifactId>${project.artifactId}</artifactId>
-                  <version>${project.version}</version>
-                  <classifier>tests</classifier>
                 </artifact>
               </artifactItems>
             </configuration>
