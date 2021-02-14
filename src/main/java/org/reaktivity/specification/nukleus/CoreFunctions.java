@@ -30,7 +30,7 @@ import org.kaazing.k3po.lang.el.Function;
 import org.kaazing.k3po.lang.el.spi.FunctionMapperSpi;
 import org.reaktivity.specification.nukleus.internal.types.String16FW;
 import org.reaktivity.specification.nukleus.internal.types.String8FW;
-import org.reaktivity.specification.nukleus.internal.types.control.Capability;
+import org.reaktivity.specification.nukleus.internal.types.stream.Capability;
 
 public final class CoreFunctions
 {
