@@ -112,6 +112,19 @@ public class CoreFunctionsTest
     }
 
     @Test
+    public void shouldEncodeNullVString()
+    {
+        byte[] array = CoreFunctions.vstring(null);
+
+        MutableDirectBuffer buffer = new UnsafeBuffer(new byte[array.length + 1]);
+        buffer.putBytes(0, array);
+        Varint32FW length = new Varint32FW().wrap(buffer, 0, buffer.capacity());
+
+        assertEquals(-1, length.value());
+        assertEquals(array.length, length.limit());
+    }
+
+    @Test
     public void shouldEncodeEmptyVString()
     {
         byte[] array = CoreFunctions.vstring("");

@@ -88,14 +88,21 @@ public final class CoreFunctions
     public static byte[] vstring(
         String text)
     {
-        byte[] utf8 = text.getBytes(UTF_8);
-        byte[] length = vint(utf8.length);
+        if (text == null)
+        {
+            return vint(-1L);
+        }
+        else
+        {
+            byte[] utf8 = text.getBytes(UTF_8);
+            byte[] length = vint(utf8.length);
 
-        byte[] vstring = new byte[length.length + utf8.length];
-        System.arraycopy(length, 0, vstring, 0, length.length);
-        System.arraycopy(utf8, 0, vstring, length.length, utf8.length);
+            byte[] vstring = new byte[length.length + utf8.length];
+            System.arraycopy(length, 0, vstring, 0, length.length);
+            System.arraycopy(utf8, 0, vstring, length.length, utf8.length);
 
-        return vstring;
+            return vstring;
+        }
     }
 
     @Function
