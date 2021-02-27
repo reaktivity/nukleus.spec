@@ -17,6 +17,8 @@ package org.reaktivity.specification.nukleus;
 
 import static java.lang.Long.highestOneBit;
 import static java.lang.Long.numberOfTrailingZeros;
+import static java.lang.ThreadLocal.withInitial;
+import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Optional.ofNullable;
 import static org.agrona.BitUtil.SIZE_OF_BYTE;
@@ -36,8 +38,9 @@ import org.reaktivity.specification.nukleus.internal.types.stream.Capability;
 
 public final class CoreFunctions
 {
-    private static final ThreadLocal<String8FW.Builder> STRING_RW = ThreadLocal.withInitial(String8FW.Builder::new);
-    private static final ThreadLocal<String16FW.Builder> STRING16_RW = ThreadLocal.withInitial(String16FW.Builder::new);
+    private static final ThreadLocal<String8FW.Builder> STRING_RW = withInitial(String8FW.Builder::new);
+    private static final ThreadLocal<String16FW.Builder> STRING16_RW = withInitial(String16FW.Builder::new);
+    private static final ThreadLocal<String16FW.Builder> STRING16N_RW = withInitial(() -> new String16FW.Builder(BIG_ENDIAN));
 
     @Function
     public static byte[] fromHex(
@@ -78,6 +81,22 @@ public final class CoreFunctions
                                          .wrap(writeBuffer, 0, writeBuffer.capacity())
                                          .set(text, UTF_8)
                                          .build();
+
+        final byte[] array = new byte[string16.sizeof()];
+        string16.buffer().getBytes(0, array);
+        return array;
+    }
+
+    @Function
+    public static byte[] string16n(
+        String text)
+    {
+        int capacity = SIZE_OF_SHORT + ofNullable(text).orElse("").length() * 2 + 1;
+        MutableDirectBuffer writeBuffer = new UnsafeBuffer(new byte[capacity]);
+        String16FW string16 = STRING16N_RW.get()
+                                          .wrap(writeBuffer, 0, writeBuffer.capacity())
+                                          .set(text, UTF_8)
+                                          .build();
 
         final byte[] array = new byte[string16.sizeof()];
         string16.buffer().getBytes(0, array);

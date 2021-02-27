@@ -15,6 +15,7 @@
  */
 package org.reaktivity.specification.nukleus;
 
+import static java.nio.ByteOrder.BIG_ENDIAN;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -95,6 +96,17 @@ public class CoreFunctionsTest
         String16FW string = new String16FW().wrap(buffer, 0, buffer.capacity());
 
         assertEquals("", string.asString());
+    }
+
+    @Test
+    public void shouldEncodeString16n()
+    {
+        byte[] array = CoreFunctions.string16n("value");
+
+        DirectBuffer buffer = new UnsafeBuffer(array);
+        String16FW string = new String16FW(BIG_ENDIAN).wrap(buffer, 0, buffer.capacity());
+
+        assertEquals("value", string.asString());
     }
 
     @Test
