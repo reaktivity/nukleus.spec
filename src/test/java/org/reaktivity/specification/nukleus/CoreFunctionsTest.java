@@ -26,7 +26,7 @@ import org.agrona.concurrent.UnsafeBuffer;
 import org.junit.Test;
 import org.reaktivity.specification.nukleus.internal.types.String16FW;
 import org.reaktivity.specification.nukleus.internal.types.String8FW;
-import org.reaktivity.specification.nukleus.internal.types.Varint32FW;
+import org.reaktivity.specification.nukleus.internal.types.Varuint32nFW;
 
 public class CoreFunctionsTest
 {
@@ -110,13 +110,13 @@ public class CoreFunctionsTest
     }
 
     @Test
-    public void shouldEncodeVString()
+    public void shouldEncodeVarString()
     {
-        byte[] array = CoreFunctions.vstring("value");
+        byte[] array = CoreFunctions.varstring("value");
 
         MutableDirectBuffer buffer = new UnsafeBuffer(new byte[array.length + 1]);
         buffer.putBytes(0, array);
-        Varint32FW length = new Varint32FW().wrap(buffer, 0, buffer.capacity());
+        Varuint32nFW length = new Varuint32nFW().wrap(buffer, 0, buffer.capacity());
 
         assertEquals(5, length.value());
         assertEquals(array.length, length.limit() + length.value());
@@ -124,26 +124,26 @@ public class CoreFunctionsTest
     }
 
     @Test
-    public void shouldEncodeNullVString()
+    public void shouldEncodeNullVarString()
     {
-        byte[] array = CoreFunctions.vstring(null);
+        byte[] array = CoreFunctions.varstring(null);
 
         MutableDirectBuffer buffer = new UnsafeBuffer(new byte[array.length + 1]);
         buffer.putBytes(0, array);
-        Varint32FW length = new Varint32FW().wrap(buffer, 0, buffer.capacity());
+        Varuint32nFW length = new Varuint32nFW().wrap(buffer, 0, buffer.capacity());
 
         assertEquals(-1, length.value());
         assertEquals(array.length, length.limit());
     }
 
     @Test
-    public void shouldEncodeEmptyVString()
+    public void shouldEncodeEmptyVarString()
     {
-        byte[] array = CoreFunctions.vstring("");
+        byte[] array = CoreFunctions.varstring("");
 
         MutableDirectBuffer buffer = new UnsafeBuffer(new byte[array.length + 1]);
         buffer.putBytes(0, array);
-        Varint32FW length = new Varint32FW().wrap(buffer, 0, buffer.capacity());
+        Varuint32nFW length = new Varuint32nFW().wrap(buffer, 0, buffer.capacity());
 
         assertEquals(0, length.value());
         assertEquals(array.length, length.limit() + length.value());
@@ -159,7 +159,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintTenBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(Long.MAX_VALUE);
+        byte[] actuals = CoreFunctions.varint(Long.MAX_VALUE);
         assertArrayEquals(new byte[] { (byte) 0xfe, (byte) 0xff,
                                        (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
                                        (byte) 0xff, (byte) 0xff, (byte) 0xff, 0x01 }, actuals);
@@ -168,7 +168,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintTenBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 62);
+        byte[] actuals = CoreFunctions.varint(1L << 62);
         assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80,
                                        (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0x80,
                                        (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x01 }, actuals);
@@ -177,7 +177,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintNineBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 62);
+        byte[] actuals = CoreFunctions.varint(-1L << 62);
         assertArrayEquals(new byte[] { (byte) 0xff,
                                        (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
                                        (byte) 0xff, (byte) 0xff, (byte) 0xff, 0x7f }, actuals);
@@ -186,7 +186,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintNineBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 55);
+        byte[] actuals = CoreFunctions.varint(1L << 55);
         assertArrayEquals(new byte[] { (byte) 0x80,
                                        (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0x80,
                                        (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x01 }, actuals);
@@ -195,7 +195,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintEightBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 55);
+        byte[] actuals = CoreFunctions.varint(-1L << 55);
         assertArrayEquals(new byte[] { (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
                                        (byte) 0xff, (byte) 0xff, (byte) 0xff, 0x7f }, actuals);
     }
@@ -203,7 +203,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintEightBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 48);
+        byte[] actuals = CoreFunctions.varint(1L << 48);
         assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0x80,
                                        (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x01 }, actuals);
     }
@@ -211,7 +211,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintSevenBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 48);
+        byte[] actuals = CoreFunctions.varint(-1L << 48);
         assertArrayEquals(new byte[] { (byte) 0xff, (byte) 0xff, (byte) 0xff,
                                        (byte) 0xff, (byte) 0xff, (byte) 0xff, 0x7f }, actuals);
     }
@@ -219,7 +219,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintSevenBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 41);
+        byte[] actuals = CoreFunctions.varint(1L << 41);
         assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80, (byte) 0x80,
                                        (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x01 }, actuals);
     }
@@ -227,7 +227,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintSixBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 41);
+        byte[] actuals = CoreFunctions.varint(-1L << 41);
         assertArrayEquals(new byte[] { (byte) 0xff, (byte) 0xff,
                                        (byte) 0xff, (byte) 0xff, (byte) 0xff, 0x7f }, actuals);
     }
@@ -235,7 +235,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintSixBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 34);
+        byte[] actuals = CoreFunctions.varint(1L << 34);
         assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80,
                                        (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x01 }, actuals);
     }
@@ -243,7 +243,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintFiveBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 34);
+        byte[] actuals = CoreFunctions.varint(-1L << 34);
         assertArrayEquals(new byte[] { (byte) 0xff,
                                        (byte) 0xff, (byte) 0xff, (byte) 0xff, 0x7f }, actuals);
     }
@@ -251,7 +251,7 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintFiveBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 27);
+        byte[] actuals = CoreFunctions.varint(1L << 27);
         assertArrayEquals(new byte[] { (byte) 0x80,
                                        (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x01 }, actuals);
     }
@@ -259,56 +259,56 @@ public class CoreFunctionsTest
     @Test
     public void shouldComputeVarintFourBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 27);
+        byte[] actuals = CoreFunctions.varint(-1L << 27);
         assertArrayEquals(new byte[] { (byte) 0xff, (byte) 0xff, (byte) 0xff, 0x7f }, actuals);
     }
 
     @Test
     public void shouldComputeVarintFourBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 20);
+        byte[] actuals = CoreFunctions.varint(1L << 20);
         assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80, (byte) 0x80, 0x01 }, actuals);
     }
 
     @Test
     public void shouldComputeVarintThreeBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 20);
+        byte[] actuals = CoreFunctions.varint(-1L << 20);
         assertArrayEquals(new byte[] { (byte) 0xff, (byte) 0xff, 0x7f }, actuals);
     }
 
     @Test
     public void shouldComputeVarintThreeBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 13);
+        byte[] actuals = CoreFunctions.varint(1L << 13);
         assertArrayEquals(new byte[] { (byte) 0x80, (byte) 0x80, 0x01 }, actuals);
     }
 
     @Test
     public void shouldComputeVarintTwoBytesMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 13);
+        byte[] actuals = CoreFunctions.varint(-1L << 13);
         assertArrayEquals(new byte[] { (byte) 0xff, 0x7f }, actuals);
     }
 
     @Test
     public void shouldComputeVarintTwoBytesMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(1L << 6);
+        byte[] actuals = CoreFunctions.varint(1L << 6);
         assertArrayEquals(new byte[] { (byte) 0x80, 0x01 }, actuals);
     }
 
     @Test
     public void shouldComputeVarintOneByteMax() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(-1L << 6);
+        byte[] actuals = CoreFunctions.varint(-1L << 6);
         assertArrayEquals(new byte[] { 0x7f }, actuals);
     }
 
     @Test
     public void shouldComputeVarintOneByteMin() throws Exception
     {
-        byte[] actuals = CoreFunctions.vint(0);
+        byte[] actuals = CoreFunctions.varint(0);
         assertArrayEquals(new byte[] { 0x00 }, actuals);
     }
 }

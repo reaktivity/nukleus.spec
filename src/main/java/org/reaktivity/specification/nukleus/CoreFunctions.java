@@ -104,32 +104,59 @@ public final class CoreFunctions
     }
 
     @Function
-    public static byte[] vstring(
+    public static byte[] varstring(
         String text)
     {
-        if (text == null)
+        byte[] bytes = text != null ? text.getBytes(UTF_8) : null;
+        return varbytes(bytes);
+    }
+
+    @Function
+    public static byte[] varbytes(
+        byte[] bytes)
+    {
+        if (bytes == null)
         {
-            return vint(-1L);
+            return varuintn(-1L);
         }
         else
         {
-            byte[] utf8 = text.getBytes(UTF_8);
-            byte[] length = vint(utf8.length);
+            byte[] length = varuintn(bytes.length);
 
-            byte[] vstring = new byte[length.length + utf8.length];
-            System.arraycopy(length, 0, vstring, 0, length.length);
-            System.arraycopy(utf8, 0, vstring, length.length, utf8.length);
+            byte[] varbytes = new byte[length.length + bytes.length];
+            System.arraycopy(length, 0, varbytes, 0, length.length);
+            System.arraycopy(bytes, 0, varbytes, length.length, bytes.length);
 
-            return vstring;
+            return varbytes;
         }
     }
 
     @Function
-    public static byte[] vint(
+    public static byte[] varuintn(
+        long nvalue)
+    {
+        return varuint(nvalue + 1);
+    }
+
+    @Function
+    public static byte[] varuint(
+        long value)
+    {
+        return varbits(value);
+    }
+
+    @Function
+    public static byte[] varint(
         long value)
     {
         final long bits = (value << 1) ^ (value >> 63);
 
+        return varbits(bits);
+    }
+
+    private static byte[] varbits(
+        long bits)
+    {
         switch (bits != 0L ? (int) Math.ceil((1 + numberOfTrailingZeros(highestOneBit(bits))) / 7.0) : 1)
         {
         case 1:
