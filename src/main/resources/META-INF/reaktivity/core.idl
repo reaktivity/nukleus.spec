@@ -15,94 +15,13 @@
  */
 scope core
 {
-    scope control
+    scope stream
     {
-        enum Role
-        {
-            SERVER,
-            CLIENT,
-            PROXY,
-            SERVER_REVERSE,
-            CLIENT_REVERSE,
-            CACHE_SERVER,
-            CACHE_CLIENT
-        }
-
         enum Capability
         {
             CHALLENGE
         }
 
-        struct Command
-        {
-            int64 correlationId;
-            string8 nukleus;
-        }
-
-        struct Response
-        {
-            int64 correlationId;
-        }
-
-        struct Error extends Response [0x40000000]
-        {
-        }
-
-        struct Route extends Command [0x00000001]
-        {
-            Role role;
-            int64 authorization = 0;
-            string8 localAddress;
-            string8 remoteAddress;
-            octets extension;
-        }
-
-        struct Routed extends Response [0x40000001]
-        {
-            int64 routeId;
-        }
-
-        struct Unroute extends Command [0x00000002]
-        {
-            int64 routeId;
-        }
-
-        struct Unrouted extends Response [0x40000002]
-        {
-        }
-
-        struct Freeze extends Command [0x00000003]
-        {
-        }
-
-        struct Frozen extends Response [0x40000003]
-        {
-        }
-
-        struct Resolve extends Command [0x00000011]
-        {
-            string8 realm;
-            string8[] roles;
-            octets extension;
-        }
-
-        struct Resolved extends Response [0x40000011]
-        {
-            int64 authorization;
-        }
-
-        struct Unresolve extends Command [0x00000012]
-        {
-            int64 authorization;
-        }
-
-        struct Unresolved extends Response [0x40000012]
-        {
-        }
-    }
-
-    scope stream
-    {
         struct Extension
         {
             int32 typeId;
@@ -176,21 +95,6 @@ scope core
         struct Challenge extends Frame [0x40000004]
         {
             octets extension;
-        }
-    }
-
-    scope state
-    {
-        struct RouteEntry
-        {
-            uint32 length;
-            octets[length] route;
-        }
-
-        struct RouteTable
-        {
-             int32 modificationCount;
-             RouteEntry[] entries;
         }
     }
 }
